@@ -6,6 +6,8 @@ public class PessoaJuridica extends Usuario{
 	
 	public PessoaJuridica(String id, String nome, String email, String celular, String classe, String status) {
 		super(nome, email, celular, classe, status);
+		if(id.trim().equals("") || id == null) 
+			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		this.cnpj = id;
 	}
 

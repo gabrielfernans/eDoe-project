@@ -6,6 +6,8 @@ public class PessoaFisica extends Usuario{
 
 	public PessoaFisica(String id, String nome, String email, String celular, String classe, String status) {
 		super(nome, email, celular, classe, status);
+		if(id == null || id.trim().equals("")) 
+			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		this.cpf = id;
 	}
 
