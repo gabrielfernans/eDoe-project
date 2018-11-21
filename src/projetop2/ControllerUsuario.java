@@ -1,14 +1,32 @@
 package projetop2;
 
 import java.util.List;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class ControllerUsuario {
 
 	private Map<String, Usuario> usuarios = new HashMap<>();
+	
+	public void lerReceptores(String caminho) throws IOException {
+		Scanner sc = new Scanner(new File(caminho));
+		String linha = null;
+		while(sc.hasNextLine()) {
+			linha = sc.nextLine();
+			if(linha.equals("id,nome,E-mail,celular,classe"))
+				continue;
+			String[] dadosReceptor = linha.split(",");
+			if(dadosReceptor.length != 5)
+				throw new IOException("Campos invalidos");
+			usuarios.put(dadosReceptor[0], new Receptor(dadosReceptor[0],dadosReceptor[1], dadosReceptor[2], dadosReceptor[3], dadosReceptor[4], "receptor"));
+		}
+		sc.close();
+	}
 	
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {	
 		if(id == null || id.trim().equals("")) 
@@ -43,10 +61,6 @@ public class ControllerUsuario {
 		if(!usuarios.containsKey(id))
 			throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");
 		usuarios.remove(id);
-	}
-	
-	public void lerReceptores(String caminho) {
-		
 	}
 	
 	public String atualizaUsuario(String id, String nome, String email, String celular) {
