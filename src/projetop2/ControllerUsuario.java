@@ -11,7 +11,6 @@ public class ControllerUsuario {
 	private Map<String, Usuario> usuarios = new HashMap<>();
 	
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {	
-
 		if(id == null || id.trim().equals("")) 
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		if(usuarios.containsKey(id))
@@ -20,12 +19,9 @@ public class ControllerUsuario {
 			throw new IllegalArgumentException("Entrada invalida: classe nao pode ser vazia ou nula.");
 		
 		switch(classe) {
-		case "PESSOA_FISICA":
-			usuarios.put(id, new PessoaFisica(id, nome, email, celular, classe, "doador"));
-			break;
-		case "ONG": case "IGREJA": case "ORGAO_PUBLICO_MUNICIPAL": case "ORGAO_PUBLICO_FEDERAL": case "ORGAO_PUBLICO_ESTADUAL":
+		case "PESSOA_FISICA": case "ONG": case "IGREJA": case "ORGAO_PUBLICO_MUNICIPAL": case "ORGAO_PUBLICO_FEDERAL": case "ORGAO_PUBLICO_ESTADUAL":
 		case "ASSOCIAÇÃO": case "SOCIEDADE":
-			usuarios.put(id, new PessoaJuridica(id, nome, email, celular, classe, "doador"));
+			usuarios.put(id, new Doador(id, nome, email, celular, classe, "doador"));
 			break;
 		default:
 			throw new IllegalArgumentException("Entrada invalida: opcao de classe invalida.");
