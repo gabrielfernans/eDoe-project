@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class ControllerUsuario {
 
 	private Map<String, Usuario> usuarios = new HashMap<>();
+	private int cont = 0;
 	
 	public void lerReceptores(String caminho) throws IOException {
 		Scanner sc = new Scanner(new File(caminho));
@@ -23,10 +24,15 @@ public class ControllerUsuario {
 			String[] dadosReceptor = linha.split(",");
 			if(dadosReceptor.length != 5)
 				throw new IOException("Campos invalidos");
-			usuarios.put(dadosReceptor[0], new Receptor(dadosReceptor[0],dadosReceptor[1], dadosReceptor[2], dadosReceptor[3], dadosReceptor[4], "receptor"));
+			if(caminho.split("/")[1].equals("atualizaReceptores.csv"))
+				usuarios.get(dadosReceptor[0]).atualizaReceptor(dadosReceptor[1], dadosReceptor[2], dadosReceptor[3]);
+			else if(caminho.split("/")[1].equals("novosReceptores.csv"))
+				usuarios.put(dadosReceptor[0], new Receptor(dadosReceptor[0],dadosReceptor[1], dadosReceptor[2], dadosReceptor[3], dadosReceptor[4], "receptor", cont++));
 		}
 		sc.close();
 	}
+
+
 	
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {	
 		if(id == null || id.trim().equals("")) 
@@ -39,7 +45,7 @@ public class ControllerUsuario {
 		switch(classe) {
 		case "PESSOA_FISICA": case "ONG": case "IGREJA": case "ORGAO_PUBLICO_MUNICIPAL": case "ORGAO_PUBLICO_FEDERAL": case "ORGAO_PUBLICO_ESTADUAL":
 		case "ASSOCIAÇÃO": case "SOCIEDADE":
-			usuarios.put(id, new Doador(id, nome, email, celular, classe, "doador"));
+			usuarios.put(id, new Doador(id, nome, email, celular, classe, "doador", cont++));
 			break;
 		default:
 			throw new IllegalArgumentException("Entrada invalida: opcao de classe invalida.");
@@ -95,25 +101,4 @@ public class ControllerUsuario {
 		}
 		return users.substring(0, users.length()-3);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

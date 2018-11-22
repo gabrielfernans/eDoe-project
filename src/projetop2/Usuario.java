@@ -9,7 +9,7 @@ public abstract class Usuario implements Comparable<Usuario>{
 	private int contador;
 	private String id;
 	
-	public Usuario(String nome, String email, String celular, String classe, String status, String id) {
+	public Usuario(String nome, String email, String celular, String classe, String status, String id, int cont) {
 		if(nome == null ||nome.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");
 		if(email == null || email.trim().equals(""))
@@ -26,7 +26,7 @@ public abstract class Usuario implements Comparable<Usuario>{
 		this.classe = classe;
 		this.status = status;
 		this.id = id;
-		contador+=1;
+		this.contador = cont;
 	}
 	
 	@Override
@@ -56,7 +56,7 @@ public abstract class Usuario implements Comparable<Usuario>{
 
 	@Override
 	public int compareTo(Usuario o) {
-		return this.contador - o.geContador(); 
+		return this.geContador() - o.geContador(); 
 	}
 
 	@Override
@@ -86,12 +86,14 @@ public abstract class Usuario implements Comparable<Usuario>{
 		return contador;
 	}
 	
-	public String geId() {
-		return id;
+	public String formataId() {
+		//08.704.413/0002-40
+		if(getClasse().equals("PESSOA_FISICA"))
+			return id.substring(0, 3) + "." + id.substring(3, 6) + "." + id.substring(6, 9) + "-" + id.substring(9, 11);
+		return id.substring(0, 2) + "." + id.substring(2, 5) + "." + id.substring(5, 8) + "/" + id.substring(8, 12) + "-" + id.substring(12, 14);	
 	}
 	
 	public String atualizaUsuario(String nome, String email, String celular) {
-		
 		if(nome != null && nome.length()!=0 )
 			this.nome = nome;
 		else if(email != null && email.length() != 0)
@@ -101,4 +103,13 @@ public abstract class Usuario implements Comparable<Usuario>{
 		return this.toString();
 	}
 	
+	public String atualizaReceptor(String nome, String email, String celular) {
+		if(!nome.equals(this.nome))
+			this.nome = nome;
+		if(!email.equals(this.email))
+			this.email = email;
+		if(!celular.equals(this.celular))
+			this.celular = celular;
+		return this.toString();
+	}
 }
