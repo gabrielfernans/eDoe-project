@@ -30,7 +30,7 @@ public class ControllerUsuario {
 			if(caminho.split("/")[1].equals("atualizaReceptores.csv"))
 				usuarios.get(dadosReceptor[0]).atualizaReceptor(dadosReceptor[1], dadosReceptor[2], dadosReceptor[3]);
 			else if(caminho.split("/")[1].equals("novosReceptores.csv"))
-				usuarios.put(dadosReceptor[0], new Receptor(dadosReceptor[0],dadosReceptor[1], dadosReceptor[2], dadosReceptor[3], dadosReceptor[4], "receptor", cont++));
+				usuarios.put(dadosReceptor[0], new Usuario(dadosReceptor[0],dadosReceptor[1], dadosReceptor[2], dadosReceptor[3], dadosReceptor[4], "receptor", cont++));
 		}
 		sc.close();
 	}
@@ -48,7 +48,7 @@ public class ControllerUsuario {
 		switch(classe) {
 		case "PESSOA_FISICA": case "ONG": case "IGREJA": case "ORGAO_PUBLICO_MUNICIPAL": case "ORGAO_PUBLICO_FEDERAL": case "ORGAO_PUBLICO_ESTADUAL":
 		case "ASSOCIAÇÃO": case "SOCIEDADE":
-			usuarios.put(id, new Doador(id, nome, email, celular, classe, "doador", cont++));
+			usuarios.put(id, new Usuario(id, nome, email, celular, classe, "doador", cont++));
 			break;
 		default:
 			throw new IllegalArgumentException("Entrada invalida: opcao de classe invalida.");

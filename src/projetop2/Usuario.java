@@ -1,6 +1,9 @@
 package projetop2;
 
-public abstract class Usuario implements Comparable<Usuario>{
+import java.util.ArrayList;
+import java.util.List;
+
+public class Usuario implements Comparable<Usuario>{
 	private String nome;
 	private String email;
 	private String celular;
@@ -8,8 +11,9 @@ public abstract class Usuario implements Comparable<Usuario>{
 	private String status;
 	private int contador;
 	private String id;
+	private List<Item> itens = new ArrayList<>();
 	
-	public Usuario(String nome, String email, String celular, String classe, String status, String id, int cont) {
+	public Usuario(String id, String nome, String email, String celular, String classe, String status, int cont) {
 		if(nome == null ||nome.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");
 		if(email == null || email.trim().equals(""))
@@ -59,8 +63,6 @@ public abstract class Usuario implements Comparable<Usuario>{
 		return this.geContador() - o.geContador(); 
 	}
 
-	@Override
-	public abstract String toString();
 
 	public String getNome() {
 		return nome;
@@ -112,6 +114,17 @@ public abstract class Usuario implements Comparable<Usuario>{
 			this.celular = celular;
 		return this.toString();
 	}
+
 	
-	public abstract void adicionaItem(Item item);
+	public void adicionaItem(Item item) {
+		this.itens.add(item);
+	}
+
+	public String getId() {
+		return formataId();
+	}
+	
+	public String toString() {
+		return getNome() + "/" + this.getId() + ", " + getEmail() + ", " + getCelular() + ", status: " + geStatus(); 
+	}
 }
