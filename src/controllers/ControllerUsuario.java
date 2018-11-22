@@ -1,4 +1,4 @@
-package projetop2;
+package controllers;
 
 import java.util.List;
 import java.io.File;
@@ -8,6 +8,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
+import entidades.Descricao;
+import entidades.Usuario;
 
 public class ControllerUsuario {
 

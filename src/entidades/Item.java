@@ -1,4 +1,4 @@
-package projetop2;
+package entidades;
 
 import java.util.ArrayList;
 import java.util.Comparator;
