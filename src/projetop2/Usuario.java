@@ -112,4 +112,6 @@ public abstract class Usuario implements Comparable<Usuario>{
 			this.celular = celular;
 		return this.toString();
 	}
+	
+	public abstract void adicionaItem(Item item);
 }

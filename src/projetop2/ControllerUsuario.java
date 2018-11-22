@@ -104,4 +104,8 @@ public class ControllerUsuario {
 		}
 		return users.substring(0, users.length()-3);
 	}
+	
+	public void adicionaItemDeUsuario(String id, Item item) {
+		this.usuarios.get(id).adicionaItem(item);
+	}
 }

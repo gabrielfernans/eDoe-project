@@ -1,13 +1,20 @@
 package projetop2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Receptor extends Usuario{
 
-	// manipula a lista de itens a serem recebidos
+	private List<Item> itensNecessarios = new ArrayList<>();
 	
 	public Receptor(String id, String nome, String email, String celular, String classe, String status, int cont) {
 		super(nome, email, celular, classe, status, id, cont);
 	}
 	
+	@Override
+	public void adicionaItem(Item item) {
+		this.itensNecessarios.add(item);
+	}
 
 	public String getId() {
 		return super.formataId();

@@ -1,11 +1,19 @@
 package projetop2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Doador extends Usuario{
 	
-	// manipula a lista de itens a serem doados
+	private List<Item> itensDisponiveis = new ArrayList<>();
 
 	public Doador(String id, String nome, String email, String celular, String classe, String status, int cont) {
 		super(nome, email, celular, classe, status, id, cont);
+	}
+	
+	@Override
+	public void adicionaItem(Item item) {
+		this.itensDisponiveis.add(item);
 	}
 
 	public String getId() {
@@ -16,4 +24,5 @@ public class Doador extends Usuario{
 	public String toString() {
 		return super.getNome() + "/" + this.getId() + ", " + super.getEmail() + ", " + super.getCelular() + ", status: " + super.geStatus(); 
 	}
+
 }
