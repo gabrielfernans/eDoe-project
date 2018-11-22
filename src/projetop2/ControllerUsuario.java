@@ -22,8 +22,11 @@ public class ControllerUsuario {
 			if(linha.equals("id,nome,E-mail,celular,classe"))
 				continue;
 			String[] dadosReceptor = linha.split(",");
-			if(dadosReceptor.length != 5)
+			if(dadosReceptor.length != 5) {
+				sc.close();
 				throw new IOException("Campos invalidos");
+			}
+				
 			if(caminho.split("/")[1].equals("atualizaReceptores.csv"))
 				usuarios.get(dadosReceptor[0]).atualizaReceptor(dadosReceptor[1], dadosReceptor[2], dadosReceptor[3]);
 			else if(caminho.split("/")[1].equals("novosReceptores.csv"))
