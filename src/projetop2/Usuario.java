@@ -1,7 +1,9 @@
 package projetop2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Usuario implements Comparable<Usuario>{
 	private String nome;
@@ -11,7 +13,7 @@ public class Usuario implements Comparable<Usuario>{
 	private String status;
 	private int contador;
 	private String id;
-	private List<Item> itens = new ArrayList<>();
+	private Map<Integer, Item> listaItens = new HashMap<>();
 	
 	public Usuario(String id, String nome, String email, String celular, String classe, String status, int cont) {
 		if(nome == null ||nome.trim().equals(""))
@@ -88,8 +90,7 @@ public class Usuario implements Comparable<Usuario>{
 		return contador;
 	}
 	
-	public String formataId() {
-		//08.704.413/0002-40
+	private String formataId() {
 		if(getClasse().equals("PESSOA_FISICA"))
 			return id.substring(0, 3) + "." + id.substring(3, 6) + "." + id.substring(6, 9) + "-" + id.substring(9, 11);
 		return id.substring(0, 2) + "." + id.substring(2, 5) + "." + id.substring(5, 8) + "/" + id.substring(8, 12) + "-" + id.substring(12, 14);	
@@ -115,9 +116,12 @@ public class Usuario implements Comparable<Usuario>{
 		return this.toString();
 	}
 
+	public void adicionaItem(int id, int quantidade, Descricao descricao, String data, List<String> tags) {
+		this.listaItens.put(id, new Item(id, quantidade, descricao, data, tags));
+	}
 	
-	public void adicionaItem(Item item) {
-		this.itens.add(item);
+	public void atualizaItem(int idItem, List<String> novasTags, int novaQuantidade) {
+		this.listaItens.get(idItem).atualizaItem(novasTags, novaQuantidade);
 	}
 
 	public String getId() {

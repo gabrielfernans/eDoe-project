@@ -21,6 +21,20 @@ public class Item implements Comparator<Item>{
 		this.tags = tags;
 	}
 	
+	public void atualizaItem(List<String> novasTags, int novaQuantidade) {
+		this.tags = novasTags;
+		this.quantidade = novaQuantidade;
+		
+	}
+	
+	@Override
+	public String toString() {
+		if (tags.size() == 0) {
+			return this.id + " - " +this.descricao.toString() + ", quantidade: " + this.quantidade;
+		}
+		return this.id + " - " + this.descricao.toString() + ", tags:" + this.tags.toString() + ", quantidade: " + this.quantidade;
+	}
+	
 	@Override
 	public int compare(Item item1, Item item2) {
 		return item1.getDescricao().compareTo(item2.getDescricao());

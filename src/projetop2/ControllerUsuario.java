@@ -105,7 +105,11 @@ public class ControllerUsuario {
 		return users.substring(0, users.length()-3);
 	}
 	
-	public void adicionaItemDeUsuario(String id, Item item) {
-		this.usuarios.get(id).adicionaItem(item);
+	public void adicionaItemDeUsuario(int idUsuario, int idItem, int quantidade, Descricao descricao, String data, List<String> tags) {
+		this.usuarios.get(idUsuario).adicionaItem(idItem, quantidade, descricao, data, tags);
+	}
+	
+	public void atualizaItem(int idUsuario, int idItem, List<String> novasTags, int novaQuantidade) {
+		this.usuarios.get(idUsuario).atualizaItem(idItem, novasTags, novaQuantidade);
 	}
 }
