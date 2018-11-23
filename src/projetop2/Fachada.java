@@ -5,6 +5,7 @@ import java.io.IOException;
 public class Fachada {
 
 	ControllerUsuario controllerUser = new ControllerUsuario();
+	ControllerDescricoes controllerDescricao = new ControllerDescricoes();
 	
 	public void lerReceptores(String caminho) throws IOException{
 		controllerUser.lerReceptores(caminho);
@@ -28,6 +29,10 @@ public class Fachada {
 	
 	public void removeUsuario(String id) {
 		controllerUser.removeUsuario(id);
+	}
+	
+	public String listaDescritorDeItensParaDoacao() {
+		return controllerDescricao.listagemDosItensPorQuantidade(controllerUser.getUsuarios());
 	}
 	
 }
