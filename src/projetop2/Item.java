@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Item implements Comparator<Item>{
+public class Item implements Comparator<Item>, Comparable<Item>{
 	private int id;
 	private int quantidade;
 	private Descricao descricao;
@@ -27,6 +27,26 @@ public class Item implements Comparator<Item>{
 		
 	}
 	
+	//erick
+	public String retornaDescricaoEQuantidade() {
+		return this.quantidade + " - " + descricao.toString();
+	}
+	
+	public String toStringCombo() {
+		return this.getId() + " - " + this.getDescricao() + ", tags: " + this.toStringDeTags() + ", quantidade: " + this.getQuantidade() + ", "; 
+	}
+	
+	//erick
+	private String toStringDeTags() {
+		String aux = "[";
+		for (int i = 0; i < tags.size(); i++) {
+			if (i != tags.size() - 1) 
+				aux += tags.get(i) + ", ";
+			else 
+				aux += tags.get(i) + "]";
+		} return aux;
+	}
+	
 	@Override
 	public String toString() {
 		if (tags.size() == 0) {
@@ -40,10 +60,19 @@ public class Item implements Comparator<Item>{
 		return item1.getDescricao().compareTo(item2.getDescricao());
 	}
 	
-	public String retornaDescricaoItemEQuantidade() {
-		return this.quantidade + " - " + descricao.toString();
+	@Override
+	public int compareTo(Item o) {
+		if (this.getQuantidade() > o.getQuantidade()) {
+			return 1;	
+		} else if ((this.getQuantidade() < o.getQuantidade())) {
+			return -1;
+		} return 0;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
 	public int getQuantidade() {
 		return quantidade;
 	}
@@ -109,7 +138,5 @@ public class Item implements Comparator<Item>{
 			return false;
 		return true;
 	}
-	
-	
 
 }

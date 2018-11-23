@@ -8,12 +8,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class ControllerUsuario {
 
 	private Map<String, Usuario> usuarios = new HashMap<>();
-	private int cont = 0;
+	private int cont = 0;	
 	
+
 	public void lerReceptores(String caminho) throws IOException {
 		Scanner sc = new Scanner(new File(caminho));
 		String linha = null;
@@ -35,8 +37,6 @@ public class ControllerUsuario {
 		sc.close();
 	}
 
-
-	
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {	
 		if(id == null || id.trim().equals("")) 
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
@@ -112,4 +112,11 @@ public class ControllerUsuario {
 	public void atualizaItem(int idUsuario, int idItem, List<String> novasTags, int novaQuantidade) {
 		this.usuarios.get(idUsuario).atualizaItem(idItem, novasTags, novaQuantidade);
 	}
+	
+	//erick
+	public Map<String, Usuario> getUsuarios() {
+		return usuarios;
+	}
+	
+	
 }

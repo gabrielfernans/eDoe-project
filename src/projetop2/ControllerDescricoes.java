@@ -8,6 +8,12 @@ import java.util.stream.Collectors;
 
 public class ControllerDescricoes {
 	
+	//erick
+	private Usuario usuario;
+	
+	//erick
+	private ControllerUsuario controllerUsuario;
+	
 	private Set<Descricao> descritores = new HashSet<>();
 	
 	public void cadastraDescritor(String descricao) {
@@ -19,12 +25,35 @@ public class ControllerDescricoes {
 		}
 	}
 	
-//	public String representacaoDeTodosOsDescritores() {
-//		ArrayList<Descricao> listaDescricao = new ArrayList<Descricao>();
-//		for (Descricao descricao : descritores) {
-//			listaDescricao.add(descricao.toString());
-//		}
-//		Collections.sort(listaDescricao);
-//		return listaDescricao.stream().map(c -> c.toString()).collect(Collectors.joining(" | "));
-//	}
+	// método que lista todos os descritores por ordem alfabetica
+	// falta adicionar quantidade
+	
+	public String listagemDosDescritoresPorOrdemAlfabetica() {
+		ArrayList<String> listaDescricao = new ArrayList<String>();
+		for (Descricao descricao : descritores) {
+			listaDescricao.add(descricao.getDescricao());
+		}
+		Collections.sort(listaDescricao);
+		return listaDescricao.stream().map(c -> c.toString()).collect(Collectors.joining(" | "));
+	}
+	
+	// método que lista todos os itens pela quantidade de itens e sua descrição
+	// Entrei na lista de usuarios do controller, dps na lista de itens e por fim no toString do item
+	
+	public String listagemDosItensPorQuantidade() {
+		Set<String> setDeItens= new HashSet<String>();
+		ArrayList<String> listDeItens= new ArrayList<String>();
+		// fiz um set pois elementos repetidos não serão adicionados
+		for (Usuario usuario : controllerUsuario.getUsuarios().values()) {
+			for (Item itens : (usuario.getListaItens().values())) {
+				setDeItens.add(itens.retornaDescricaoEQuantidade());
+			}
+		}
+		for (String str : setDeItens) {
+			listDeItens.add(str);
+		}
+		Collections.sort(listDeItens);
+		return listDeItens.stream().map(c -> c.toString()).collect(Collectors.joining(" | "));
+	}
+	
 }	

@@ -35,61 +35,11 @@ public class Usuario implements Comparable<Usuario>{
 		this.contador = cont;
 	}
 	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+	// adicionei o get de itens para poder ter acesso a lista no controller
+	public Map<Integer, Item> getListaItens() {
+		return listaItens;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-
-	@Override
-	public int compareTo(Usuario o) {
-		return this.geContador() - o.geContador(); 
-	}
-
-
-	public String getNome() {
-		return nome;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getCelular() {
-		return celular;
-	}
-
-	public String getClasse() {
-		return classe;
-	}
-	
-	public String geStatus() {
-		return status;
-	}
-	
-	public int geContador() {
-		return contador;
-	}
-	
 	private String formataId() {
 		if(getClasse().equals("PESSOA_FISICA"))
 			return id.substring(0, 3) + "." + id.substring(3, 6) + "." + id.substring(6, 9) + "-" + id.substring(9, 11);
@@ -123,12 +73,81 @@ public class Usuario implements Comparable<Usuario>{
 	public void atualizaItem(int idItem, List<String> novasTags, int novaQuantidade) {
 		this.listaItens.get(idItem).atualizaItem(novasTags, novaQuantidade);
 	}
+	
+	// é a representação 2. do eDoe que será usado no método listagemDosItensPorQuantidade()
+	// falta ordenar 
+	public String listagemCombo() {
+		ArrayList<String> listaItensToStringCombo = new ArrayList<>();
+		String aux = "";
+		int contador = 0;
+		for (Item item : listaItens.values()) {
+			if (contador < listaItens.size() - 1)
+				aux += listaItensToStringCombo.add(item.toStringCombo()) + "doador: " + this.getNome() +  "/" + this.getId() + " | ";
+			else 
+				aux += listaItensToStringCombo.add(item.toStringCombo()) + "doador: " + this.getNome() + "/" + this.getId();
+		} 	
+		return aux;
+	}
+	
+	@Override
+	public int compareTo(Usuario o) {
+		return this.geContador() - o.geContador(); 
+	}
 
+	public String getNome() {
+		return nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public String getClasse() {
+		return classe;
+	}
+	
+	public String geStatus() {
+		return status;
+	}
+	
+	public int geContador() {
+		return contador;
+	}
+	
 	public String getId() {
 		return formataId();
 	}
 	
 	public String toString() {
 		return getNome() + "/" + this.getId() + ", " + getEmail() + ", " + getCelular() + ", status: " + geStatus(); 
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 }
