@@ -1,4 +1,4 @@
-package projetop2;
+package entidades;
 
 public class Descricao {
 	

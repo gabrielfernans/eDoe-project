@@ -1,4 +1,4 @@
-package projetop2;
+package controllers;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,6 +7,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import entidades.Descricao;
+import entidades.Item;
+import entidades.Usuario;
 
 
 public class ControllerDescricoes {
