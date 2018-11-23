@@ -1,6 +1,6 @@
 package entidades;
 
-public class Descricao {
+public class Descricao implements Comparable<Descricao>{
 	
 	private String descricao;
 
@@ -49,7 +49,7 @@ public class Descricao {
 			return false;
 		return true;
 	}
-	
+
 	
 	
 }

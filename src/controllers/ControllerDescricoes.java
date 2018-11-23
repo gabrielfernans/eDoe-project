@@ -2,14 +2,12 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-
 import entidades.Descricao;
 import entidades.Item;
+import entidades.ItemComparavel;
 import entidades.Usuario;
 
 
@@ -26,22 +24,30 @@ public class ControllerDescricoes {
 		}
 	}
 	
-	// método que lista todos os descritores por ordem alfabetica
-	// falta adicionar quantidade
-	
-	public String listagemDosDescritoresPorOrdemAlfabetica() {
-		ArrayList<String> listaDescricao = new ArrayList<String>();
-		for (Descricao descricao : descritores) {
-			listaDescricao.add(descricao.getDescricao());
+	//método de listagem de todos os itens inseridos no sistema ordenada pela quantidade do item no sistema
+	public String listagemPorItem(Map<String, Usuario> map) {
+		String aux = "";
+		ArrayList<Item> listDeItens= new ArrayList<Item>();		
+		ArrayList<String> descricoesOrdenadas = new ArrayList<String>();
+		
+		for (Usuario usuario : map.values()) {
+			for (Item itens : (usuario.getListaItens().values())) {
+				listDeItens.add(itens);
+				
+				}
+			
+			Collections.sort(listDeItens, new ItemComparavel());
+			
+			for (Item itm : listDeItens) {
+				aux += itm.toStringCombo() + " | ";
+			}
 		}
-		Collections.sort(listaDescricao);
-		return listaDescricao.stream().map(c -> c.toString()).collect(Collectors.joining(" | "));
+		
+		return "";
 	}
 	
-	// método que lista todos os itens pela quantidade de itens e sua descrição
-	// Entrei na lista de usuarios do controller, dps na lista de itens e por fim no toString do item
-	
-	public String listagemDosItensPorQuantidade(Map<String, Usuario> map) {
+	// método de listagem de todos os descritores de itens cadastrados no sistema
+	public String listagemPorQuantidadeEDescricao(Map<String, Usuario> map) {
 		String retornoDaListagem = "";
 		Set<String> setDeItens= new HashSet<String>();
 		ArrayList<String> listDeItens= new ArrayList<String>();		

@@ -35,7 +35,16 @@ public class Fachada {
 	}
 	
 	public String listaDescritorDeItensParaDoacao() {
-		return controllerDescricao.listagemDosItensPorQuantidade(controllerUser.getUsuarios());
+		return controllerDescricao.listagemPorQuantidadeEDescricao(controllerUser.getUsuarios());
 	}
+	
+	public String listaItensParaDoacao() {
+		return controllerDescricao.listagemPorItem(controllerUser.getUsuarios());
+	}
+	
+	public String pesquisaItemParaDoacaoPorDescricao() {
+		return "";
+	}
+	 
 	
 }

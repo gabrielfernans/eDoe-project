@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Item implements Comparator<Item>, Comparable<Item>{
+public class Item implements Comparator<Item>{
 	private int id;
 	private int quantidade;
 	private Descricao descricao;
@@ -58,15 +58,6 @@ public class Item implements Comparator<Item>, Comparable<Item>{
 	@Override
 	public int compare(Item item1, Item item2) {
 		return item1.getDescricao().compareTo(item2.getDescricao());
-	}
-	
-	@Override
-	public int compareTo(Item o) {
-		if (this.getQuantidade() > o.getQuantidade()) {
-			return 1;	
-		} else if ((this.getQuantidade() < o.getQuantidade())) {
-			return -1;
-		} return 0;
 	}
 	
 	public int getId() {
