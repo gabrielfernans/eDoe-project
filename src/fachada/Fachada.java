@@ -1,7 +1,6 @@
 package fachada;
 
 import java.io.IOException;
-
 import controllers.ControllerUsuario;
 import easyaccept.EasyAccept;
 

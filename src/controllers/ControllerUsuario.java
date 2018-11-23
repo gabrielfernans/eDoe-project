@@ -12,6 +12,12 @@ import java.util.Scanner;
 import entidades.Descricao;
 import entidades.Usuario;
 
+/**
+ * Classe que representa o Controller dos usuários cadastrados no sistema.
+ * 
+ * @author
+ *
+ */
 public class ControllerUsuario {
 
 	private Map<String, Usuario> usuarios = new HashMap<>();
