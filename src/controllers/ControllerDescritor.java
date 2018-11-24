@@ -7,14 +7,25 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import entidades.Descritor;
 
-
+/**
+ * Classe que representa o controlador dos descritores cadastrados no sistema.
+ * @author
+ *
+ */
 public class ControllerDescritor {
-	
-	private Set<Descritor> descritores = new HashSet<>();
+	private Set<Descritor> descritores;
 	
 	/**
-	 * 
-	 * @param descritor
+	 * Construtor da classe ControllerDescritor
+	 */
+	public ControllerDescritor() {
+		this.descritores = new HashSet<>();
+	}
+
+	/**
+	 * Método responsável por cadastrar um descritor no sistema. Contém uma exceção para verificar se o parâmetro inserido
+	 * não irá interferir no funcionamento do programa.
+	 * @param descritor Descritor
 	 */
 	public void cadastraDescritor(Descritor descritor) {
 		if (!descritores.contains(descritor)) {

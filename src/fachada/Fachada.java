@@ -1,14 +1,13 @@
 package fachada;
 
 import java.io.IOException;
-
 import controllers.ControllerDescritor;
 import controllers.ControllerUsuario;
 import easyaccept.EasyAccept;
 import entidades.Descritor;
 
 public class Fachada {
-
+	
 	ControllerUsuario controllerUsuario = new ControllerUsuario();
 	ControllerDescritor controllerDescritor = new ControllerDescritor();
 	
@@ -45,12 +44,12 @@ public class Fachada {
 		controllerDescritor.cadastraDescritor(new Descritor(descritor));
 	}
 	
-	public void cadastraItem() {
-		
+	public void adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
+		controllerUsuario.cadastraItem(idDoador, new Descritor(descricaoItem), quantidade, tags);
 	}
 	
-	public void exibeItem() {
-		
+	public String exibeItem() {
+		return null;
 	}
 	
 	public void atualizaItem() {

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Usuario implements Comparable<Usuario>{
+	
 	private String nome;
 	private String email;
 	private String celular;
@@ -14,16 +15,6 @@ public class Usuario implements Comparable<Usuario>{
 	private String id;
 	private Map<Integer, Item> listaItens = new HashMap<>();
 	
-	/**
-	 * 
-	 * @param id
-	 * @param nome
-	 * @param email
-	 * @param celular
-	 * @param classe
-	 * @param status
-	 * @param cont
-	 */
 	public Usuario(String id, String nome, String email, String celular, String classe, String status, int cont) {
 		if(nome == null ||nome.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");
@@ -42,6 +33,79 @@ public class Usuario implements Comparable<Usuario>{
 		this.status = status;
 		this.id = id;
 		this.contador = cont;
+	}
+	
+	public String atualizaUsuario(String nome, String email, String celular) {
+		if(nome != null && nome.length()!=0 )
+			this.nome = nome;
+		else if(email != null && email.length() != 0)
+			this.email = email;
+		else if(celular != null && celular.length() != 0)
+			this.celular = celular;
+		return this.toString();
+	}
+	
+	public String atualizaReceptor(String nome, String email, String celular) {
+		if(!nome.equals(this.nome))
+			this.nome = nome;
+		if(!email.equals(this.email))
+			this.email = email;
+		if(!celular.equals(this.celular))
+			this.celular = celular;
+		return this.toString();
+	}
+	
+	
+	public void cadastraItem(int id, Descritor descritor, int quantidade, String data, List<String> tags) {
+		this.listaItens.put(id, new Item(id, quantidade, descritor, data, tags));
+	}
+	
+	
+	public void atualizaItem(int idItem, List<String> novasTags, int novaQuantidade) {
+		this.listaItens.get(idItem).atualizaItem(novasTags, novaQuantidade);
+	}
+
+	@Override
+	public int compareTo(Usuario o) {
+		return this.getContador() - o.getContador(); 
+	}
+
+	public String getNome() {
+		return this.nome;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public String getCelular() {
+		return this.celular;
+	}
+
+	public String getClasse() {
+		return this.classe;
+	}
+	
+	public String getStatus() {
+		return this.status;
+	}
+	
+	public int getContador() {
+		return this.contador;
+	}
+	
+	private String formataId() {
+		if(getClasse().equals("PESSOA_FISICA"))
+			return id.substring(0, 3) + "." + id.substring(3, 6) + "." + id.substring(6, 9) + "-" + id.substring(9, 11);
+		return id.substring(0, 2) + "." + id.substring(2, 5) + "." + id.substring(5, 8) + "/" + id.substring(8, 12) + "-" + id.substring(12, 14);	
+	}
+	
+	public String getId() {
+		return formataId();
+	}
+	
+	public String toString() {
+		return getNome() + "/" + this.getId() + ", " + getEmail() + ", " + getCelular() + ", status: " + getStatus(); 
 	}
 	
 	@Override
@@ -68,76 +132,5 @@ public class Usuario implements Comparable<Usuario>{
 			return false;
 		return true;
 	}
-
-	@Override
-	public int compareTo(Usuario o) {
-		return this.geContador() - o.geContador(); 
-	}
-
-
-	public String getNome() {
-		return nome;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getCelular() {
-		return celular;
-	}
-
-	public String getClasse() {
-		return classe;
-	}
 	
-	public String geStatus() {
-		return status;
-	}
-	
-	public int geContador() {
-		return contador;
-	}
-	
-	private String formataId() {
-		if(getClasse().equals("PESSOA_FISICA"))
-			return id.substring(0, 3) + "." + id.substring(3, 6) + "." + id.substring(6, 9) + "-" + id.substring(9, 11);
-		return id.substring(0, 2) + "." + id.substring(2, 5) + "." + id.substring(5, 8) + "/" + id.substring(8, 12) + "-" + id.substring(12, 14);	
-	}
-	
-	public String atualizaUsuario(String nome, String email, String celular) {
-		if(nome != null && nome.length()!=0 )
-			this.nome = nome;
-		else if(email != null && email.length() != 0)
-			this.email = email;
-		else if(celular != null && celular.length() != 0)
-			this.celular = celular;
-		return this.toString();
-	}
-	
-	public String atualizaReceptor(String nome, String email, String celular) {
-		if(!nome.equals(this.nome))
-			this.nome = nome;
-		if(!email.equals(this.email))
-			this.email = email;
-		if(!celular.equals(this.celular))
-			this.celular = celular;
-		return this.toString();
-	}
-
-	public void adicionaItem(int id, int quantidade, Descritor descricao, String data, List<String> tags) {
-		this.listaItens.put(id, new Item(id, quantidade, descricao, data, tags));
-	}
-	
-	public void atualizaItem(int idItem, List<String> novasTags, int novaQuantidade) {
-		this.listaItens.get(idItem).atualizaItem(novasTags, novaQuantidade);
-	}
-
-	public String getId() {
-		return formataId();
-	}
-	
-	public String toString() {
-		return getNome() + "/" + this.getId() + ", " + getEmail() + ", " + getCelular() + ", status: " + geStatus(); 
-	}
 }

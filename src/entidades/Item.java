@@ -9,14 +9,14 @@ public class Item implements Comparator<Item>{
 	private int quantidade;
 	private Descritor descricao;
 	private String data;
-	private List<String> tags = new ArrayList<>();
+	private List<String> tags;
 	
 	public Item(int id, int quantidade, Descritor descricao, String data, List<String> tags) {
 		this.id = id;
 		this.quantidade = quantidade;
 		this.descricao = descricao;
 		this.data = data;
-		this.tags = tags;
+		this.tags = new ArrayList<>();
 	}
 	
 	public void atualizaItem(List<String> novasTags, int novaQuantidade) {

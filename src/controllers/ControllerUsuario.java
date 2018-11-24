@@ -13,24 +13,31 @@ import entidades.Descritor;
 import entidades.Usuario;
 
 /**
- * Classe que representa o Controller dos usuários cadastrados no sistema.
- * 
+ * Classe que representa o controlador dos usuários cadastrados no sistema.
  * @author
  *
  */
 public class ControllerUsuario {
-
-	private Map<String, Usuario> usuarios = new HashMap<>();
+	
+	private Map<String, Usuario> usuarios;
 	private int cont = 0;
 	
 	/**
-	 * 
-	 * @param id
-	 * @param nome
-	 * @param email
-	 * @param celular
-	 * @param classe
-	 * @return
+	 * Construtor da classe ControllerUsuario.
+	 */
+	public ControllerUsuario() {
+		this.usuarios = new HashMap<String, Usuario>();
+	}
+
+	/**
+	 * Método responsável por adicionar um doador no sistemma. Possui exceções para garantir que os parâmetros inseridos
+	 * não irão afetar no funcionamento do programa.
+	 * @param id Documento de identificação do doador.
+	 * @param nome Nome do doador.
+	 * @param email E-mail do doador.
+	 * @param celular Celular do doador.
+	 * @param classe Classe do doador.
+	 * @return Retorna o número de identificação do doador.
 	 */
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {	
 		if(id == null || id.trim().equals("")) 
@@ -57,12 +64,12 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * 
-	 * @param id
-	 * @return
+	 * Método responsável por pesquisar um determinado usuário cadastrado no sistema através do ID. Possui exceções para garantir que os 
+	 * parâmetros inseridos não irão afetar no funcionamento do programa.
+	 * @param id Número de identificação do usuário
+	 * @return Retorna o toString do usuário.
 	 */
 	public String pesquisaUsuarioPorId(String id) {
-		
 		if(id == null || id.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		
@@ -73,12 +80,12 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * 
-	 * @param nome
-	 * @return
+	 * Método responsável por pesquisar um determinado usuário cadastrado no sistema através do nome. Possui exceções para garantir que os 
+	 * parâmetros inseridos não irão afetar no funcionamento do programa.
+	 * @param nome Nome do usuário.
+	 * @return Retorna o toString do usuário.
 	 */
 	public String pesquisaUsuarioPorNome(String nome) {
-		
 		if(nome == null || nome.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");
 		
@@ -99,12 +106,13 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * 
-	 * @param id
-	 * @param nome
-	 * @param email
-	 * @param celular
-	 * @return
+	 * Método responsável por atualizar os atributos de um usuário. Possui exceções para garantir que os 
+	 * parâmetros inseridos não irão afetar no funcionamento do programa.
+	 * @param id Número de identificação do usuário.
+	 * @param nome Nome do usuário.
+	 * @param email E-mail do usuário.
+	 * @param celular Celular do usuário.
+	 * @return Retorna o toString do usuário.
 	 */
 	public String atualizaUsuario(String id, String nome, String email, String celular) {
 		
@@ -118,19 +126,22 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * 
-	 * @param id
+	 * Método responsável por remover um usuário do sistema através do ID.
+	 * @param id Número de identificação do usuário.
 	 */
 	public void removeUsuario(String id) {
 		if(id == null || id.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		
 		if(!usuarios.containsKey(id))
 			throw new IllegalArgumentException("Usuario nao encontrado: " + id + ".");
+		
 		usuarios.remove(id);
 	}
 	
 	/**
-	 * 
+	 * Método responsável por ler um arquivo .csv e cadastrar novos receptores no sistema, assim como atualizar os atributos
+	 * dos que já foram previamente inseridos.
 	 * @param caminho
 	 * @throws IOException
 	 */
@@ -152,22 +163,28 @@ public class ControllerUsuario {
 				
 			if(caminho.split("/")[1].equals("atualizaReceptores.csv"))
 				usuarios.get(dadosReceptor[0]).atualizaReceptor(dadosReceptor[1], dadosReceptor[2], dadosReceptor[3]);
+			
 			else if(caminho.split("/")[1].equals("novosReceptores.csv"))
 				usuarios.put(dadosReceptor[0], new Usuario(dadosReceptor[0],dadosReceptor[1], dadosReceptor[2], dadosReceptor[3], dadosReceptor[4], "receptor", cont++));
 		}
 		sc.close();
 	}
 	
-	public void adicionaItemDeUsuario(String idUsuario, int idItem, int quantidade, Descritor descricao, String data, List<String> tags) {
-		this.usuarios.get(idUsuario).adicionaItem(idItem, quantidade, descricao, data, tags);
+	/**
+	 * Método responsável por cadastrar um item para doação no sistema. 
+	 * @param idUsuario Documento de identificação do usuário referente ao item.
+	 * @param descritor Descritor que representa o item a ser cadastrado.
+	 * @param quantidade Quantidade de itens a serem cadastrados.
+	 * @param tags Tags que caracterizam o item.
+	 */
+	public void cadastraItem(String idDoador, Descritor descritor, int quantidade, String tags) {
+	//	this.usuarios.get(idDoador).cadastraItem(descritor, quantidade, tags);
 	}
 	
 	public void atualizaItem(String idUsuario, int idItem, List<String> novasTags, int novaQuantidade) {
 		this.usuarios.get(idUsuario).atualizaItem(idItem, novasTags, novaQuantidade);
 	}
 
-	
-	
 	private String editaLista(List<Usuario> listaDeUsuario) {
 		String users = "";
 		for(Usuario u : listaDeUsuario) {
@@ -175,4 +192,5 @@ public class ControllerUsuario {
 		}
 		return users.substring(0, users.length()-3);
 	}
+	
 }
