@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import entidades.Descricao;
 
-public class ControllerDescricoes {
+public class ControllerDescritor {
 	
 	private Set<Descricao> descritores = new HashSet<>();
 	

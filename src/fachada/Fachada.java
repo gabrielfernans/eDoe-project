@@ -1,18 +1,21 @@
 package fachada;
 
 import java.io.IOException;
+
+import controllers.ControllerDescritor;
 import controllers.ControllerUsuario;
 import easyaccept.EasyAccept;
 
 public class Fachada {
+
+	ControllerUsuario controllerUsuario = new ControllerUsuario();
+	ControllerDescritor controllerDescritor = new ControllerDescritor();
 	
 	public static void main(String[] args) {
 		args = new String[] {"fachada.Fachada", "accept_testes/use_case_1.txt", "accept_testes/use_case_2.txt"};
 		EasyAccept.main(args);
 	}
 
-	ControllerUsuario controllerUsuario = new ControllerUsuario();
-	
 	public void lerReceptores(String caminho) throws IOException{
 		controllerUsuario.lerReceptores(caminho);
 	}
