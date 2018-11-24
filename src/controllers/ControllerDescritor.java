@@ -5,28 +5,32 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import entidades.Descritor;
 
-import entidades.Descricao;
 
 public class ControllerDescritor {
 	
-	private Set<Descricao> descritores = new HashSet<>();
+	private Set<Descritor> descritores = new HashSet<>();
 	
-	public void cadastraDescritor(String descricao) {
-		if (!descritores.contains(descricao)) {
-			descritores.add(new Descricao(descricao.trim().toLowerCase()));
+	/**
+	 * 
+	 * @param descritor
+	 */
+	public void cadastraDescritor(Descritor descritor) {
+		if (!descritores.contains(descritor)) {
+			descritores.add(descritor);
 		}
 		else {
 			throw new IllegalArgumentException("");
 		}
 	}
 	
-//	public String representacaoDeTodosOsDescritores() {
-//		ArrayList<Descricao> listaDescricao = new ArrayList<Descricao>();
-//		for (Descricao descricao : descritores) {
-//			listaDescricao.add(descricao.toString());
-//		}
-//		Collections.sort(listaDescricao);
-//		return listaDescricao.stream().map(c -> c.toString()).collect(Collectors.joining(" | "));
-//	}
+	public String representacaoDeTodosOsDescritores() {
+		ArrayList<String> listaDescritores = new ArrayList<String>();
+		for (Descritor descricao : descritores) {
+			listaDescritores.add(descricao.toString());
+		}
+		Collections.sort(listaDescritores);
+		return listaDescritores.stream().map(c -> c.toString()).collect(Collectors.joining(" | "));
+	}
 }	

@@ -5,6 +5,7 @@ import java.io.IOException;
 import controllers.ControllerDescritor;
 import controllers.ControllerUsuario;
 import easyaccept.EasyAccept;
+import entidades.Descritor;
 
 public class Fachada {
 
@@ -14,10 +15,6 @@ public class Fachada {
 	public static void main(String[] args) {
 		args = new String[] {"fachada.Fachada", "accept_testes/use_case_1.txt", "accept_testes/use_case_2.txt"};
 		EasyAccept.main(args);
-	}
-
-	public void lerReceptores(String caminho) throws IOException{
-		controllerUsuario.lerReceptores(caminho);
 	}
 	
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
@@ -40,4 +37,27 @@ public class Fachada {
 		controllerUsuario.removeUsuario(id);
 	}
 	
+	public void lerReceptores(String caminho) throws IOException{
+		controllerUsuario.lerReceptores(caminho);
+	}
+	
+	public void cadastraDescritor(String descritor) {
+		controllerDescritor.cadastraDescritor(new Descritor(descritor));
+	}
+	
+	public void cadastraItem() {
+		
+	}
+	
+	public void exibeItem() {
+		
+	}
+	
+	public void atualizaItem() {
+		
+	}
+	
+	public void removeItem() {
+		
+	}
 }

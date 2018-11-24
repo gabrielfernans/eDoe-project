@@ -1,6 +1,5 @@
 package entidades;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +14,16 @@ public class Usuario implements Comparable<Usuario>{
 	private String id;
 	private Map<Integer, Item> listaItens = new HashMap<>();
 	
+	/**
+	 * 
+	 * @param id
+	 * @param nome
+	 * @param email
+	 * @param celular
+	 * @param classe
+	 * @param status
+	 * @param cont
+	 */
 	public Usuario(String id, String nome, String email, String celular, String classe, String status, int cont) {
 		if(nome == null ||nome.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");
@@ -116,7 +125,7 @@ public class Usuario implements Comparable<Usuario>{
 		return this.toString();
 	}
 
-	public void adicionaItem(int id, int quantidade, Descricao descricao, String data, List<String> tags) {
+	public void adicionaItem(int id, int quantidade, Descritor descricao, String data, List<String> tags) {
 		this.listaItens.put(id, new Item(id, quantidade, descricao, data, tags));
 	}
 	
