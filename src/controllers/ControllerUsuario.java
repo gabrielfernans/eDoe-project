@@ -19,9 +19,9 @@ import entidades.Usuario;
  */
 public class ControllerUsuario {
 	
-	private Map<String, Usuario> usuarios;
+	private Map<String, Usuario> usuarios = new HashMap<String, Usuario>();
 	private int cont = 0;
-	
+	private ControllerDescritor controllerDescritor = new ControllerDescritor();
 	/**
 	 * Construtor da classe ControllerUsuario.
 	 */
@@ -181,8 +181,27 @@ public class ControllerUsuario {
 	 * @param quantidade Quantidade de itens a serem cadastrados.
 	 * @param tags Tags que caracterizam o item.
 	 */
-	public void cadastraItem(String idDoador, Descritor descritor, int quantidade, String tags) {
-	//	this.usuarios.get(idDoador).cadastraItem(descritor, quantidade, tags);
+	public void cadastraItem(String idDoador, String descritor, int quantidade, String tags) {
+		Descritor novoDescritor = new Descritor(descritor);
+		
+		if (descritor == null || descritor.trim().equals("")) {
+			throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");
+		}
+		
+		if (quantidade <= 0) {
+			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
+		}
+		
+		if (idDoador == null || idDoador.trim().equals("")) {
+			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
+		
+		if (!this.usuarios.containsKey(idDoador)) {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
+		}
+		
+		
+		
 	}
 	
 	public void atualizaItem(String idUsuario, int idItem, List<String> novasTags, int novaQuantidade) {

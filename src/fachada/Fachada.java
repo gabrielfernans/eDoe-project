@@ -4,7 +4,6 @@ import java.io.IOException;
 import controllers.ControllerDescritor;
 import controllers.ControllerUsuario;
 import easyaccept.EasyAccept;
-import entidades.Descritor;
 
 public class Fachada {
 	
@@ -46,7 +45,7 @@ public class Fachada {
 	}
 	
 	public void adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
-		controllerUsuario.cadastraItem(idDoador, new Descritor(descricaoItem), quantidade, tags);
+		controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
 	}
 	
 	public String exibeItem() {
