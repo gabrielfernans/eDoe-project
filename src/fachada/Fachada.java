@@ -40,8 +40,9 @@ public class Fachada {
 		controllerUsuario.lerReceptores(caminho);
 	}
 	
-	public void cadastraDescritor(String descritor) {
-		controllerDescritor.cadastraDescritor(new Descritor(descritor));
+	// métodos da US2
+	public void adicionaDescritor(String descritor) {
+		controllerDescritor.cadastraDescritor(descritor);
 	}
 	
 	public void adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {

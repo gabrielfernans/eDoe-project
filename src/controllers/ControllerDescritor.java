@@ -25,15 +25,19 @@ public class ControllerDescritor {
 	/**
 	 * Método responsável por cadastrar um descritor no sistema. Contém uma exceção para verificar se o parâmetro inserido
 	 * não irá interferir no funcionamento do programa.
-	 * @param descritor Descritor
+	 * @param descritor Nome do descritor
 	 */
-	public void cadastraDescritor(Descritor descritor) {
-		if (!descritores.contains(descritor)) {
-			descritores.add(descritor);
+	public void cadastraDescritor(String descritor) {
+		Descritor novoDescritor = new Descritor(descritor);
+		
+		if (descritor == null || descritor.trim().equals("")) {
+			throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");
 		}
-		else {
-			throw new IllegalArgumentException("");
+		
+		if (descritores.contains(novoDescritor)) {
+			throw new IllegalArgumentException("Descritor de Item ja existente: " + novoDescritor.getDescritor().trim().toLowerCase() + ".");
 		}
+		descritores.add(novoDescritor);
 	}
 	
 	public String representacaoDeTodosOsDescritores() {

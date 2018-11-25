@@ -51,8 +51,12 @@ public class ControllerUsuario {
 		
 		switch(classe) {
 		
-		case "PESSOA_FISICA": case "ONG": case "IGREJA": case "ORGAO_PUBLICO_MUNICIPAL": case "ORGAO_PUBLICO_FEDERAL": case "ORGAO_PUBLICO_ESTADUAL":
-			
+		case "PESSOA_FISICA": 
+		case "ONG": 
+		case "IGREJA": 
+		case "ORGAO_PUBLICO_MUNICIPAL": 
+		case "ORGAO_PUBLICO_FEDERAL": 
+		case "ORGAO_PUBLICO_ESTADUAL":
 		case "ASSOCIAÇÃO": case "SOCIEDADE":
 			usuarios.put(id, new Usuario(id, nome, email, celular, classe, "doador", cont++));
 			break;

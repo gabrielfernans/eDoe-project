@@ -1,19 +1,28 @@
 package entidades;
 
+/**
+ * Classe que representa um determinado descritor, utilizado no sistema em formato de tag para auxiliar no controle de itens.
+ * @author 
+ *
+ */
 public class Descritor {
 	
 	private String descritor;
 
+	/**
+	 * Construtor da classe Descritor.
+	 * @param descritor Nome do descritor.
+	 */
 	public Descritor(String descritor) {
 		this.descritor = descritor.trim().toLowerCase();
 	}
 
 	public int compareTo(Descritor descricao2) {
-		return this.descritor.compareTo(descricao2.getDescricao());
+		return this.descritor.compareTo(descricao2.getDescritor());
 	}
 
-	public String getDescricao() {
-		return descritor;
+	public String getDescritor() {
+		return this.descritor;
 	}
 
 	public void setDescricao(String descricao) {
@@ -22,7 +31,7 @@ public class Descritor {
 
 	@Override
 	public String toString() {
-		return descritor;
+		return this.descritor;
 	}
 
 	@Override
