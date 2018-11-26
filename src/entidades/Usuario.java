@@ -62,7 +62,7 @@ public class Usuario implements Comparable<Usuario>{
 	
 	
 	public void cadastraItem(String descritor, int quantidade, String tags) {
-		int idItem = 0;
+		int idItem = 1;
 		String[] vetorTags = tags.split(",");
 		List<String> listaTags = new ArrayList<String>();
 		
@@ -81,6 +81,11 @@ public class Usuario implements Comparable<Usuario>{
 			}
 		}
 	}
+	
+	public String exibeItem(int idDoador) {
+		return this.listaItens.get(idDoador).toString();
+	}
+	
 	
 	public void atualizaItem() {
 		

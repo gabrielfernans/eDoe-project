@@ -49,8 +49,9 @@ public class Fachada {
 		controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
 	}
 	
-	public String exibeItem() {
-		return null;
+	// MÉTODO IMPLEMENTADO
+	public String exibeItem(int idItem, String idDoador) {
+		return this.controllerUsuario.exibeItem(idItem, idDoador);
 	}
 	
 	public void atualizaItem() {

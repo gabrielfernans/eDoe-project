@@ -109,8 +109,8 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * Método responsável por atualizar os atributos de um usuário. Possui exceções para garantir que os 
-	 * parâmetros inseridos não irão afetar no funcionamento do programa.
+	 *Atualiza os atributos de um usuário. Possui exceções para garantir que os parâmetros inseridos não irão 
+	 *afetar no funcionamento do programa.
 	 * @param id Número de identificação do usuário.
 	 * @param nome Nome do usuário.
 	 * @param email E-mail do usuário.
@@ -129,7 +129,7 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * Método responsável por remover um usuário do sistema através do ID.
+	 * Remove um usuário do sistema através do ID.
 	 * @param id Número de identificação do usuário.
 	 */
 	public void removeUsuario(String id) {
@@ -143,8 +143,7 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * Método responsável por ler um arquivo .csv e cadastrar novos receptores no sistema, assim como atualizar os atributos
-	 * dos que já foram previamente inseridos.
+	 * Lê um arquivo .csv e cadastra novos receptores no sistema, assim como atualiza os atributos que já foram previamente inseridos.
 	 * @param caminho
 	 * @throws IOException
 	 */
@@ -174,7 +173,7 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * Método responsável por cadastrar um item para doação no sistema. 
+	 * Cadastra um item para doação no sistema.  
 	 * @param idUsuario Documento de identificação do usuário referente ao item.
 	 * @param descritor Descritor que representa o item a ser cadastrado.
 	 * @param quantidade Quantidade de itens a serem cadastrados.
@@ -200,6 +199,17 @@ public class ControllerUsuario {
 		
 		this.usuarios.get(idDoador).cadastraItem(descritor.trim().toLowerCase(), quantidade, tags);
 		
+	}
+	
+	/**
+	 * Exibe um determinado item cadastrado no sistema a partir do id do usuário e do item.
+	 * 
+	 * @param idItem Id do item a ser exibido.
+	 * @param idDoador Documento de identificação do doador que possui o item.
+	 * @return Retorna o toString do item requerido.
+	 */
+	public String exibeItem(int idItem, String idDoador) {
+		return this.usuarios.get(idDoador).exibeItem(idItem);
 	}
 	
 	public void atualizaItem() {
