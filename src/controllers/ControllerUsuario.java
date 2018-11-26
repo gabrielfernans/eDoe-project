@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import entidades.Descritor;
 import entidades.Usuario;
 
 /**
@@ -22,6 +21,7 @@ public class ControllerUsuario {
 	private Map<String, Usuario> usuarios = new HashMap<String, Usuario>();
 	private int cont = 0;
 	private ControllerDescritor controllerDescritor = new ControllerDescritor();
+	
 	/**
 	 * Construtor da classe ControllerUsuario.
 	 */
@@ -182,7 +182,6 @@ public class ControllerUsuario {
 	 * @param tags Tags que caracterizam o item.
 	 */
 	public void cadastraItem(String idDoador, String descritor, int quantidade, String tags) {
-		Descritor novoDescritor = new Descritor(descritor);
 		
 		if (descritor == null || descritor.trim().equals("")) {
 			throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");
@@ -200,12 +199,12 @@ public class ControllerUsuario {
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
 		}
 		
-		
+		this.usuarios.get(idDoador).cadastraItem(descritor.trim().toLowerCase(), quantidade, tags);
 		
 	}
 	
-	public void atualizaItem(String idUsuario, int idItem, List<String> novasTags, int novaQuantidade) {
-		this.usuarios.get(idUsuario).atualizaItem(idItem, novasTags, novaQuantidade);
+	public void atualizaItem() {
+		
 	}
 
 	private String editaLista(List<Usuario> listaDeUsuario) {

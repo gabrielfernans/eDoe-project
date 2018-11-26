@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class Item implements Comparator<Item>{
+public class Item{
 	private int id;
 	private int quantidade;
-	private Descritor descricao;
+	private String descricao;
 	private String data;
 	private List<String> tags;
 	
-	public Item(int id, int quantidade, Descritor descricao, String data, List<String> tags) {
+	public Item(int id, int quantidade, String descricao, String data, List<String> tags) {
 		this.id = id;
 		this.quantidade = quantidade;
 		this.descricao = descricao;
@@ -33,11 +33,6 @@ public class Item implements Comparator<Item>{
 		return this.id + " - " + this.descricao.toString() + ", tags:" + this.tags.toString() + ", quantidade: " + this.quantidade;
 	}
 	
-	@Override
-	public int compare(Item item1, Item item2) {
-		return item1.getDescricao().compareTo(item2.getDescricao());
-	}
-	
 	public String retornaDescricaoItemEQuantidade() {
 		return this.quantidade + " - " + descricao.toString();
 	}
@@ -50,11 +45,11 @@ public class Item implements Comparator<Item>{
 		this.quantidade = quantidade;
 	}
 
-	public Descritor getDescricao() {
+	public String getDescricao() {
 		return descricao;
 	}
 
-	public void setDescricao(Descritor descricao) {
+	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
 

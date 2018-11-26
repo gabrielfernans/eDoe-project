@@ -39,7 +39,7 @@ public class Fachada {
 		controllerUsuario.lerReceptores(caminho);
 	}
 	
-	// métodos da US2
+	// MÉTODO IMPLEMENTADO
 	public void adicionaDescritor(String descritor) {
 		controllerDescritor.cadastraDescritor(descritor);
 	}

@@ -18,14 +18,19 @@ public class Usuario implements Comparable<Usuario>{
 	public Usuario(String id, String nome, String email, String celular, String classe, String status, int cont) {
 		if(nome == null ||nome.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");
+		
 		if(email == null || email.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: email nao pode ser vazio ou nulo.");
+		
 		if(celular == null || celular.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: celular nao pode ser vazio ou nulo.");
+		
 		if(classe == null || classe.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: classe nao pode ser vazia ou nula.");
+		
 		if(id == null || id.trim().equals("")) 
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		
 		this.nome = nome;
 		this.email = email;
 		this.celular = celular;
@@ -56,13 +61,14 @@ public class Usuario implements Comparable<Usuario>{
 	}
 	
 	
-	public void cadastraItem(int id, Descritor descritor, int quantidade, String data, List<String> tags) {
-		this.listaItens.put(id, new Item(id, quantidade, descritor, data, tags));
+	public void cadastraItem(String descritor, int quantidade, String tags) {
+		
+		
 	}
 	
 	
-	public void atualizaItem(int idItem, List<String> novasTags, int novaQuantidade) {
-		this.listaItens.get(idItem).atualizaItem(novasTags, novaQuantidade);
+	public void atualizaItem() {
+		
 	}
 
 	@Override
