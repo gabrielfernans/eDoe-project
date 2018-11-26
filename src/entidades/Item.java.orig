@@ -2,11 +2,9 @@ package entidades;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-public class Item implements Comparator<Item>{
+public class Item{
 	private int id;
 	private int quantidade;
 	private String descricao;
@@ -55,6 +53,7 @@ public class Item implements Comparator<Item>{
 		return this.id + " - " + this.descricao.toString() + ", tags:" + this.tags.toString() + ", quantidade: " + this.quantidade;
 	}
 	
+<<<<<<< HEAD:src/entidades/Item.java
 	@Override
 	public int compare(Item item1, Item item2) {
 		return item1.getDescricao().compareTo(item2.getDescricao());
@@ -62,12 +61,12 @@ public class Item implements Comparator<Item>{
 	
 	public int getId() {
 		return id;
-	}
-
+=======
 	public String retornaDescricaoItemEQuantidade() {
 		return this.quantidade + " - " + descricao.toString();
+>>>>>>> ddc293cbad949702735aa3c2c5ef9a8cf8e8c513:src/entidades/Item.java
 	}
-	
+
 	public int getQuantidade() {
 		return quantidade;
 	}
@@ -133,7 +132,5 @@ public class Item implements Comparator<Item>{
 			return false;
 		return true;
 	}
-	
-	
 
 }

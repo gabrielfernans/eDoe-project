@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import entidades.Descricao;
 import entidades.Item;
 import entidades.ItemComparavel;
 import entidades.Usuario;
@@ -13,11 +12,11 @@ import entidades.Usuario;
 
 public class ControllerDescricoes {
 
-	private Set<Descricao> descritores = new HashSet<>();
+	private Set<String> descritores = new HashSet<>();
 	
 	public void cadastraDescritor(String descricao) {
 		if (!descritores.contains(descricao)) {
-			descritores.add(new Descricao(descricao.trim().toLowerCase()));
+			descritores.add(descricao.toLowerCase());
 		}
 		else {
 			throw new IllegalArgumentException("");
@@ -53,8 +52,8 @@ public class ControllerDescricoes {
 		ArrayList<String> listDeItens= new ArrayList<String>();		
 		ArrayList<String> descricoesOrdenadas = new ArrayList<String>();
 		
-		for (Descricao descricao : descritores) {
-			descricoesOrdenadas.add(descricao.getDescricao());
+		for (String descricao : descritores) {
+			descricoesOrdenadas.add(descricao);
 		}
 		Collections.sort(descricoesOrdenadas);
 		

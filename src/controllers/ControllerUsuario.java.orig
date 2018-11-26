@@ -9,10 +9,41 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+
+import entidades.Descricao;
 import entidades.Usuario;
 
+import entidades.Usuario;
+
+<<<<<<< HEAD:src/controllers/ControllerUsuario.java
+	private Map<String, Usuario> usuarios = new HashMap<>();
+	private int cont = 0;	
+	
+
+	public void lerReceptores(String caminho) throws IOException {
+		Scanner sc = new Scanner(new File(caminho));
+		String linha = null;
+		while(sc.hasNextLine()) {
+			linha = sc.nextLine();
+			if(linha.equals("id,nome,E-mail,celular,classe"))
+				continue;
+			String[] dadosReceptor = linha.split(",");
+			if(dadosReceptor.length != 5) {
+				sc.close();
+				throw new IOException("Campos invalidos");
+			}
+				
+			if(caminho.split("/")[1].equals("atualizaReceptores.csv"))
+				usuarios.get(dadosReceptor[0]).atualizaReceptor(dadosReceptor[1], dadosReceptor[2], dadosReceptor[3]);
+			else if(caminho.split("/")[1].equals("novosReceptores.csv"))
+				usuarios.put(dadosReceptor[0], new Usuario(dadosReceptor[0],dadosReceptor[1], dadosReceptor[2], dadosReceptor[3], dadosReceptor[4], "receptor", cont++));
+		}
+		sc.close();
+	}
+
+=======
 /**
- * Classe que representa o controlador dos usu√°rios cadastrados no sistema.
+ * Classe que representa o controlador dos usu·rios cadastrados no sistema.
  * @author
  *
  */
@@ -22,7 +53,7 @@ public class ControllerUsuario {
 	private int cont = 0;
 	private ControllerDescritor controllerDescritor = new ControllerDescritor();
 	
-/**
+	/**
 	 * Construtor da classe ControllerUsuario.
 	 */
 	public ControllerUsuario() {
@@ -30,15 +61,16 @@ public class ControllerUsuario {
 	}
 
 	/**
-	 * M√©todo respons√°vel por adicionar um doador no sistemma. Possui exce√ß√µes para garantir que os par√¢metros inseridos
-	 * n√£o ir√£o afetar no funcionamento do programa.
-	 * @param id Documento de identifica√ß√£o do doador.
+	 * MÈtodo respons·vel por adicionar um doador no sistemma. Possui exceÁıes para garantir que os par‚metros inseridos
+	 * n„o ir„o afetar no funcionamento do programa.
+	 * @param id Documento de identificaÁ„o do doador.
 	 * @param nome Nome do doador.
 	 * @param email E-mail do doador.
 	 * @param celular Celular do doador.
 	 * @param classe Classe do doador.
-	 * @return Retorna o n√∫mero de identifica√ß√£o do doador.
+	 * @return Retorna o n˙mero de identificaÁ„o do doador.
 	 */
+>>>>>>> ddc293cbad949702735aa3c2c5ef9a8cf8e8c513:src/controllers/ControllerUsuario.java
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {	
 		if(id == null || id.trim().equals("")) 
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
@@ -57,7 +89,7 @@ public class ControllerUsuario {
 		case "ORGAO_PUBLICO_MUNICIPAL": 
 		case "ORGAO_PUBLICO_FEDERAL": 
 		case "ORGAO_PUBLICO_ESTADUAL":
-		case "ASSOCIA√á√ÉO": case "SOCIEDADE":
+		case "ASSOCIA«√O": case "SOCIEDADE":
 			usuarios.put(id, new Usuario(id, nome, email, celular, classe, "doador", cont++));
 			break;
 			
@@ -68,10 +100,10 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * M√©todo respons√°vel por pesquisar um determinado usu√°rio cadastrado no sistema atrav√©s do ID. Possui exce√ß√µes para garantir que os 
-	 * par√¢metros inseridos n√£o ir√£o afetar no funcionamento do programa.
-	 * @param id N√∫mero de identifica√ß√£o do usu√°rio
-	 * @return Retorna o toString do usu√°rio.
+	 * MÈtodo respons·vel por pesquisar um determinado usu·rio cadastrado no sistema atravÈs do ID. Possui exceÁıes para garantir que os 
+	 * par‚metros inseridos n„o ir„o afetar no funcionamento do programa.
+	 * @param id N˙mero de identificaÁ„o do usu·rio
+	 * @return Retorna o toString do usu·rio.
 	 */
 	public String pesquisaUsuarioPorId(String id) {
 		if(id == null || id.trim().equals(""))
@@ -84,10 +116,10 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * M√©todo respons√°vel por pesquisar um determinado usu√°rio cadastrado no sistema atrav√©s do nome. Possui exce√ß√µes para garantir que os 
-	 * par√¢metros inseridos n√£o ir√£o afetar no funcionamento do programa.
-	 * @param nome Nome do usu√°rio.
-	 * @return Retorna o toString do usu√°rio.
+	 * MÈtodo respons·vel por pesquisar um determinado usu·rio cadastrado no sistema atravÈs do nome. Possui exceÁıes para garantir que os 
+	 * par‚metros inseridos n„o ir„o afetar no funcionamento do programa.
+	 * @param nome Nome do usu·rio.
+	 * @return Retorna o toString do usu·rio.
 	 */
 	public String pesquisaUsuarioPorNome(String nome) {
 		if(nome == null || nome.trim().equals(""))
@@ -110,13 +142,13 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * M√©todo respons√°vel por atualizar os atributos de um usu√°rio. Possui exce√ß√µes para garantir que os 
-	 * par√¢metros inseridos n√£o ir√£o afetar no funcionamento do programa.
-	 * @param id N√∫mero de identifica√ß√£o do usu√°rio.
-	 * @param nome Nome do usu√°rio.
-	 * @param email E-mail do usu√°rio.
-	 * @param celular Celular do usu√°rio.
-	 * @return Retorna o toString do usu√°rio.
+	 * MÈtodo respons·vel por atualizar os atributos de um usu·rio. Possui exceÁıes para garantir que os 
+	 * par‚metros inseridos n„o ir„o afetar no funcionamento do programa.
+	 * @param id N˙mero de identificaÁ„o do usu·rio.
+	 * @param nome Nome do usu·rio.
+	 * @param email E-mail do usu·rio.
+	 * @param celular Celular do usu·rio.
+	 * @return Retorna o toString do usu·rio.
 	 */
 	public String atualizaUsuario(String id, String nome, String email, String celular) {
 		
@@ -130,8 +162,8 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * M√©todo respons√°vel por remover um usu√°rio do sistema atrav√©s do ID.
-	 * @param id N√∫mero de identifica√ß√£o do usu√°rio.
+	 * MÈtodo respons·vel por remover um usu·rio do sistema atravÈs do ID.
+	 * @param id N˙mero de identificaÁ„o do usu·rio.
 	 */
 	public void removeUsuario(String id) {
 		if(id == null || id.trim().equals(""))
@@ -144,8 +176,8 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * M√©todo respons√°vel por ler um arquivo .csv e cadastrar novos receptores no sistema, assim como atualizar os atributos
-	 * dos que j√° foram previamente inseridos.
+	 * MÈtodo respons·vel por ler um arquivo .csv e cadastrar novos receptores no sistema, assim como atualizar os atributos
+	 * dos que j· foram previamente inseridos.
 	 * @param caminho
 	 * @throws IOException
 	 */
@@ -175,8 +207,8 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * M√©todo respons√°vel por cadastrar um item para doa√ß√£o no sistema. 
-	 * @param idUsuario Documento de identifica√ß√£o do usu√°rio referente ao item.
+	 * MÈtodo respons·vel por cadastrar um item para doaÁ„o no sistema. 
+	 * @param idUsuario Documento de identificaÁ„o do usu·rio referente ao item.
 	 * @param descritor Descritor que representa o item a ser cadastrado.
 	 * @param quantidade Quantidade de itens a serem cadastrados.
 	 * @param tags Tags que caracterizam o item.
@@ -215,7 +247,8 @@ public class ControllerUsuario {
 		return users.substring(0, users.length()-3);
 	}
 	
-	public void adicionaItemDeUsuario(int idUsuario, int idItem, int quantidade, String descricao, String data, List<String> tags) {
+<<<<<<< HEAD:src/controllers/ControllerUsuario.java
+	public void adicionaItemDeUsuario(int idUsuario, int idItem, int quantidade, Descricao descricao, String data, List<String> tags) {
 		this.usuarios.get(idUsuario).adicionaItem(idItem, quantidade, descricao, data, tags);
 	}
 	
@@ -229,4 +262,6 @@ public class ControllerUsuario {
 	}
 	
 	
+=======
+>>>>>>> ddc293cbad949702735aa3c2c5ef9a8cf8e8c513:src/controllers/ControllerUsuario.java
 }
