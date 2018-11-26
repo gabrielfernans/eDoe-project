@@ -11,8 +11,7 @@ public class Fachada {
 	ControllerDescritor controllerDescritor = new ControllerDescritor();
 	
 	public static void main(String[] args) {
-		args = new String[] {"fachada.Fachada", "accept_testes/use_case_1.txt"};
-		args = new String[] {"fachada.Fachada", "accept_testes/use_case_2.txt"};
+		args = new String[] {"fachada.Fachada", "accept_testes/use_case_1.txt", "accept_testes/use_case_2.txt"};
 		EasyAccept.main(args);
 	}
 	
@@ -40,14 +39,13 @@ public class Fachada {
 		controllerUsuario.lerReceptores(caminho);
 	}
 	
-	// MÉTODO IMPLEMENTADO - NÃO TESTADO
 	public void adicionaDescritor(String descritor) {
 		controllerDescritor.cadastraDescritor(descritor);
 	}
 	
 	// MÉTODO IMPLEMENTADO - NÃO TESTADO
-	public void adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
-		controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
+	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
+		return controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
 	}
 	
 	// MÉTODO IMPLEMENTADO - NÃO TESTADO

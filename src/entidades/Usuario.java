@@ -61,8 +61,7 @@ public class Usuario implements Comparable<Usuario>{
 	}
 	
 	
-	public void cadastraItem(String descritor, int quantidade, String tags) {
-		int idItem = 1;
+	public int cadastraItem(String descritor, int quantidade, String tags) {
 		String[] vetorTags = tags.split(",");
 		List<String> listaTags = new ArrayList<String>();
 		
@@ -71,15 +70,16 @@ public class Usuario implements Comparable<Usuario>{
 			listaTags.add(c);
 		}
 		
-		//Conferindo se o idItem já está cadastrado.
-		while (true) {
-			if (this.listaItens.containsKey(idItem)) {
-				idItem += 1;
-			}
-			else {
-				this.listaItens.put(idItem, new Item(idItem, quantidade, descritor, listaTags));
+		int idItem = listaItens.size()+1;
+		
+		for (Item c : listaItens.values()) {
+			if (c.getDescritor().equals(descritor) && c.getTags().equals(listaTags)) {
+				c.setQuantidade(quantidade);
 			}
 		}
+		this.listaItens.put(idItem, new Item(idItem, quantidade, descritor, listaTags));
+		
+		return idItem;
 	}
 	
 	/**

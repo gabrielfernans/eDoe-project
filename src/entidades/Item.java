@@ -27,6 +27,20 @@ public class Item{
 		this.quantidade = novaQuantidade;
 	}
 	
+	
+	
+	public String getDescritor() {
+		return descritor;
+	}
+
+	public List<String> getTags() {
+		return tags;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
 	@Override
 	public String toString() {
 		String lista = "[";
