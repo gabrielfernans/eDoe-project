@@ -20,7 +20,6 @@ public class ControllerUsuario {
 	
 	private Map<String, Usuario> usuarios = new HashMap<String, Usuario>();
 	private int cont = 0;
-	private ControllerDescritor controllerDescritor = new ControllerDescritor();
 	
 	/**
 	 * Construtor da classe ControllerUsuario.

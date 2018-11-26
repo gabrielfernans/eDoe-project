@@ -1,22 +1,18 @@
 package entidades;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class Item{
 	private int id;
 	private int quantidade;
-	private String descricao;
-	private String data;
+	private String descritor;
 	private List<String> tags;
 	
-	public Item(int id, int quantidade, String descricao, String data, List<String> tags) {
+	public Item(int id, int quantidade, String descritor, List<String> tags) {
 		this.id = id;
 		this.quantidade = quantidade;
-		this.descricao = descricao;
-		this.data = data;
-		this.tags = new ArrayList<>();
+		this.descritor = descritor;
+		this.tags = tags;
 	}
 	
 	public void atualizaItem(List<String> novasTags, int novaQuantidade) {
@@ -28,13 +24,13 @@ public class Item{
 	@Override
 	public String toString() {
 		if (tags.size() == 0) {
-			return this.id + " - " +this.descricao.toString() + ", quantidade: " + this.quantidade;
+			return this.id + " - " +this.descritor.toString() + ", quantidade: " + this.quantidade;
 		}
-		return this.id + " - " + this.descricao.toString() + ", tags:" + this.tags.toString() + ", quantidade: " + this.quantidade;
+		return this.id + " - " + this.descritor.toString() + ", tags:" + this.tags.toString() + ", quantidade: " + this.quantidade;
 	}
 	
 	public String retornaDescricaoItemEQuantidade() {
-		return this.quantidade + " - " + descricao.toString();
+		return this.quantidade + " - " + descritor.toString();
 	}
 	
 	public int getQuantidade() {
@@ -46,19 +42,11 @@ public class Item{
 	}
 
 	public String getDescricao() {
-		return descricao;
+		return descritor;
 	}
 
 	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
+		this.descritor = descricao;
 	}
 
 	public List<String> getTags() {
@@ -73,7 +61,7 @@ public class Item{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((descritor == null) ? 0 : descritor.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((tags == null) ? 0 : tags.hashCode());
 		return result;
@@ -88,10 +76,10 @@ public class Item{
 		if (getClass() != obj.getClass())
 			return false;
 		Item other = (Item) obj;
-		if (descricao == null) {
-			if (other.descricao != null)
+		if (descritor == null) {
+			if (other.descritor != null)
 				return false;
-		} else if (!descricao.equals(other.descricao))
+		} else if (!descritor.equals(other.descritor))
 			return false;
 		if (id != other.id)
 			return false;

@@ -44,6 +44,7 @@ public class Fachada {
 		controllerDescritor.cadastraDescritor(descritor);
 	}
 	
+	// MÉTODO IMPLEMENTADO
 	public void adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
 		controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
 	}

@@ -1,5 +1,6 @@
 package entidades;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,6 @@ public class Usuario implements Comparable<Usuario>{
 		
 		if(id == null || id.trim().equals("")) 
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
-		
 		this.nome = nome;
 		this.email = email;
 		this.celular = celular;
@@ -62,10 +62,25 @@ public class Usuario implements Comparable<Usuario>{
 	
 	
 	public void cadastraItem(String descritor, int quantidade, String tags) {
+		int idItem = 0;
+		String[] vetorTags = tags.split(",");
+		List<String> listaTags = new ArrayList<String>();
 		
+		//Adicionando as tags do vetor no ArrayList
+		for (String c : vetorTags) {
+			listaTags.add(c);
+		}
 		
+		//Conferindo se o idItem já está cadastrado.
+		while (true) {
+			if (this.listaItens.containsKey(idItem)) {
+				idItem += 1;
+			}
+			else {
+				this.listaItens.put(idItem, new Item(idItem, quantidade, descritor, listaTags));
+			}
+		}
 	}
-	
 	
 	public void atualizaItem() {
 		
