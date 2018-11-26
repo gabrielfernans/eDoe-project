@@ -17,7 +17,7 @@ import entidades.Usuario;
  *
  */
 public class ControllerUsuario {
-	
+	private ControllerDescritor controllerdescritor = new ControllerDescritor();
 	private Map<String, Usuario> usuarios = new HashMap<String, Usuario>();
 	private int cont = 0;
 	
@@ -197,6 +197,10 @@ public class ControllerUsuario {
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
 		}
 		
+		if (controllerdescritor.contemDescritor(descritor) == false) {
+			controllerdescritor.cadastraDescritor(descritor);
+		}
+		
 		this.usuarios.get(idDoador).cadastraItem(descritor.trim().toLowerCase(), quantidade, tags);
 		
 	}
@@ -209,13 +213,57 @@ public class ControllerUsuario {
 	 * @return Retorna o toString do item requerido.
 	 */
 	public String exibeItem(int idItem, String idDoador) {
+		if (!this.usuarios.containsKey(idDoador)) {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
+		}
+		
 		return this.usuarios.get(idDoador).exibeItem(idItem);
 	}
 	
-	public void atualizaItem() {
+	/**
+	 * Atualiza a quantidade de itens e as tags inseridas, se uma tag 
+	 * @param idItem
+	 * @param idDoador
+	 * @param quantidade
+	 * @param tags
+	 */
+	public void atualizaItem(int idItem, String idDoador, int quantidade, String tags) {
+		if(idItem < 0) {
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		}
 		
+		if (idDoador == null || idDoador.trim().equals("")) {
+			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
+		
+		if (!this.usuarios.containsKey(idDoador)) {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
+		}
+		
+		usuarios.get(idDoador).atualizaItem(idItem, tags, quantidade);
 	}
-
+	
+	/**
+	 * Remove um determinado item do sistema a partir do id.
+	 * @param idItem Id do item a ser retirado.
+ 	 * @param idDoador Documento de identificação do doador.
+	 */
+	public void removeItem(int idItem, String idDoador) {
+		if(idItem < 0) {
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		}
+		
+		if (idDoador == null || idDoador.trim().equals("")) {
+			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
+		
+		if (!this.usuarios.containsKey(idDoador)) {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
+		}
+		
+		usuarios.get(idDoador).removeItem(idItem);
+	}
+	
 	private String editaLista(List<Usuario> listaDeUsuario) {
 		String users = "";
 		for(Usuario u : listaDeUsuario) {

@@ -11,7 +11,8 @@ public class Fachada {
 	ControllerDescritor controllerDescritor = new ControllerDescritor();
 	
 	public static void main(String[] args) {
-		args = new String[] {"fachada.Fachada", "accept_testes/use_case_1.txt", "accept_testes/use_case_2.txt"};
+		args = new String[] {"fachada.Fachada", "accept_testes/use_case_1.txt"};
+		args = new String[] {"fachada.Fachada", "accept_testes/use_case_2.txt"};
 		EasyAccept.main(args);
 	}
 	
@@ -39,26 +40,28 @@ public class Fachada {
 		controllerUsuario.lerReceptores(caminho);
 	}
 	
-	// MÉTODO IMPLEMENTADO
+	// MÉTODO IMPLEMENTADO - NÃO TESTADO
 	public void adicionaDescritor(String descritor) {
 		controllerDescritor.cadastraDescritor(descritor);
 	}
 	
-	// MÉTODO IMPLEMENTADO
+	// MÉTODO IMPLEMENTADO - NÃO TESTADO
 	public void adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
 		controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
 	}
 	
-	// MÉTODO IMPLEMENTADO
+	// MÉTODO IMPLEMENTADO - NÃO TESTADO
 	public String exibeItem(int idItem, String idDoador) {
-		return this.controllerUsuario.exibeItem(idItem, idDoador);
+		return controllerUsuario.exibeItem(idItem, idDoador);
 	}
 	
-	public void atualizaItem() {
-		
+	// MÉTODO IMPLEMENTADO - NÃO TESTADO
+	public void atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
+		controllerUsuario.atualizaItem(idItem, idDoador, quantidade, tags);
 	}
 	
-	public void removeItem() {
-		
+	// MÉTODO IMPLEMENTADO - NÃO TESTADO
+	public void removeItemParaDoacao(int idItem, String idDoador) {
+		controllerUsuario.removeItem(idItem, idDoador);
 	}
 }

@@ -82,15 +82,50 @@ public class Usuario implements Comparable<Usuario>{
 		}
 	}
 	
-	public String exibeItem(int idDoador) {
-		return this.listaItens.get(idDoador).toString();
+	/**
+	 * 
+	 * @param idItem
+	 * @return
+	 */
+	public String exibeItem(int idItem) {
+		if (!this.listaItens.containsKey(idItem)) {
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
+		}
+		return this.listaItens.get(idItem).toString();
 	}
 	
-	
-	public void atualizaItem() {
+	/**
+	 * 
+	 * @param idItem
+	 * @param novasTags
+	 * @param novaQuantidade
+	 */
+	public void atualizaItem(int idItem, String novasTags, int novaQuantidade) {
+		String[] vetorTags = novasTags.split(",");
+		List<String> listaTags = new ArrayList<String>();
 		
+		//Adicionando as tags do vetor no ArrayList
+		for (String c : vetorTags) {
+			listaTags.add(c);
+		}
+		
+		if (!this.listaItens.containsKey(idItem)) {
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
+		}
+		
+		this.listaItens.get(idItem).atualizaItem(listaTags, novaQuantidade);
 	}
-
+	
+	public void removeItem(int idItem) {
+		if (this.listaItens.size() == 00 ) {
+			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
+		}
+		if (!this.listaItens.containsKey(idItem)) {
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
+		}
+		this.listaItens.remove(idItem);
+	}
+	
 	@Override
 	public int compareTo(Usuario o) {
 		return this.getContador() - o.getContador(); 

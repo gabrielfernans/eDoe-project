@@ -21,7 +21,9 @@ public class Item{
 	}
 	
 	public void atualizaItem(List<String> novasTags, int novaQuantidade) {
-		this.tags = novasTags;
+		if (novasTags.size() > 0) {
+			this.tags = novasTags;
+		}
 		this.quantidade = novaQuantidade;
 	}
 	
@@ -46,7 +48,6 @@ public class Item{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((descritor == null) ? 0 : descritor.hashCode());
-		result = prime * result + idItem;
 		result = prime * result + ((tags == null) ? 0 : tags.hashCode());
 		return result;
 	}
@@ -65,8 +66,6 @@ public class Item{
 				return false;
 		} else if (!descritor.equals(other.descritor))
 			return false;
-		if (idItem != other.idItem)
-			return false;
 		if (tags == null) {
 			if (other.tags != null)
 				return false;
@@ -74,5 +73,7 @@ public class Item{
 			return false;
 		return true;
 	}
+
+	
 
 }

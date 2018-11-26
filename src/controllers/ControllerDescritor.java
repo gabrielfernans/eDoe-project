@@ -35,5 +35,17 @@ public class ControllerDescritor {
 		descritores.add(descritor);
 	}
 	
-	
+	/**
+	 * 
+	 * @param descritor
+	 * @return
+	 */
+	public boolean contemDescritor(String descritor) {
+		if (descritores.contains(descritor)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }	
