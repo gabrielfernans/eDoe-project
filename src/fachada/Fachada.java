@@ -43,7 +43,6 @@ public class Fachada {
 		controllerDescritor.cadastraDescritor(descritor);
 	}
 	
-	// MÉTODO IMPLEMENTADO - NÃO TESTADO
 	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
 		return controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
 	}
