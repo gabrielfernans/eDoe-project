@@ -1,5 +1,6 @@
 package entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +21,24 @@ public class Item{
 		this.tags = tags;
 	}
 	
-	public void atualizaItem(List<String> novasTags, int novaQuantidade) {
-		if (novasTags.size() > 0) {
-			this.tags = novasTags;
+	public String atualizaItem(String novasTags, int novaQuantidade) {
+		if (novasTags != null) {
+			String[] vetorTags = novasTags.split(",");
+			List<String> listaTags = new ArrayList<String>();
+			
+			//Adicionando as tags do vetor no ArrayList
+			for (String c : vetorTags) {
+				listaTags.add(c);
+			}
+			
+			this.tags = listaTags;
+			
 		}
-		this.quantidade = novaQuantidade;
+		
+		if (novaQuantidade > 0) {
+			this.quantidade = novaQuantidade;
+		}
+		return this.toString();
 	}
 	
 	
@@ -45,7 +59,7 @@ public class Item{
 	public String toString() {
 		String lista = "[";
 		
-		//Criando representação textual da lista de itens.
+		//Criando representaï¿½ï¿½o textual da lista de itens.
 		for (int i=0; i < tags.size(); i++) {
 			if (i == tags.size()-1) {
 				lista += tags.get(i) + "]";

@@ -12,7 +12,7 @@ import java.util.Scanner;
 import entidades.Usuario;
 
 /**
- * Classe que representa o controlador dos usuários cadastrados no sistema.
+ * Classe que representa o controlador dos usuarios cadastrados no sistema.
  * @author
  *
  */
@@ -20,6 +20,7 @@ public class ControllerUsuario {
 	private ControllerDescritor controllerdescritor = new ControllerDescritor();
 	private Map<String, Usuario> usuarios;
 	private int cont = 0;
+	private int idItem = 1;
 	
 	/**
 	 * Construtor da classe ControllerUsuario.
@@ -29,14 +30,14 @@ public class ControllerUsuario {
 	}
 
 	/**
-	 * Método responsável por adicionar um doador no sistemma. Possui exceções para garantir que os parâmetros inseridos
-	 * não irão afetar no funcionamento do programa.
-	 * @param id Documento de identificação do doador.
+	 * Mï¿½todo responsï¿½vel por adicionar um doador no sistemma. Possui exceï¿½ï¿½es para garantir que os parï¿½metros inseridos
+	 * nï¿½o irï¿½o afetar no funcionamento do programa.
+	 * @param id Documento de identificaï¿½ï¿½o do doador.
 	 * @param nome Nome do doador.
 	 * @param email E-mail do doador.
 	 * @param celular Celular do doador.
 	 * @param classe Classe do doador.
-	 * @return Retorna o número de identificação do doador.
+	 * @return Retorna o nï¿½mero de identificaï¿½ï¿½o do doador.
 	 */
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {	
 		if(id == null || id.trim().equals("")) 
@@ -56,7 +57,7 @@ public class ControllerUsuario {
 		case "ORGAO_PUBLICO_MUNICIPAL": 
 		case "ORGAO_PUBLICO_FEDERAL": 
 		case "ORGAO_PUBLICO_ESTADUAL":
-		case "ASSOCIAÇÃO": case "SOCIEDADE":
+		case "ASSOCIAï¿½ï¿½O": case "SOCIEDADE":
 			usuarios.put(id, new Usuario(id, nome, email, celular, classe, "doador", cont++));
 			break;
 			
@@ -67,10 +68,10 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * Método responsável por pesquisar um determinado usuário cadastrado no sistema através do ID. Possui exceções para garantir que os 
-	 * parâmetros inseridos não irão afetar no funcionamento do programa.
-	 * @param id Número de identificação do usuário
-	 * @return Retorna o toString do usuário.
+	 * Mï¿½todo responsï¿½vel por pesquisar um determinado usuï¿½rio cadastrado no sistema atravï¿½s do ID. Possui exceï¿½ï¿½es para garantir que os 
+	 * parï¿½metros inseridos nï¿½o irï¿½o afetar no funcionamento do programa.
+	 * @param id Nï¿½mero de identificaï¿½ï¿½o do usuï¿½rio
+	 * @return Retorna o toString do usuï¿½rio.
 	 */
 	public String pesquisaUsuarioPorId(String id) {
 		if(id == null || id.trim().equals(""))
@@ -83,10 +84,10 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * Método responsável por pesquisar um determinado usuário cadastrado no sistema através do nome. Possui exceções para garantir que os 
-	 * parâmetros inseridos não irão afetar no funcionamento do programa.
-	 * @param nome Nome do usuário.
-	 * @return Retorna o toString do usuário.
+	 * Mï¿½todo responsï¿½vel por pesquisar um determinado usuï¿½rio cadastrado no sistema atravï¿½s do nome. Possui exceï¿½ï¿½es para garantir que os 
+	 * parï¿½metros inseridos nï¿½o irï¿½o afetar no funcionamento do programa.
+	 * @param nome Nome do usuï¿½rio.
+	 * @return Retorna o toString do usuï¿½rio.
 	 */
 	public String pesquisaUsuarioPorNome(String nome) {
 		if(nome == null || nome.trim().equals(""))
@@ -109,13 +110,13 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 *Atualiza os atributos de um usuário. Possui exceções para garantir que os parâmetros inseridos não irão 
+	 *Atualiza os atributos de um usuï¿½rio. Possui exceï¿½ï¿½es para garantir que os parï¿½metros inseridos nï¿½o irï¿½o 
 	 *afetar no funcionamento do programa.
-	 * @param id Número de identificação do usuário.
-	 * @param nome Nome do usuário.
-	 * @param email E-mail do usuário.
-	 * @param celular Celular do usuário.
-	 * @return Retorna o toString do usuário.
+	 * @param id Nï¿½mero de identificaï¿½ï¿½o do usuï¿½rio.
+	 * @param nome Nome do usuï¿½rio.
+	 * @param email E-mail do usuï¿½rio.
+	 * @param celular Celular do usuï¿½rio.
+	 * @return Retorna o toString do usuï¿½rio.
 	 */
 	public String atualizaUsuario(String id, String nome, String email, String celular) {
 		
@@ -129,8 +130,8 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * Remove um usuário do sistema através do ID.
-	 * @param id Número de identificação do usuário.
+	 * Remove um usuï¿½rio do sistema atravï¿½s do ID.
+	 * @param id Nï¿½mero de identificaï¿½ï¿½o do usuï¿½rio.
 	 */
 	public void removeUsuario(String id) {
 		if(id == null || id.trim().equals(""))
@@ -143,7 +144,7 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * Lê um arquivo .csv e cadastra novos receptores no sistema, assim como atualiza os atributos que já foram previamente inseridos.
+	 * Lï¿½ um arquivo .csv e cadastra novos receptores no sistema, assim como atualiza os atributos que jï¿½ foram previamente inseridos.
 	 * @param caminho
 	 * @throws IOException
 	 */
@@ -173,8 +174,8 @@ public class ControllerUsuario {
 	}
 	
 	/**
-	 * Cadastra um item para doação no sistema.  
-	 * @param idUsuario Documento de identificação do usuário referente ao item.
+	 * Cadastra um item para doacao no sistema.  
+	 * @param idUsuario Documento de identificaï¿½ï¿½o do usuï¿½rio referente ao item.
 	 * @param descritor Descritor que representa o item a ser cadastrado.
 	 * @param quantidade Quantidade de itens a serem cadastrados.
 	 * @param tags Tags que caracterizam o item.
@@ -201,14 +202,14 @@ public class ControllerUsuario {
 			controllerdescritor.cadastraDescritor(descritor);
 		}
 		
-		return this.usuarios.get(idDoador).cadastraItem(descritor.trim().toLowerCase(), quantidade, tags);
+		return this.usuarios.get(idDoador).cadastraItem(this.idItem++, descritor.trim().toLowerCase(), quantidade, tags);
 	}
 	
 	/**
-	 * Exibe um determinado item cadastrado no sistema a partir do id do usuário e do item.
+	 * Exibe um determinado item cadastrado no sistema a partir do id do usuï¿½rio e do item.
 	 * 
 	 * @param idItem Id do item a ser exibido.
-	 * @param idDoador Documento de identificação do doador que possui o item.
+	 * @param idDoador Documento de identificaï¿½ï¿½o do doador que possui o item.
 	 * @return Retorna o toString do item requerido.
 	 */
 	public String exibeItem(int idItem, String idDoador) {
@@ -225,7 +226,7 @@ public class ControllerUsuario {
 	 * @param quantidade
 	 * @param tags
 	 */
-	public void atualizaItem(int idItem, String idDoador, int quantidade, String tags) {
+	public String atualizaItem(int idItem, String idDoador, int quantidade, String tags) {
 		if(idItem < 0) {
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		}
@@ -238,13 +239,13 @@ public class ControllerUsuario {
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
 		}
 		
-		usuarios.get(idDoador).atualizaItem(idItem, tags, quantidade);
+		return usuarios.get(idDoador).atualizaItem(idItem, tags, quantidade);
 	}
 	
 	/**
 	 * Remove um determinado item do sistema a partir do id.
 	 * @param idItem Id do item a ser retirado.
- 	 * @param idDoador Documento de identificação do doador.
+ 	 * @param idDoador Documento de identificaï¿½ï¿½o do doador.
 	 */
 	public void removeItem(int idItem, String idDoador) {
 		if(idItem < 0) {

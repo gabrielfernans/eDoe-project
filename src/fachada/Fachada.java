@@ -47,17 +47,14 @@ public class Fachada {
 		return controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
 	}
 	
-	// MÉTODO IMPLEMENTADO - NÃO TESTADO
 	public String exibeItem(int idItem, String idDoador) {
 		return controllerUsuario.exibeItem(idItem, idDoador);
 	}
 	
-	// MÉTODO IMPLEMENTADO - NÃO TESTADO
-	public void atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
-		controllerUsuario.atualizaItem(idItem, idDoador, quantidade, tags);
+	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
+		return controllerUsuario.atualizaItem(idItem, idDoador, quantidade, tags);
 	}
 	
-	// MÉTODO IMPLEMENTADO - NÃO TESTADO
 	public void removeItemParaDoacao(int idItem, String idDoador) {
 		controllerUsuario.removeItem(idItem, idDoador);
 	}

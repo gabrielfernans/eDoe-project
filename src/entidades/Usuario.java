@@ -12,7 +12,7 @@ public class Usuario implements Comparable<Usuario>{
 	private String celular;
 	private String classe;
 	private String status;
-	private int contador;
+	private int contadorOrdem;
 	private String id;
 	private Map<Integer, Item> listaItens = new HashMap<>();
 	
@@ -37,7 +37,7 @@ public class Usuario implements Comparable<Usuario>{
 		this.classe = classe;
 		this.status = status;
 		this.id = id;
-		this.contador = cont;
+		this.contadorOrdem = cont;
 	}
 	
 	public String atualizaUsuario(String nome, String email, String celular) {
@@ -61,7 +61,7 @@ public class Usuario implements Comparable<Usuario>{
 	}
 	
 	
-	public int cadastraItem(String descritor, int quantidade, String tags) {
+	public int cadastraItem(int idItem, String descritor, int quantidade, String tags) {
 		String[] vetorTags = tags.split(",");
 		List<String> listaTags = new ArrayList<String>();
 		
@@ -69,8 +69,6 @@ public class Usuario implements Comparable<Usuario>{
 		for (String c : vetorTags) {
 			listaTags.add(c);
 		}
-		
-		int idItem = listaItens.size()+1;
 		
 		for (Item c : listaItens.values()) {
 			if (c.getDescritor().equals(descritor) && c.getTags().equals(listaTags)) {
@@ -100,20 +98,12 @@ public class Usuario implements Comparable<Usuario>{
 	 * @param novasTags
 	 * @param novaQuantidade
 	 */
-	public void atualizaItem(int idItem, String novasTags, int novaQuantidade) {
-		String[] vetorTags = novasTags.split(",");
-		List<String> listaTags = new ArrayList<String>();
-		
-		//Adicionando as tags do vetor no ArrayList
-		for (String c : vetorTags) {
-			listaTags.add(c);
-		}
-		
+	public String atualizaItem(int idItem, String novasTags, int novaQuantidade) {
 		if (!this.listaItens.containsKey(idItem)) {
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		}
-		
-		this.listaItens.get(idItem).atualizaItem(listaTags, novaQuantidade);
+
+		return this.listaItens.get(idItem).atualizaItem(novasTags, novaQuantidade);
 	}
 	
 	public void removeItem(int idItem) {
@@ -152,7 +142,7 @@ public class Usuario implements Comparable<Usuario>{
 	}
 	
 	public int getContador() {
-		return this.contador;
+		return this.contadorOrdem;
 	}
 	
 	private String formataId() {
