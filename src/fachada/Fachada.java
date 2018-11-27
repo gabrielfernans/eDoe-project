@@ -1,9 +1,13 @@
 package fachada;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import controllers.ControllerDescritor;
 import controllers.ControllerUsuario;
 import easyaccept.EasyAccept;
+import entidades.Usuario;
 
 public class Fachada {
 	
@@ -57,5 +61,13 @@ public class Fachada {
 	
 	public void removeItemParaDoacao(int idItem, String idDoador) {
 		controllerUsuario.removeItem(idItem, idDoador);
+	}
+	
+	public String listaDescritorDeItensParaDoacao() {
+		return controllerDescritor.listaDescritorDeItensParaDoacao(controllerUsuario.getUsuarios());
+	}
+	
+	public String listaItensParaDoacao() {
+		return controllerDescritor.listaItensParaDoacao(controllerUsuario.getUsuarios());
 	}
 }

@@ -39,7 +39,7 @@ public class Item implements Comparator<Item>{
 
 	//erick
 	public String retornaDescricaoEQuantidade() {
-		return this.quantidade + " - " + descritor.toString();
+		return this.quantidade + " - " + descritor;
 	}
 
 	public String toStringCombo() {
