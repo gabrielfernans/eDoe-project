@@ -17,10 +17,9 @@ import entidades.Usuario;
  *
  */
 public class ControllerUsuario {
-	private ControllerDescritor controllerdescritor = new ControllerDescritor();
+	private ControllerDescritor controllerDescritor = new ControllerDescritor();
 	private Map<String, Usuario> usuarios;
 	private int cont = 0;
-private ControllerDescritor controllerDescritor = new ControllerDescritor();
 	private int idItem = 1;
 	
 	/**
@@ -29,7 +28,6 @@ private ControllerDescritor controllerDescritor = new ControllerDescritor();
 	public ControllerUsuario() {
 		this.usuarios = new HashMap<String, Usuario>();
 	}
-
 	
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {	
 		if(id == null || id.trim().equals("")) 
@@ -49,7 +47,7 @@ private ControllerDescritor controllerDescritor = new ControllerDescritor();
 		case "ORGAO_PUBLICO_MUNICIPAL": 
 		case "ORGAO_PUBLICO_FEDERAL": 
 		case "ORGAO_PUBLICO_ESTADUAL":
-		case "ASSOCIA��O": case "SOCIEDADE":
+		case "ASSOCIACAO": case "SOCIEDADE":
 			usuarios.put(id, new Usuario(id, nome, email, celular, classe, "doador", cont++));
 			break;
 			
@@ -58,7 +56,6 @@ private ControllerDescritor controllerDescritor = new ControllerDescritor();
 		}
 		return id;
 	}
-	
 	
 	public String pesquisaUsuarioPorId(String id) {
 		if(id == null || id.trim().equals(""))
@@ -69,7 +66,6 @@ private ControllerDescritor controllerDescritor = new ControllerDescritor();
 		
 		return usuarios.get(id).toString();
 	}
-	
 	
 	public String pesquisaUsuarioPorNome(String nome) {
 		if(nome == null || nome.trim().equals(""))
@@ -90,7 +86,6 @@ private ControllerDescritor controllerDescritor = new ControllerDescritor();
 		Collections.sort(users);
 		return editaLista(users);
 	}
-	
 
 	public String atualizaUsuario(String id, String nome, String email, String celular) {
 		
@@ -112,7 +107,6 @@ private ControllerDescritor controllerDescritor = new ControllerDescritor();
 		
 		usuarios.remove(id);
 	}
-	
 
 	public void lerReceptores(String caminho) throws IOException {
 		Scanner sc = new Scanner(new File(caminho));
@@ -138,7 +132,6 @@ private ControllerDescritor controllerDescritor = new ControllerDescritor();
 		}
 		sc.close();
 	}
-	
 
 	public int cadastraItem(String idDoador, String descritor, int quantidade, String tags) {
 		
@@ -158,19 +151,38 @@ private ControllerDescritor controllerDescritor = new ControllerDescritor();
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
 		}
 		
-		if (controllerdescritor.contemDescritor(descritor) == false) {
-			controllerdescritor.cadastraDescritor(descritor);
+		if (controllerDescritor.contemDescritor(descritor) == false) {
+			controllerDescritor.cadastraDescritor(descritor);
 		}
 		
 		return this.usuarios.get(idDoador).cadastraItem(this.idItem++, descritor.trim().toLowerCase(), quantidade, tags);
 	}
 	
-
+	public int cadastraItemNecessario(String idReceptor, String descritor, int quantidade, String tags) {
+		if (descritor == null || descritor.trim().equals("")) {
+			throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");
+		}
+		
+		if (quantidade <= 0) {
+			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
+		}
+		
+		if (idReceptor == null || idReceptor.trim().equals("")) {
+			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
+		
+		return this.usuarios.get(idReceptor).cadastraItem(this.idItem++, descritor.trim().toLowerCase(), quantidade, tags);
+	}
+	
 	public String exibeItem(int idItem, String idDoador) {
 		if (!this.usuarios.containsKey(idDoador)) {
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
 		}
 		return this.usuarios.get(idDoador).exibeItem(idItem);
+	}
+	
+	public String listaItensNecessarios() {
+		return "";
 	}
 	
 	/**
@@ -196,6 +208,22 @@ private ControllerDescritor controllerDescritor = new ControllerDescritor();
 		return usuarios.get(idDoador).atualizaItem(idItem, tags, quantidade);
 	}
 	
+	public String atualizaItemNecessario(String idReceptor, int idItem, int quantidade, String tags) {
+		if(idItem < 0) {
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		}
+		
+		if (idReceptor == null || idReceptor.trim().equals("")) {
+			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
+		
+		if (!this.usuarios.containsKey(idReceptor)) {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idReceptor + ".");
+		}
+		
+		return usuarios.get(idReceptor).atualizaItem(idItem, tags, quantidade);
+	}
+	
 	/**
 	 * Remove um determinado item do sistema a partir do id.
 	 * @param idItem Id do item a ser retirado.
@@ -215,6 +243,22 @@ private ControllerDescritor controllerDescritor = new ControllerDescritor();
 		}
 		
 		usuarios.get(idDoador).removeItem(idItem);
+	}
+	
+	public void removeItemNecessario(String idReceptor, int idItem) {
+		if(idItem < 0) {
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		}
+		
+		if (idReceptor == null || idReceptor.trim().equals("")) {
+			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		}
+		
+		if (!this.usuarios.containsKey(idReceptor)) {
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idReceptor + ".");
+		}
+		
+		usuarios.get(idReceptor).removeItem(idItem);
 	}
 	
 	private String editaLista(List<Usuario> listaDeUsuario) {
@@ -237,6 +281,5 @@ private ControllerDescritor controllerDescritor = new ControllerDescritor();
 	public Map<String, Usuario> getUsuarios() {
 		return usuarios;
 	}
-	
 	
 }

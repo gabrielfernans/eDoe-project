@@ -10,11 +10,6 @@ public class Fachada {
 	ControllerUsuario controllerUsuario = new ControllerUsuario();
 	ControllerDescritor controllerDescritor = new ControllerDescritor();
 	
-	public static void main(String[] args) {
-		args = new String[] {"fachada.Fachada", "accept_testes/use_case_1.txt", "accept_testes/use_case_2.txt"};
-		EasyAccept.main(args);
-	}
-	
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
 		return controllerUsuario.adicionaDoador(id, nome, email, celular, classe);
 	}
@@ -47,6 +42,10 @@ public class Fachada {
 		return controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
 	}
 	
+	public int adicionaItemNecessario(String idReceptor, String descricaoItem, int quantidade, String tags) {
+		return controllerUsuario.cadastraItemNecessario(idReceptor, descricaoItem, quantidade, tags);
+	}
+	
 	public String exibeItem(int idItem, String idDoador) {
 		return controllerUsuario.exibeItem(idItem, idDoador);
 	}
@@ -55,7 +54,15 @@ public class Fachada {
 		return controllerUsuario.atualizaItem(idItem, idDoador, quantidade, tags);
 	}
 	
+	public String atualizaItemNecessario(String idReceptor, int idItem, int quantidade, String tags) {
+		return controllerUsuario.atualizaItemNecessario(idReceptor, idItem, quantidade, tags);
+	}
+	
 	public void removeItemParaDoacao(int idItem, String idDoador) {
 		controllerUsuario.removeItem(idItem, idDoador);
+	}
+	
+	public void removeItemNecessario(String idReceptor, int idItem) {
+		controllerUsuario.removeItem(idItem, idReceptor);
 	}
 }
