@@ -70,4 +70,8 @@ public class Fachada {
 	public String listaItensParaDoacao() {
 		return controllerDescritor.listaItensParaDoacao(controllerUsuario.getUsuarios());
 	}
+	
+	public String pesquisaItemParaDoacaoPorDescricao(String desc) {
+		return controllerDescritor.pesquisaItemParaDoacaoPorDescricao(desc, controllerUsuario.getUsuarios());
+	}
 }

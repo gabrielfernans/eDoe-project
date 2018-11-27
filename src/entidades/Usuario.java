@@ -81,6 +81,7 @@ public class Usuario implements Comparable<Usuario>{
 				c.setQuantidade(quantidade);
 			}
 		}
+		
 		this.listaItens.put(idItem, new Item(idItem, quantidade, descritor, listaTags));
 		
 		return idItem;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class Item implements Comparator<Item>{
+public class Item implements Comparable<Item>{
 	private int idItem;
 	private int quantidade;
 	private String descritor;
@@ -53,11 +53,15 @@ public class Item implements Comparator<Item>{
 		}
 		return this.idItem + " - " + this.descritor.toString() + ", tags: " + this.tags.toString() + ", quantidade: " + this.quantidade;
 	}
-
-	@Override
-	public int compare(Item item1, Item item2) {
-		return item1.getDescritor().compareTo(item2.getDescritor());
-	}
+	
+	public static Comparator<Item> quantidadeComparator = new Comparator<Item>() {
+		
+		@Override //comparator
+		public int compare(Item item1, Item item2) {
+			return item2.getQuantidade() - item1.getQuantidade();
+		}
+		
+	};
 
 	public String retornaDescricaoItemEQuantidade() {
 		return this.quantidade + " - " + descritor.toString();
@@ -138,6 +142,9 @@ public class Item implements Comparator<Item>{
 		return true;
 	}
 
-	
+	@Override
+	public int compareTo(Item o) {
+		return this.descritor.compareTo(o.getDescritor());
+	}
 
 }
