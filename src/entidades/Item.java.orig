@@ -1,28 +1,52 @@
 package entidades;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Comparator;
+import java.util.HashSet;
+=======
+>>>>>>> 5984dd709a5551d7da1d7a3b3cdd283d4b56afa2
 import java.util.List;
+import java.util.Set;
 
-public class Item{
+<<<<<<< HEAD
+public class Item implements Comparator<Item>{
 	private int id;
+=======
+/**
+ * 
+ * @author 
+ *
+ */
+public class Item{
+	private int idItem;
+>>>>>>> 5984dd709a5551d7da1d7a3b3cdd283d4b56afa2
 	private int quantidade;
-	private String descricao;
-	private String data;
+	private String descritor;
 	private List<String> tags;
 	
-	public Item(int id, int quantidade, String descricao, String data, List<String> tags) {
-		this.id = id;
+	public Item(int idItem, int quantidade, String descritor, List<String> tags) {
+		this.idItem = idItem;
 		this.quantidade = quantidade;
-		this.descricao = descricao;
-		this.data = data;
-		this.tags = new ArrayList<>();
+		this.descritor = descritor;
+		this.tags = tags;
 	}
 	
-	public void atualizaItem(List<String> novasTags, int novaQuantidade) {
-		this.tags = novasTags;
-		this.quantidade = novaQuantidade;
+	public String atualizaItem(String novasTags, int novaQuantidade) {
+		if (novasTags != null) {
+			String[] vetorTags = novasTags.split(",");
+			List<String> listaTags = new ArrayList<String>();
+			
+			//Adicionando as tags do vetor no ArrayList
+			for (String c : vetorTags) {
+				listaTags.add(c);
+			}
+			
+			this.tags = listaTags;
+			
+		}
 		
+<<<<<<< HEAD
 	}
 	
 	//erick
@@ -49,11 +73,15 @@ public class Item{
 	public String toString() {
 		if (tags.size() == 0) {
 			return this.id + " - " +this.descricao.toString() + ", quantidade: " + this.quantidade;
+=======
+		if (novaQuantidade > 0) {
+			this.quantidade = novaQuantidade;
+>>>>>>> 5984dd709a5551d7da1d7a3b3cdd283d4b56afa2
 		}
-		return this.id + " - " + this.descricao.toString() + ", tags:" + this.tags.toString() + ", quantidade: " + this.quantidade;
+		return this.toString();
 	}
 	
-<<<<<<< HEAD:src/entidades/Item.java
+<<<<<<< HEAD
 	@Override
 	public int compare(Item item1, Item item2) {
 		return item1.getDescricao().compareTo(item2.getDescricao());
@@ -61,50 +89,48 @@ public class Item{
 	
 	public int getId() {
 		return id;
-=======
+	}
+
 	public String retornaDescricaoItemEQuantidade() {
 		return this.quantidade + " - " + descricao.toString();
->>>>>>> ddc293cbad949702735aa3c2c5ef9a8cf8e8c513:src/entidades/Item.java
 	}
-
-	public int getQuantidade() {
-		return quantidade;
-	}
+=======
+>>>>>>> 5984dd709a5551d7da1d7a3b3cdd283d4b56afa2
 	
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
+	
+	public String getDescritor() {
+		return descritor;
 	}
 
 	public List<String> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<String> tags) {
-		this.tags = tags;
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
 	}
 
+	@Override
+	public String toString() {
+		String lista = "[";
+		
+		//Criando representa��o textual da lista de itens.
+		for (int i=0; i < tags.size(); i++) {
+			if (i == tags.size()-1) {
+				lista += tags.get(i) + "]";
+			}
+			else {
+				lista += tags.get(i) + ", ";
+			}
+		}
+		return this.idItem + " - " + this.descritor + ", tags: " + lista + ", quantidade: " + this.quantidade;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result + id;
+		result = prime * result + ((descritor == null) ? 0 : descritor.hashCode());
 		result = prime * result + ((tags == null) ? 0 : tags.hashCode());
 		return result;
 	}
@@ -118,12 +144,10 @@ public class Item{
 		if (getClass() != obj.getClass())
 			return false;
 		Item other = (Item) obj;
-		if (descricao == null) {
-			if (other.descricao != null)
+		if (descritor == null) {
+			if (other.descritor != null)
 				return false;
-		} else if (!descricao.equals(other.descricao))
-			return false;
-		if (id != other.id)
+		} else if (!descritor.equals(other.descritor))
 			return false;
 		if (tags == null) {
 			if (other.tags != null)
@@ -132,5 +156,9 @@ public class Item{
 			return false;
 		return true;
 	}
+	
+	
+
+	
 
 }

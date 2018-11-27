@@ -12,7 +12,7 @@ public class Usuario implements Comparable<Usuario>{
 	private String celular;
 	private String classe;
 	private String status;
-	private int contador;
+	private int contadorOrdem;
 	private String id;
 	private Map<Integer, Item> listaItens = new HashMap<>();
 	
@@ -31,14 +31,13 @@ public class Usuario implements Comparable<Usuario>{
 		
 		if(id == null || id.trim().equals("")) 
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
-		
 		this.nome = nome;
 		this.email = email;
 		this.celular = celular;
 		this.classe = classe;
 		this.status = status;
 		this.id = id;
-		this.contador = cont;
+		this.contadorOrdem = cont;
 	}
 	
 	// adicionei o get de itens para poder ter acesso a lista no controller
@@ -68,16 +67,61 @@ public class Usuario implements Comparable<Usuario>{
 	}
 	
 	
-	public void cadastraItem(String descritor, int quantidade, String tags) {
+	public int cadastraItem(int idItem, String descritor, int quantidade, String tags) {
+		String[] vetorTags = tags.split(",");
+		List<String> listaTags = new ArrayList<String>();
 		
+		//Adicionando as tags do vetor no ArrayList
+		for (String c : vetorTags) {
+			listaTags.add(c);
+		}
 		
+		for (Item c : listaItens.values()) {
+			if (c.getDescritor().equals(descritor) && c.getTags().equals(listaTags)) {
+				c.setQuantidade(quantidade);
+			}
+		}
+		this.listaItens.put(idItem, new Item(idItem, quantidade, descritor, listaTags));
+		
+		return idItem;
 	}
 	
-	
-	public void atualizaItem() {
-		
+	/**
+	 * 
+	 * @param idItem
+	 * @return
+	 */
+	public String exibeItem(int idItem) {
+		if (!this.listaItens.containsKey(idItem)) {
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
+		}
+		return this.listaItens.get(idItem).toString();
 	}
+	
+	/**
+	 * 
+	 * @param idItem
+	 * @param novasTags
+	 * @param novaQuantidade
+	 */
+	public String atualizaItem(int idItem, String novasTags, int novaQuantidade) {
+		if (!this.listaItens.containsKey(idItem)) {
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
+		}
 
+		return this.listaItens.get(idItem).atualizaItem(novasTags, novaQuantidade);
+	}
+	
+	public void removeItem(int idItem) {
+		if (this.listaItens.size() == 00 ) {
+			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
+		}
+		if (!this.listaItens.containsKey(idItem)) {
+			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
+		}
+		this.listaItens.remove(idItem);
+	}
+	
 	@Override
 	public int compareTo(Usuario o) {
 		return this.getContador() - o.getContador(); 
@@ -105,7 +149,7 @@ public class Usuario implements Comparable<Usuario>{
 	}
 	
 	public int getContador() {
-		return this.contador;
+		return this.contadorOrdem;
 	}
 	
 	private String formataId() {
@@ -115,11 +159,7 @@ public class Usuario implements Comparable<Usuario>{
 	}
 
 	public void adicionaItem(int id, int quantidade, String descricao, String data, List<String> tags) {
-		this.listaItens.put(id, new Item(id, quantidade, descricao, data, tags));
-	}
-	
-	public void atualizaItem(int idItem, List<String> novasTags, int novaQuantidade) {
-		this.listaItens.get(idItem).atualizaItem(novasTags, novaQuantidade);
+		this.listaItens.put(id, new Item(id, quantidade, descricao, tags));
 	}
 
 	public String getId() {

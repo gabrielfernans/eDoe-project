@@ -2,110 +2,116 @@ package entidades;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Item implements Comparator<Item>{
-	private int id;
+	private int idItem;
 	private int quantidade;
-	private String descricao;
-	private String data;
+	private String descritor;
 	private List<String> tags;
 	
-	public Item(int id, int quantidade, String descricao, String data, List<String> tags) {
-		this.id = id;
+	public Item(int idItem, int quantidade, String descritor, List<String> tags) {
+		this.idItem = idItem;
 		this.quantidade = quantidade;
-		this.descricao = descricao;
-		this.data = data;
-		this.tags = new ArrayList<>();
+		this.descritor = descritor;
+		this.tags = tags;
 	}
 	
-	public void atualizaItem(List<String> novasTags, int novaQuantidade) {
-		this.tags = novasTags;
-		this.quantidade = novaQuantidade;
+	public String atualizaItem(String novasTags, int novaQuantidade) {
+		if (novasTags != null) {
+			String[] vetorTags = novasTags.split(",");
+			List<String> listaTags = new ArrayList<String>();
+			
+			//Adicionando as tags do vetor no ArrayList
+			for (String c : vetorTags) {
+				listaTags.add(c);
+			}
+			
+			this.tags = listaTags;
+			
+		}
 		
+		if (novaQuantidade > 0) {
+			this.quantidade = novaQuantidade;
+		}
+		return this.toString();
 	}
-	
+
 	//erick
 	public String retornaDescricaoEQuantidade() {
-		return this.quantidade + " - " + descricao.toString();
+		return this.quantidade + " - " + descritor.toString();
 	}
-	
+
 	public String toStringCombo() {
-		return this.getId() + " - " + this.getDescricao() + ", tags: " + this.toStringDeTags() + ", quantidade: " + this.getQuantidade() + ", "; 
-	}
-	
-	//erick
-	private String toStringDeTags() {
-		String aux = "[";
-		for (int i = 0; i < tags.size(); i++) {
-			if (i != tags.size() - 1) 
-				aux += tags.get(i) + ", ";
-			else 
-				aux += tags.get(i) + "]";
-		} return aux;
+		return this.idItem + " - " + this.getDescritor() + ", tags: " + this.toStringDeTags() + ", quantidade: " + this.quantidade + ", "; 
 	}
 	
 	@Override
 	public String toString() {
 		if (tags.size() == 0) {
-			return this.id + " - " +this.descricao.toString() + ", quantidade: " + this.quantidade;
+			return this.idItem + " - " +this.descritor.toString() + ", quantidade: " + this.quantidade;
 		}
-		return this.id + " - " + this.descricao.toString() + ", tags:" + this.tags.toString() + ", quantidade: " + this.quantidade;
+		return this.idItem + " - " + this.descritor.toString() + ", tags: " + this.tags.toString() + ", quantidade: " + this.quantidade;
 	}
-	
+
 	@Override
 	public int compare(Item item1, Item item2) {
-		return item1.getDescricao().compareTo(item2.getDescricao());
-	}
-	
-	public int getId() {
-		return id;
+		return item1.getDescritor().compareTo(item2.getDescritor());
 	}
 
 	public String retornaDescricaoItemEQuantidade() {
-		return this.quantidade + " - " + descricao.toString();
+		return this.quantidade + " - " + descritor.toString();
 	}
 	
-	public int getQuantidade() {
-		return quantidade;
-	}
 	
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
+	public String getDescritor() {
+		return descritor;
 	}
 
 	public List<String> getTags() {
 		return tags;
 	}
 
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setIdItem(int idItem) {
+		this.idItem = idItem;
+	}
+
+	public void setDescritor(String descritor) {
+		this.descritor = descritor;
+	}
+
 	public void setTags(List<String> tags) {
 		this.tags = tags;
+	}
+
+	public String toStringDeTags() {
+		String lista = "[";
+		
+		//Criando representacao textual da lista de itens.
+		for (int i=0; i < tags.size(); i++) {
+			if (i == tags.size()-1) {
+				lista += tags.get(i) + "]";
+			}
+			else {
+				lista += tags.get(i) + ", ";
+			}
+		}
+		return this.idItem + " - " + this.descritor + ", tags: " + lista + ", quantidade: " + this.quantidade;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result + id;
+		result = prime * result + ((descritor == null) ? 0 : descritor.hashCode());
 		result = prime * result + ((tags == null) ? 0 : tags.hashCode());
 		return result;
 	}
@@ -119,12 +125,10 @@ public class Item implements Comparator<Item>{
 		if (getClass() != obj.getClass())
 			return false;
 		Item other = (Item) obj;
-		if (descricao == null) {
-			if (other.descricao != null)
+		if (descritor == null) {
+			if (other.descritor != null)
 				return false;
-		} else if (!descricao.equals(other.descricao))
-			return false;
-		if (id != other.id)
+		} else if (!descritor.equals(other.descritor))
 			return false;
 		if (tags == null) {
 			if (other.tags != null)
@@ -133,7 +137,7 @@ public class Item implements Comparator<Item>{
 			return false;
 		return true;
 	}
-	
+
 	
 
 }

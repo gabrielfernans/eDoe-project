@@ -1,17 +1,18 @@
 package fachada;
 
 import java.io.IOException;
-
-import controllers.ControllerDescricoes;
+import controllers.ControllerDescritor;
 import controllers.ControllerUsuario;
+import easyaccept.EasyAccept;
 
 public class Fachada {
-
-	ControllerUsuario controllerUsuario = new ControllerUsuario();
-	ControllerDescricoes controllerDescritor = new ControllerDescricoes();
 	
-	public void lerReceptores(String caminho) throws IOException{
-		controllerUsuario.lerReceptores(caminho);
+	ControllerUsuario controllerUsuario = new ControllerUsuario();
+	ControllerDescritor controllerDescritor = new ControllerDescritor();
+	
+	public static void main(String[] args) {
+		args = new String[] {"fachada.Fachada", "accept_testes/use_case_1.txt", "accept_testes/use_case_2.txt"};
+		EasyAccept.main(args);
 	}
 	
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
@@ -34,38 +35,27 @@ public class Fachada {
 		controllerUsuario.removeUsuario(id);
 	}
 	
-	public String listaDescritorDeItensParaDoacao() {
-		return controllerDescritor.listagemPorQuantidadeEDescricao(controllerUsuario.getUsuarios());
+	public void lerReceptores(String caminho) throws IOException{
+		controllerUsuario.lerReceptores(caminho);
 	}
 	
-	public String listaItensParaDoacao() {
-		return controllerDescritor.listagemPorItem(controllerUsuario.getUsuarios());
+	public void adicionaDescritor(String descritor) {
+		controllerDescritor.cadastraDescritor(descritor);
 	}
 	
-	public String pesquisaItemParaDoacaoPorDescricao() {
-		return "";
+	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
+		return controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
 	}
 	
-	// MÉTODO IMPLEMENTADO
-		public void adicionaDescritor(String descritor) {
-			controllerDescritor.cadastraDescritor(descritor);
-		}
-		
-		public void adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
-			controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
-		}
-		
-		public String exibeItem() {
-			return null;
-		}
-		
-		public void atualizaItem() {
-			
-		}
-		
-		public void removeItem() {
-			
+	public String exibeItem(int idItem, String idDoador) {
+		return controllerUsuario.exibeItem(idItem, idDoador);
 	}
-	 
 	
+	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
+		return controllerUsuario.atualizaItem(idItem, idDoador, quantidade, tags);
+	}
+	
+	public void removeItemParaDoacao(int idItem, String idDoador) {
+		controllerUsuario.removeItem(idItem, idDoador);
+	}
 }

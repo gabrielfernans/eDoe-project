@@ -61,7 +61,7 @@ public class ControllerDescricoes {
 			int count = 0;
 			for (Usuario usuario : map.values()) {
 				for (Item itens : (usuario.getListaItens().values())) {
-					if (itens.getDescricao().equals(descricao)){
+					if (itens.getDescritor().equals(descricao)){
 						count += itens.getQuantidade();
 					}
 				}
