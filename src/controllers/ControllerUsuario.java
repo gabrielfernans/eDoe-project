@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+
+import entidades.Item;
 import entidades.Usuario;
 
 /**
@@ -182,7 +184,21 @@ public class ControllerUsuario {
 	}
 	
 	public String listaItensNecessarios() {
-		return "";
+		String aux = "";
+		ArrayList<Item> itensNecessarios = new ArrayList<>();
+		for (Usuario u : usuarios.values()) {
+			if (u.getStatus().equals("receptor")) {
+				for (Item item : u.itensNec().values()) {
+					itensNecessarios.add(item);
+				}
+			}
+		}
+		
+		for (Item item : itensNecessarios) {
+			aux += item.getIdItem() + " - " + item.getDescritor() + ", tags: " + item.getTags() + ", quantidade: " + item.getQuantidade() + ", Receptor: " + item;
+		}
+		
+		return aux;
 	}
 	
 	/**

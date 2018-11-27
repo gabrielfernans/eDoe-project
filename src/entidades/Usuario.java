@@ -122,6 +122,10 @@ public class Usuario implements Comparable<Usuario>{
 		this.listaItens.remove(idItem);
 	}
 	
+	public Map<Integer, Item> itensNec() {
+		return listaItens;
+	}
+	
 	@Override
 	public int compareTo(Usuario o) {
 		return this.getContador() - o.getContador(); 

@@ -83,6 +83,10 @@ public class Item implements Comparator<Item>{
 	public void setIdItem(int idItem) {
 		this.idItem = idItem;
 	}
+	
+	public int getIdItem() {
+		return idItem;
+	}
 
 	public void setDescritor(String descritor) {
 		this.descritor = descritor;

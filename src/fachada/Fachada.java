@@ -50,6 +50,10 @@ public class Fachada {
 		return controllerUsuario.exibeItem(idItem, idDoador);
 	}
 	
+	public String listaItensNecessarios(){
+		return controllerUsuario.listaItensNecessarios();
+	}
+	
 	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
 		return controllerUsuario.atualizaItem(idItem, idDoador, quantidade, tags);
 	}
