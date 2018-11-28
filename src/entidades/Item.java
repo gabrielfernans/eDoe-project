@@ -108,7 +108,7 @@ public class Item implements Comparable<Item>{
 				lista += tags.get(i) + ", ";
 			}
 		}
-		return this.idItem + " - " + this.descritor + ", tags: " + lista + ", quantidade: " + this.quantidade;
+		return lista;
 	}
 
 	@Override
@@ -145,6 +145,10 @@ public class Item implements Comparable<Item>{
 	@Override
 	public int compareTo(Item o) {
 		return this.descritor.compareTo(o.getDescritor());
+	}
+	
+	public String idItemToString() {
+		return this.idItem + " - " + this.descritor + ", " + "tags: " + this.toStringDeTags() + ", quantidade: " + this.quantidade;
 	}
 
 }
