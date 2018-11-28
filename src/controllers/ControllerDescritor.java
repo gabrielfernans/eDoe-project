@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class ControllerDescritor {
 		if (descritores.contains(descritor.trim().toLowerCase())) {
 			throw new IllegalArgumentException("Descritor de Item ja existente: " + descritor.trim().toLowerCase() + ".");
 		}
-		descritores.add(descritor);
+		descritores.add(descritor.trim().toLowerCase());
 	}
 	
 	/**
@@ -61,82 +62,106 @@ public class ControllerDescritor {
 	}
 	
 	public String listaDescritorDeItensParaDoacao(Map<String, Usuario> map) {
-
-		ArrayList<String> listaOrdenada = new ArrayList<>();
-		ArrayList<String> listaDescricoesOrdenadasDoSet = new ArrayList<>();
-		ArrayList<String> listaDescricoesItens = new ArrayList<>();
-		List<Item> listDeItens= new ArrayList<Item>();	
-		boolean varBool = true;
-		String aux = "";
-		
-		for (String descricao : descritores) {
-			listaDescricoesOrdenadasDoSet.add(descricao);
-		}
-		
+		Map<String, Integer> itens = new HashMap<String, Integer>();
 		for (Usuario usuario : map.values()) {
-			for (Item itens : (usuario.getListaItens().values())) {
-				listDeItens.add(itens);
+			for (Item item : (usuario.getListaItens().values())) {
+				itens.put(item.getDescritor(), item.getQuantidade());
 			}
 		}
-		
-		for (Item item : listDeItens) {
-			listaDescricoesItens.add(item.getDescritor());
+		for (String descricao : descritores) {
+			if(!itens.containsKey(descricao))
+				itens.put(descricao, 0);
 		}
-		
-		Collections.sort(listaDescricoesOrdenadasDoSet);
-		Collections.sort(listaDescricoesItens);
-		
-		for (String descricao : listaDescricoesOrdenadasDoSet) {
-			if (varBool == false) {
-				listaOrdenada.add("0" + " - " + descricao);
-				listaOrdenada.add(" | ");
-			}
-			varBool = true;
-			for (String item : listaDescricoesItens) {
-				if (item.equals(descricao)){
-					for (Item itens : listDeItens) {
-						if (itens.getDescritor().equals(item)) {
-							listaOrdenada.add(itens.retornaDescricaoEQuantidade());
-							listaOrdenada.add(" | ");
-							break;
-						}
-
-					}
-
-				} 
-				else {
-					varBool = false;
-				}
-			} 
-
+		List<String> itensOrdenados = new ArrayList<String>();
+		for(String descricao: itens.keySet()) {
+			itensOrdenados.add(descricao);
 		}
-
-//		for (String descricao : listaDescricoesOrdenadasDoSet) {
-//			for (Item item : listDeItens) {
-//				if (item.getDescritor().equals(descricao)){
-//					listaOrdenada.add(item.retornaDescricaoEQuantidade());
-//					listaOrdenada.add(" | ");
-//				}
-//				else {
-//					varBool = false;
-//					itemAux = item;
-//				}
+		Collections.sort(itensOrdenados);
+		String listaFinal = "";
+		for(String descricao : itensOrdenados) {
+			listaFinal += itens.get(descricao) + " - " + descricao + " | ";
+		}
+		return listaFinal.substring(0, listaFinal.length()-3);
+	}
+	
+	
+//	public String listaDescritorDeItensParaDoacao(Map<String, Usuario> map) {
+//
+//		ArrayList<String> listaOrdenada = new ArrayList<>();
+//		ArrayList<String> listaDescricoesOrdenadasDoSet = new ArrayList<>();
+//		ArrayList<String> listaDescricoesItens = new ArrayList<>();
+//		List<Item> listDeItens= new ArrayList<Item>();	
+//		boolean varBool = true;
+//		String aux = "";
+//		
+//		for (String descricao : descritores) {
+//			listaDescricoesOrdenadasDoSet.add(descricao);
+//		}
+//		
+//		for (Usuario usuario : map.values()) {
+//			for (Item itens : (usuario.getListaItens().values())) {
+//				listDeItens.add(itens);
 //			}
+//		}
+//		
+//		for (Item item : listDeItens) {
+//			listaDescricoesItens.add(item.getDescritor());
+//		}
+//		
+//		Collections.sort(listaDescricoesOrdenadasDoSet);
+//		Collections.sort(listaDescricoesItens);
+//		
+//		for (String descricao : listaDescricoesOrdenadasDoSet) {
 //			if (varBool == false) {
-//				listaOrdenada.add(itemAux.retornaDescricaoEQuantidade());
+//				listaOrdenada.add("0" + " - " + descricao);
 //				listaOrdenada.add(" | ");
 //			}
-//				
+//			varBool = true;
+//			for (String item : listaDescricoesItens) {
+//				if (item.equals(descricao)){
+//					for (Item itens : listDeItens) {
+//						if (itens.getDescritor().equals(item)) {
+//							listaOrdenada.add(itens.retornaDescricaoEQuantidade());
+//							listaOrdenada.add(" | ");
+//							break;
+//						}
+//
+//					}
+//
+//				} 
+//				else {
+//					varBool = false;
+//				}
+//			} 
+//
 //		}
-
-		listaOrdenada.remove(listaOrdenada.size()-1);	
-
-		for (String str : listaOrdenada) {
-			aux += str;
-		}
-
-		return aux;
-	}
+//
+////		for (String descricao : listaDescricoesOrdenadasDoSet) {
+////			for (Item item : listDeItens) {
+////				if (item.getDescritor().equals(descricao)){
+////					listaOrdenada.add(item.retornaDescricaoEQuantidade());
+////					listaOrdenada.add(" | ");
+////				}
+////				else {
+////					varBool = false;
+////					itemAux = item;
+////				}
+////			}
+////			if (varBool == false) {
+////				listaOrdenada.add(itemAux.retornaDescricaoEQuantidade());
+////				listaOrdenada.add(" | ");
+////			}
+////				
+////		}
+//
+//		listaOrdenada.remove(listaOrdenada.size()-1);	
+//
+//		for (String str : listaOrdenada) {
+//			aux += str;
+//		}
+//
+//		return aux;
+//	}
 
 	
 	public String listaItensParaDoacao(Map<String, Usuario> map) {
