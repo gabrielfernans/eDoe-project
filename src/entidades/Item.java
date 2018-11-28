@@ -1,7 +1,6 @@
 package entidades;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class Item implements Comparable<Item>{
@@ -37,7 +36,6 @@ public class Item implements Comparable<Item>{
 		return this.toString();
 	}
 
-	//erick
 	public String retornaDescricaoEQuantidade() {
 		return this.quantidade + " - " + descritor;
 	}
@@ -53,15 +51,6 @@ public class Item implements Comparable<Item>{
 		}
 		return this.idItem + " - " + this.descritor.toString() + ", tags: " + this.tags.toString() + ", quantidade: " + this.quantidade;
 	}
-	
-	public static Comparator<Item> quantidadeComparator = new Comparator<Item>() {
-		
-		@Override //comparator
-		public int compare(Item item1, Item item2) {
-			return item2.getQuantidade() - item1.getQuantidade();
-		}
-		
-	};
 
 	public String retornaDescricaoItemEQuantidade() {
 		return this.quantidade + " - " + descritor.toString();
@@ -98,8 +87,7 @@ public class Item implements Comparable<Item>{
 
 	public String toStringDeTags() {
 		String lista = "[";
-		
-		//Criando representacao textual da lista de itens.
+
 		for (int i=0; i < tags.size(); i++) {
 			if (i == tags.size()-1) {
 				lista += tags.get(i) + "]";

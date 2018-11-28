@@ -2,17 +2,14 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import entidades.Item;
 import entidades.ItemComparavel;
-import entidades.ItemComparavelNome;
 import entidades.Usuario;
 
 /**
@@ -32,8 +29,8 @@ public class ControllerDescritor {
 	}
 
 	/**
-	 * M�todo respons�vel por cadastrar um descritor no sistema. Cont�m uma exce��o para verificar se o par�metro inserido
-	 * n�o ir� interferir no funcionamento do programa.
+	 * Metodo responsavel por cadastrar um descritor no sistema. Contem uma excecao para verificar se o parametro inserido
+	 * nao ira interferir no funcionamento do programa.
 	 * @param descritor Nome do descritor
 	 */
 	public void cadastraDescritor(String descritor) {
@@ -62,6 +59,12 @@ public class ControllerDescritor {
 		}
 	}
 	
+	/**
+	 * Metodo que lista os descritores de itens cadastrados no sistema, em ordem alfabetica pela descricao do mesmo.
+	 * Na saida, eh exibido a quantidade do item e sua descricao.
+	 * @param map Um mapa com os usuarios que sera necessario para acessar as listas de itens dos usuarios.
+	 * @return O retorno eh uma string com a representacao textual dos itens
+	 */
 	public String listaDescritorDeItensParaDoacao(Map<String, Usuario> map) {
 		Map<String, Integer> itens = new HashMap<String, Integer>();
 		for (Usuario usuario : map.values()) {
@@ -85,6 +88,12 @@ public class ControllerDescritor {
 		return listaFinal.substring(0, listaFinal.length()-3);
 	}
 
+	/**
+	 * Metodo que lista todos os itens inseridos no sistema ordenada pela quantidade do item no sistema.
+	 * Itens com a mesma quantidade serao ordenados pela ordem alfabética de descricao.
+	 * @param map Um mapa com os usuarios que sera necessario para acessar as listas de itens dos usuarios.
+	 * @return O retorno eh uma string com a representacao do id do item, a descricao, tag, quantidade e o doador.
+	 */
 	public String listaItensParaDoacao(Map<String, Usuario> map) {
 		ArrayList<Item> itensOrdenados = new ArrayList<Item>();
 		LinkedHashMap<String, Item> mapDeItens = new LinkedHashMap<String, Item>();
@@ -122,6 +131,13 @@ public class ControllerDescritor {
 		
 	}
 	
+	/**
+	 * Metodo que lista todos os itens relacionados a uma dada string de pesquisa.
+	 * A listagem ocorre em ordem alfabética considerando os descritores dos itens. 
+	 * @param desc Parametro designado pelo usuario para string de pesquisa.
+	 * @param map Um mapa com os usuarios que sera necessario para acessar as listas de itens dos usuarios.
+	 * @return O retorno eh uma string com a representacao do id do item, a descricao, tag e quantidade.
+	 */
 	public String pesquisaItemParaDoacaoPorDescricao(String desc, Map<String, Usuario> map) {
 		if (desc == null || desc.trim().equals("")) {
 			throw new IllegalArgumentException("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");

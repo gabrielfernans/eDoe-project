@@ -1,10 +1,6 @@
 package fachada;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import easyaccept.EasyAccept;
-import entidades.Item;
 
 public class Main {
 	

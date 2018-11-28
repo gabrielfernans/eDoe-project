@@ -1,13 +1,10 @@
 package fachada;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import controllers.ControllerDescritor;
 import controllers.ControllerUsuario;
 import easyaccept.EasyAccept;
-import entidades.Usuario;
+
 
 public class Fachada {
 	

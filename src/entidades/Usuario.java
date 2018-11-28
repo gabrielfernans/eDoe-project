@@ -40,7 +40,6 @@ public class Usuario implements Comparable<Usuario>{
 		this.contadorOrdem = cont;
 	}
 	
-	// adicionei o get de itens para poder ter acesso a lista no controller
 	public Map<Integer, Item> getListaItens() {
 		return listaItens;
 	}
