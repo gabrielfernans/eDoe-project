@@ -172,19 +172,13 @@ public class Usuario implements Comparable<Usuario>{
 	public int getContador() {
 		return this.contadorOrdem;
 	}
-	
-	private String formataId() {
-		if(getClasse().equals("PESSOA_FISICA"))
-			return id.substring(0, 3) + "." + id.substring(3, 6) + "." + id.substring(6, 9) + "-" + id.substring(9, 11);
-		return id.substring(0, 2) + "." + id.substring(2, 5) + "." + id.substring(5, 8) + "/" + id.substring(8, 12) + "-" + id.substring(12, 14);	
-	}
 
 	public void adicionaItem(int id, int quantidade, String descricao, String data, List<String> tags) {
 		this.listaItens.put(id, new Item(id, quantidade, descricao, tags));
 	}
 
 	public String getId() {
-		return formataId();
+		return this.id;
 	}
 	
 	public String toString() {
