@@ -11,6 +11,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import entidades.Item;
+import entidades.ItemComparavelPorId;
 import entidades.Usuario;
 
 /**
@@ -184,22 +185,27 @@ public class ControllerUsuario {
 	}
 	
 	public String listaItensNecessarios() {
-		String aux = "";
-		ArrayList<Item> itensNecessarios = new ArrayList<>();
-		for (Usuario u : usuarios.values()) {
-			if (u.getStatus().equals("receptor")) {
-				for (Item item : u.itensNec().values()) {
-					itensNecessarios.add(item);
-				}
+	String aux = "";
+	HashMap<Item, String> mapaItensNecessarios = new HashMap<>();
+	ArrayList<Item> itensNecessarios = new ArrayList<>(); 
+	for (Usuario u : usuarios.values()) {
+		if (u.getStatus().equals("receptor")) {
+			String receptor = u.getNome() + "/" + u.getId();
+			for (Item item : u.itensNec().values()) {
+				mapaItensNecessarios.put(item, receptor);
+				itensNecessarios.add(item);
 			}
 		}
-		
-		for (Item item : itensNecessarios) {
-			aux += item.getIdItem() + " - " + item.getDescritor() + ", tags: " + item.getTags() + ", quantidade: " + item.getQuantidade() + ", Receptor: " + item;
-		}
-		
-		return aux;
 	}
+	
+	Collections.sort(itensNecessarios, new ItemComparavelPorId());
+	
+	for (Item item : itensNecessarios) {
+		aux += item.getIdItem() + " - " + item.getDescritor() + ", tags: " + item.getTags() + ", quantidade: " + item.getQuantidade() + ", Receptor: " + mapaItensNecessarios.get(item) + " | ";
+	}
+	
+	return aux;
+}
 	
 	/**
 	 * Atualiza a quantidade de itens e as tags inseridas, se uma tag 
