@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 import entidades.Usuario;
 
 /**
@@ -17,10 +16,8 @@ import entidades.Usuario;
  *
  */
 public class ControllerUsuario {
-	private ControllerDescritor controllerdescritor = new ControllerDescritor();
 	private Map<String, Usuario> usuarios;
 	private int cont = 0;
-private ControllerDescritor controllerDescritor = new ControllerDescritor();
 	private int idItem = 1;
 	
 	/**
@@ -156,10 +153,6 @@ private ControllerDescritor controllerDescritor = new ControllerDescritor();
 		
 		if (!this.usuarios.containsKey(idDoador)) {
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
-		}
-		
-		if (controllerdescritor.contemDescritor(descritor) == false) {
-			controllerdescritor.cadastraDescritor(descritor);
 		}
 		
 		return this.usuarios.get(idDoador).cadastraItem(this.idItem++, descritor.trim().toLowerCase(), quantidade, tags);
