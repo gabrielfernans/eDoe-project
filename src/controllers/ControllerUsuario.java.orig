@@ -8,9 +8,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+<<<<<<< HEAD
+import java.util.stream.Collectors;
 
 import entidades.Item;
 import entidades.ItemComparavelPorId;
+=======
+>>>>>>> 118f383f3704b29a73b2c847db1e220936692839
 import entidades.Usuario;
 
 /**
@@ -19,6 +23,10 @@ import entidades.Usuario;
  *
  */
 public class ControllerUsuario {
+<<<<<<< HEAD
+	private ControllerDescritor controllerDescritor = new ControllerDescritor();
+=======
+>>>>>>> 118f383f3704b29a73b2c847db1e220936692839
 	private Map<String, Usuario> usuarios;
 	private int cont = 0;
 	private int idItem = 1;
@@ -152,6 +160,13 @@ public class ControllerUsuario {
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
 		}
 		
+<<<<<<< HEAD
+		if (controllerDescritor.contemDescritor(descritor) == false) {
+			controllerDescritor.cadastraDescritor(descritor);
+		}
+		
+=======
+>>>>>>> 118f383f3704b29a73b2c847db1e220936692839
 		return this.usuarios.get(idDoador).cadastraItem(this.idItem++, descritor.trim().toLowerCase(), quantidade, tags);
 	}
 	
@@ -167,10 +182,12 @@ public class ControllerUsuario {
 		if (idReceptor == null || idReceptor.trim().equals("")) {
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
-
+		if(!controllerDescritor.contemDescritor(descritor.trim().toLowerCase())) {
+			controllerDescritor.cadastraDescritor(descritor);
+		}
 		return this.usuarios.get(idReceptor).cadastraItem(this.idItem++, descritor.trim().toLowerCase(), quantidade, tags);
 	}
-
+	
 	public String exibeItem(int idItem, String idDoador) {
 		if (!this.usuarios.containsKey(idDoador)) {
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
@@ -200,7 +217,32 @@ public class ControllerUsuario {
 		return aux.substring(0, aux.length()-3);
 			
 	}
-
+	
+	
+//	
+//	public String listaItensNecessarios() {
+//		String aux = "";
+//		HashMap<Item, String> mapaItensNecessarios = new HashMap<>();
+//		ArrayList<Item> itensNecessarios = new ArrayList<>(); 
+//		for (Usuario u : usuarios.values()) {
+//			if (u.getStatus().equals("receptor")) {
+//				String receptor = u.getNome() + "/" + u.getId();
+//				for (Item item : u.itensNec().values()) {
+//					mapaItensNecessarios.put(item, receptor);
+//					itensNecessarios.add(item);
+//				}
+//			}
+//		}
+//		
+//		Collections.sort(itensNecessarios, new ItemComparavelPorId());
+//		
+//		for (Item item : itensNecessarios) {
+//			aux += item.getIdItem() + " - " + item.getDescritor() + ", tags: " + item.getTags() + ", quantidade: " + item.getQuantidade() + ", Receptor: " + mapaItensNecessarios.get(item) + " | ";
+//		}
+//		
+//		return aux;
+//	}
+	
 	/**
 	 * Atualiza a quantidade de itens e as tags inseridas, se uma tag 
 	 * @param idItem

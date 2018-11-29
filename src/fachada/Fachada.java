@@ -39,7 +39,14 @@ public class Fachada {
 	}
 	
 	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
-		return controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
+		if (controllerDescritor.contemDescritor(descricaoItem) == true) {
+			return controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
+		}
+		else {
+			controllerDescritor.cadastraDescritor(descricaoItem);
+			return controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
+			
+		}
 	}
 	
 	public int adicionaItemNecessario(String idReceptor, String descricaoItem, int quantidade, String tags) {

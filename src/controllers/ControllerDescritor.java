@@ -42,6 +42,8 @@ public class ControllerDescritor {
 		if (descritores.contains(descritor.trim().toLowerCase())) {
 			throw new IllegalArgumentException("Descritor de Item ja existente: " + descritor.trim().toLowerCase() + ".");
 		}
+		
+		
 		descritores.add(descritor.trim().toLowerCase());
 	}
 	
@@ -106,9 +108,9 @@ public class ControllerDescritor {
 			}
 		}
 		
-		for (Item itens : setDeItens) {
-			itensOrdenados.add(itens);
-		}
+		//addAll
+		
+		itensOrdenados.addAll(setDeItens);
 
 		Collections.sort(itensOrdenados, new ItemComparavel());
 		
@@ -116,11 +118,14 @@ public class ControllerDescritor {
 			mapDeItens.put(itens.getDescritor(), itens);
 		}
 		
-		for (Usuario usuario : map.values()) { 
-			for (Item mapItensOrdenado : mapDeItens.values()) {
-				for (Item itens : (usuario.getListaItens().values())) {
+		
+		for (Item mapItensOrdenado : mapDeItens.values()) { 
+			for (Usuario usuario : map.values()) {
+				for (Item itens : (usuario.getListaItens().values())) {	
+					String str = "";
 					if (mapItensOrdenado.equals(itens)) {
-						aux += mapItensOrdenado.toStringCombo() + "doador: " + usuario.getNome() + "/" + usuario.getId().replace(".", "").replace("-", "")  + " | ";
+						str = mapItensOrdenado.toStringCombo() + "doador: " + usuario.getNome() + "/" + usuario.getId().replace(".", "").replace("-", "")  + " | ";
+						aux += str;
 						break;
 					}
 				}
