@@ -30,9 +30,7 @@ public class Item implements Comparator<Item>{
 				
 				this.tags = listaTags;
 			}
-			
 		}
-		
 		if (novaQuantidade > 0) {
 			this.quantidade = novaQuantidade;
 		}
