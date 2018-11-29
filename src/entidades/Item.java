@@ -18,16 +18,18 @@ public class Item implements Comparator<Item>{
 	}
 	
 	public String atualizaItem(String novasTags, int novaQuantidade) {
-		if (novasTags != null) {
-			String[] vetorTags = novasTags.split(",");
-			List<String> listaTags = new ArrayList<String>();
-			
-			//Adicionando as tags do vetor no ArrayList
-			for (String c : vetorTags) {
-				listaTags.add(c);
+		if (novasTags != null ) {
+			if(novasTags.length()>0) {
+				String[] vetorTags = novasTags.split(",");
+				List<String> listaTags = new ArrayList<String>();
+				
+				//Adicionando as tags do vetor no ArrayList
+				for (String c : vetorTags) {
+					listaTags.add(c);
+				}
+				
+				this.tags = listaTags;
 			}
-			
-			this.tags = listaTags;
 			
 		}
 		
