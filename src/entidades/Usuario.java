@@ -1,5 +1,6 @@
 package entidades;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +32,9 @@ public class Usuario implements Comparable<Usuario>{
 		
 		if(id == null || id.trim().equals("")) 
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		nome = Normalizer.normalize(nome, Normalizer.Form.NFD);
+		nome = nome.replaceAll("[^\\p{ASCII}]", "");
+		nome = nome.replace("\\n", "");
 		this.nome = nome;
 		this.email = email;
 		this.celular = celular;
@@ -76,13 +80,18 @@ public class Usuario implements Comparable<Usuario>{
 			listaTags.add(c);
 		}
 		
+		int idItemProvisorio = idItem;
 		for (Item c : listaItens.values()) {
 			if (c.getDescritor().equals(descritor) && c.getTags().equals(listaTags)) {
 				c.setQuantidade(quantidade);
+				idItemProvisorio = c.getIdItem();
 			}
 		}
-		this.listaItens.put(idItem, new Item(idItem, quantidade, descritor, listaTags));
+		if(listaItens.containsValue(new Item(idItemProvisorio, quantidade, descritor, listaTags))) {
+			return idItemProvisorio;
+		}
 		
+		this.listaItens.put(idItem, new Item(idItem, quantidade, descritor, listaTags));
 		return idItem;
 	}
 	
@@ -133,6 +142,9 @@ public class Usuario implements Comparable<Usuario>{
 
 
 	public String getNome() {
+		nome = Normalizer.normalize(nome, Normalizer.Form.NFD);
+		nome = nome.replaceAll("[^\\p{ASCII}]", "");
+		nome = nome.replace("\\n", "");
 		return this.nome;
 	}
 
@@ -146,6 +158,10 @@ public class Usuario implements Comparable<Usuario>{
 
 	public String getClasse() {
 		return this.classe;
+	}
+	
+	public String getIdSemFormatacao() {
+		return this.id;
 	}
 	
 	public String getStatus() {

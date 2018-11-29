@@ -173,7 +173,9 @@ public class ControllerUsuario {
 		if (idReceptor == null || idReceptor.trim().equals("")) {
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		}
-		
+		if(!controllerDescritor.contemDescritor(descritor.trim().toLowerCase())) {
+			controllerDescritor.cadastraDescritor(descritor);
+		}
 		return this.usuarios.get(idReceptor).cadastraItem(this.idItem++, descritor.trim().toLowerCase(), quantidade, tags);
 	}
 	
@@ -185,27 +187,52 @@ public class ControllerUsuario {
 	}
 	
 	public String listaItensNecessarios() {
-	String aux = "";
-	HashMap<Item, String> mapaItensNecessarios = new HashMap<>();
-	ArrayList<Item> itensNecessarios = new ArrayList<>(); 
-	for (Usuario u : usuarios.values()) {
-		if (u.getStatus().equals("receptor")) {
-			String receptor = u.getNome() + "/" + u.getId();
-			for (Item item : u.itensNec().values()) {
-				mapaItensNecessarios.put(item, receptor);
-				itensNecessarios.add(item);
+		Map<Item, String> itens = new HashMap<>();
+		for(Usuario user: usuarios.values()){
+			if(user.getStatus().equals("receptor")){
+				for(Item item: user.itensNec().values()){
+					itens.put(item, user.getNome() + "/" + user.getIdSemFormatacao());
+				}
 			}
 		}
+		List<Item> itensLista = new ArrayList<>();
+		for(Item item: itens.keySet()){
+			itensLista.add(item);
+		}
+		Collections.sort(itensLista, new ItemComparavelPorId());
+		String aux ="";
+		for(Item item: itensLista){
+			aux += item.getIdItem() + " - " + item.getDescritor() + ", tags: " + item.getTags() + ", quantidade: " + item.getQuantidade() + ", Receptor: " + itens.get(item) + " | ";
+		}
+		
+		return aux.substring(0, aux.length()-3);
+			
 	}
 	
-	Collections.sort(itensNecessarios, new ItemComparavelPorId());
 	
-	for (Item item : itensNecessarios) {
-		aux += item.getIdItem() + " - " + item.getDescritor() + ", tags: " + item.getTags() + ", quantidade: " + item.getQuantidade() + ", Receptor: " + mapaItensNecessarios.get(item) + " | ";
-	}
-	
-	return aux;
-}
+//	
+//	public String listaItensNecessarios() {
+//		String aux = "";
+//		HashMap<Item, String> mapaItensNecessarios = new HashMap<>();
+//		ArrayList<Item> itensNecessarios = new ArrayList<>(); 
+//		for (Usuario u : usuarios.values()) {
+//			if (u.getStatus().equals("receptor")) {
+//				String receptor = u.getNome() + "/" + u.getId();
+//				for (Item item : u.itensNec().values()) {
+//					mapaItensNecessarios.put(item, receptor);
+//					itensNecessarios.add(item);
+//				}
+//			}
+//		}
+//		
+//		Collections.sort(itensNecessarios, new ItemComparavelPorId());
+//		
+//		for (Item item : itensNecessarios) {
+//			aux += item.getIdItem() + " - " + item.getDescritor() + ", tags: " + item.getTags() + ", quantidade: " + item.getQuantidade() + ", Receptor: " + mapaItensNecessarios.get(item) + " | ";
+//		}
+//		
+//		return aux;
+//	}
 	
 	/**
 	 * Atualiza a quantidade de itens e as tags inseridas, se uma tag 

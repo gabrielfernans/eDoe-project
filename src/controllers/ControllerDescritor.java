@@ -17,10 +17,10 @@ public class ControllerDescritor {
 	public ControllerDescritor() {
 		this.descritores = new HashSet<>();
 	}
-
+	
 	/**
-	 * Método responsável por cadastrar um descritor no sistema. Contém uma exceção para verificar se o parâmetro inserido
-	 * não irá interferir no funcionamento do programa.
+	 * Mï¿½todo responsï¿½vel por cadastrar um descritor no sistema. Contï¿½m uma exceï¿½ï¿½o para verificar se o parï¿½metro inserido
+	 * nï¿½o irï¿½ interferir no funcionamento do programa.
 	 * @param descritor Nome do descritor
 	 */
 	public void cadastraDescritor(String descritor) {
