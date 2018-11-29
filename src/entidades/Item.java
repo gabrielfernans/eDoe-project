@@ -1,10 +1,9 @@
 package entidades;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-public class Item implements Comparator<Item>{
+public class Item implements Comparable<Item>{
 	private int idItem;
 	private int quantidade;
 	private String descritor;
@@ -37,9 +36,8 @@ public class Item implements Comparator<Item>{
 		return this.toString();
 	}
 
-	//erick
 	public String retornaDescricaoEQuantidade() {
-		return this.quantidade + " - " + descritor.toString();
+		return this.quantidade + " - " + descritor;
 	}
 
 	public String toStringCombo() {
@@ -52,11 +50,6 @@ public class Item implements Comparator<Item>{
 			return this.idItem + " - " +this.descritor.toString() + ", quantidade: " + this.quantidade;
 		}
 		return this.idItem + " - " + this.descritor.toString() + ", tags: " + this.tags.toString() + ", quantidade: " + this.quantidade;
-	}
-
-	@Override
-	public int compare(Item item1, Item item2) {
-		return item1.getDescritor().compareTo(item2.getDescritor());
 	}
 
 	public String retornaDescricaoItemEQuantidade() {
@@ -98,8 +91,7 @@ public class Item implements Comparator<Item>{
 
 	public String toStringDeTags() {
 		String lista = "[";
-		
-		//Criando representacao textual da lista de itens.
+
 		for (int i=0; i < tags.size(); i++) {
 			if (i == tags.size()-1) {
 				lista += tags.get(i) + "]";
@@ -108,7 +100,7 @@ public class Item implements Comparator<Item>{
 				lista += tags.get(i) + ", ";
 			}
 		}
-		return this.idItem + " - " + this.descritor + ", tags: " + lista + ", quantidade: " + this.quantidade;
+		return lista;
 	}
 
 	@Override
@@ -142,6 +134,13 @@ public class Item implements Comparator<Item>{
 		return true;
 	}
 
+	@Override
+	public int compareTo(Item o) {
+		return this.descritor.compareTo(o.getDescritor());
+	}
 	
+	public String idItemToString() {
+		return this.idItem + " - " + this.descritor + ", " + "tags: " + this.toStringDeTags() + ", quantidade: " + this.quantidade;
+	}
 
 }

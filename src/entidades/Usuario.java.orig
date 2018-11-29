@@ -44,7 +44,6 @@ public class Usuario implements Comparable<Usuario>{
 		this.contadorOrdem = cont;
 	}
 	
-	// adicionei o get de itens para poder ter acesso a lista no controller
 	public Map<Integer, Item> getListaItens() {
 		return listaItens;
 	}
@@ -87,12 +86,16 @@ public class Usuario implements Comparable<Usuario>{
 				idItemProvisorio = c.getIdItem();
 			}
 		}
+<<<<<<< HEAD
 		if(listaItens.containsValue(new Item(idItemProvisorio, quantidade, descritor, listaTags))) {
 			return idItemProvisorio;
 		}
+=======
 		
 		this.listaItens.put(idItem, new Item(idItem, quantidade, descritor, listaTags));
+>>>>>>> 5a4ed134ecca20c10bc5d7831c57123352480585
 		
+		this.listaItens.put(idItem, new Item(idItem, quantidade, descritor, listaTags));
 		return idItem;
 	}
 	

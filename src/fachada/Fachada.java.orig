@@ -5,6 +5,7 @@ import controllers.ControllerDescritor;
 import controllers.ControllerUsuario;
 import easyaccept.EasyAccept;
 
+
 public class Fachada {
 	
 	ControllerUsuario controllerUsuario = new ControllerUsuario();
@@ -66,6 +67,10 @@ public class Fachada {
 		controllerUsuario.removeItem(idItem, idDoador);
 	}
 	
+<<<<<<< HEAD
+	public void removeItemNecessario(String idReceptor, int idItem) {
+		controllerUsuario.removeItem(idItem, idReceptor);
+=======
 	public String listaDescritorDeItensParaDoacao() {
 		return controllerDescritor.listaDescritorDeItensParaDoacao(controllerUsuario.getUsuarios());
 	}
@@ -76,9 +81,6 @@ public class Fachada {
 	
 	public String pesquisaItemParaDoacaoPorDescricao(String desc) {
 		return controllerDescritor.pesquisaItemParaDoacaoPorDescricao(desc, controllerUsuario.getUsuarios());
-	}
-
- 	public void removeItemNecessario(String idReceptor, int idItem) {
-		controllerUsuario.removeItem(idItem, idReceptor);
+>>>>>>> 5a4ed134ecca20c10bc5d7831c57123352480585
 	}
 }

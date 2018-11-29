@@ -6,12 +6,13 @@ public class ItemComparavel implements Comparator<Item>{
 
 	@Override
 	public int compare(Item o1, Item o2) {
-		if (o1.getQuantidade() > o2.getQuantidade())
-			return -1;
-		else if ((o1.getQuantidade() < o2.getQuantidade()))
-			return 1;
-		else 
-			return 0;
+		
+		int flag = o2.getQuantidade() - o1.getQuantidade();
+		
+		if(flag == 0) 
+			flag = o1.getDescritor().compareTo(o2.getDescritor());
+		
+		return flag;
 	}
-	
-}
+
+}    

@@ -27,10 +27,15 @@ public class ControllerDescritor {
 	public ControllerDescritor() {
 		this.descritores = new HashSet<>();
 	}
-
+	
 	/**
+<<<<<<< HEAD
+	 * M�todo respons�vel por cadastrar um descritor no sistema. Cont�m uma exce��o para verificar se o par�metro inserido
+	 * n�o ir� interferir no funcionamento do programa.
+=======
 	 * Metodo responsavel por cadastrar um descritor no sistema. Contem uma excecao para verificar se o parametro inserido
 	 * nao ira interferir no funcionamento do programa.
+>>>>>>> 5a4ed134ecca20c10bc5d7831c57123352480585
 	 * @param descritor Nome do descritor
 	 */
 	public void cadastraDescritor(String descritor) {
@@ -90,7 +95,7 @@ public class ControllerDescritor {
 
 	/**
 	 * Metodo que lista todos os itens inseridos no sistema ordenada pela quantidade do item no sistema.
-	 * Itens com a mesma quantidade serao ordenados pela ordem alfabetica de descricao.
+	 * Itens com a mesma quantidade serao ordenados pela ordem alfabética de descricao.
 	 * @param map Um mapa com os usuarios que sera necessario para acessar as listas de itens dos usuarios.
 	 * @return O retorno eh uma string com a representacao do id do item, a descricao, tag, quantidade e o doador.
 	 */
@@ -133,7 +138,7 @@ public class ControllerDescritor {
 	
 	/**
 	 * Metodo que lista todos os itens relacionados a uma dada string de pesquisa.
-	 * A listagem ocorre em ordem alfab�tica considerando os descritores dos itens. 
+	 * A listagem ocorre em ordem alfabética considerando os descritores dos itens. 
 	 * @param desc Parametro designado pelo usuario para string de pesquisa.
 	 * @param map Um mapa com os usuarios que sera necessario para acessar as listas de itens dos usuarios.
 	 * @return O retorno eh uma string com a representacao do id do item, a descricao, tag e quantidade.
