@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="entidades.ItemComparavelPorId" project="projetop2" 
     file="/projetop2/src/entidades/ItemComparavelPorId.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="97" width="149" x="232" y="-42"/>    
+    <position height="97" width="149" x="130" y="95"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="fachada.Fachada" project="projetop2" file="/projetop2/src/fachada/Fachada.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="403" width="292" x="614" y="-42"/>    
+    <position height="403" width="292" x="512" y="95"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="entidades.Usuario" project="projetop2" 
     file="/projetop2/src/entidades/Usuario.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="583" width="268" x="431" y="880"/>    
+    <position height="511" width="268" x="346" y="945"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="entidades.ItemComparavelNome" project="projetop2" 
     file="/projetop2/src/entidades/ItemComparavelNome.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="97" width="153" x="421" y="-42"/>    
+    <position height="97" width="153" x="319" y="95"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </class>  
   <class id="5" language="java" name="controllers.ControllerUsuario" project="projetop2" 
     file="/projetop2/src/controllers/ControllerUsuario.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="439" width="327" x="431" y="401"/>    
+    <position height="367" width="292" x="346" y="538"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="entidades.Item" project="projetop2" file="/projetop2/src/entidades/Item.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="475" width="230" x="431" y="1503"/>    
+    <position height="367" width="209" x="346" y="1496"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -57,7 +57,7 @@
   </class>  
   <class id="7" language="java" name="fachada.Main" project="projetop2" file="/projetop2/src/fachada/Main.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="97" width="113" x="946" y="-42"/>    
+    <position height="97" width="113" x="844" y="95"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -66,7 +66,7 @@
   </class>  
   <class id="8" language="java" name="controllers.ControllerDescritor" project="projetop2" 
     file="/projetop2/src/controllers/ControllerDescritor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="187" width="384" x="798" y="401"/>    
+    <position height="169" width="324" x="678" y="538"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -75,7 +75,7 @@
   </class>  
   <class id="9" language="java" name="entidades.ItemComparavel" project="projetop2" 
     file="/projetop2/src/entidades/ItemComparavel.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="97" width="135" x="1099" y="-42"/>    
+    <position height="97" width="135" x="997" y="95"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -84,50 +84,34 @@
   </class>  
   <association id="10">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="11" name="controllerDescritor">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="12" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
+      <attribute id="11" name="controllerDescritor"/>      
+      <multiplicity id="12" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="13">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="14" name="itens"/>      
+      <multiplicity id="15" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="16">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="14" name="usuarios">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="15" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
+      <attribute id="17" name="usuarios"/>      
+      <multiplicity id="18" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="16">    
+  <association id="19">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="17" name="controllerUsuario">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="18" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
+      <attribute id="20" name="controllerUsuario"/>      
+      <multiplicity id="21" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="19">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="20" name="itens">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="21" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
