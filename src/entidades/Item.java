@@ -18,7 +18,7 @@ public class Item implements Comparable<Item>{
 	
 	public String atualizaItem(String novasTags, int novaQuantidade) {
 		if (novasTags != null ) {
-			if(novasTags.length()>0) {
+			if(novasTags.length() > 0) {
 				String[] vetorTags = novasTags.split(",");
 				List<String> listaTags = new ArrayList<String>();
 				
@@ -41,7 +41,7 @@ public class Item implements Comparable<Item>{
 	}
 
 	public String toStringCombo() {
-		return this.idItem + " - " + this.getDescritor() + ", tags: " + this.toStringDeTags() + ", quantidade: " + this.quantidade + ", "; 
+		return this.idItem + " - " + this.getDescritor() + ", tags: " + this.tags.toString() + ", quantidade: " + this.quantidade + ", "; 
 	}
 	
 	@Override
@@ -51,56 +51,22 @@ public class Item implements Comparable<Item>{
 		}
 		return this.idItem + " - " + this.descritor.toString() + ", tags: " + this.tags.toString() + ", quantidade: " + this.quantidade;
 	}
-
-	public String retornaDescricaoItemEQuantidade() {
-		return this.quantidade + " - " + descritor.toString();
-	}
-	
 	
 	public String getDescritor() {
 		return descritor;
 	}
 
-	public List<String> getTags() {
-		return tags;
-	}
-
 	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
+		if(quantidade > 0)
+			this.quantidade = quantidade;
 	}
 
 	public int getQuantidade() {
 		return quantidade;
 	}
-
-	public void setIdItem(int idItem) {
-		this.idItem = idItem;
-	}
 	
 	public int getIdItem() {
 		return idItem;
-	}
-
-	public void setDescritor(String descritor) {
-		this.descritor = descritor;
-	}
-
-	public void setTags(List<String> tags) {
-		this.tags = tags;
-	}
-
-	public String toStringDeTags() {
-		String lista = "[";
-
-		for (int i=0; i < tags.size(); i++) {
-			if (i == tags.size()-1) {
-				lista += tags.get(i) + "]";
-			}
-			else {
-				lista += tags.get(i) + ", ";
-			}
-		}
-		return lista;
 	}
 
 	@Override
@@ -140,7 +106,7 @@ public class Item implements Comparable<Item>{
 	}
 	
 	public String idItemToString() {
-		return this.idItem + " - " + this.descritor + ", " + "tags: " + this.toStringDeTags() + ", quantidade: " + this.quantidade;
+		return this.idItem + " - " + this.descritor + ", " + "tags: " + this.tags.toString() + ", quantidade: " + this.quantidade;
 	}
 
 }

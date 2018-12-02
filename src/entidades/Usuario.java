@@ -1,10 +1,16 @@
 package entidades;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+/**
+ * Entidade usuario, representa um usuario do sistema, que pode ser receptor ou doador.
+ * Cada usuario possui um nome, email, celular, classe (que informa se ele eh uma pessoa fisica ou algum orgao),
+ * status (informado se eh doador ou receptor), uma colecao de itens e um id unico no sistema(cpf para pessoa fisica, cnpj para outro)
+ * @author debora leda
+ */
 
 public class Usuario implements Comparable<Usuario>{
 	
@@ -15,9 +21,19 @@ public class Usuario implements Comparable<Usuario>{
 	private String status;
 	private int contadorOrdem;
 	private String id;
-	private Map<Integer, Item> listaItens = new HashMap<>();
+	private Map<Integer, Item> itens = new HashMap<>();
 	
-	public Usuario(String id, String nome, String email, String celular, String classe, String status, int cont) {
+	/**
+	 * Construtor de usuario, a partir dos dados do mesmo
+	 * @param id cpf para pessoa fisica, cnpj para pessoa juridica
+	 * @param nome nome do usuario
+	 * @param email email do usuario
+	 * @param celular celular do usuario
+	 * @param classe classe do usuario, informando se eh pessoa fisica ou outro orgao
+	 * @param status status do usuario, indormando se eh doador ou receptor
+	 * @param contadorOrdem contador usado depois para ordenar o usuario por ordem de insersao no sistema
+	 */
+	public Usuario(String id, String nome, String email, String celular, String classe, String status, int contadorOrdem) {
 		if(nome == null ||nome.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: nome nao pode ser vazio ou nulo.");
 		
@@ -32,46 +48,54 @@ public class Usuario implements Comparable<Usuario>{
 		
 		if(id == null || id.trim().equals("")) 
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
-		nome = Normalizer.normalize(nome, Normalizer.Form.NFD);
-		nome = nome.replaceAll("[^\\p{ASCII}]", "");
-		nome = nome.replace("\\n", "");
 		this.nome = nome;
 		this.email = email;
 		this.celular = celular;
 		this.classe = classe;
 		this.status = status;
 		this.id = id;
-		this.contadorOrdem = cont;
+		this.contadorOrdem = contadorOrdem;
 	}
 	
-	// adicionei o get de itens para poder ter acesso a lista no controller
-	public Map<Integer, Item> getListaItens() {
-		return listaItens;
+	/**
+	 * Get todos os itens de um usuario
+	 * @return um Map<Integer, Item> contendo todos os itens de um usuario
+	 */
+	public Map<Integer, Item> getItens() {
+		return itens;
 	}
 
+	/**
+	 * Atualiza informacoes de um usuario, podendo atualizar apenas nome, email e celular
+	 * @param nome nome do usuario
+	 * @param email email do usuario
+	 * @param celular celular do usuario
+	 * @return String contendo os novos dados do usuario
+	 */
 	public String atualizaUsuario(String nome, String email, String celular) {
-		if(nome != null && nome.length()!=0 )
+		if(nome != null && nome.length()!=0 && !nome.equals(this.nome))
 			this.nome = nome;
-		else if(email != null && email.length() != 0)
+		if(email != null && email.length() != 0 && !email.equals(this.email))
 			this.email = email;
-		else if(celular != null && celular.length() != 0)
-			this.celular = celular;
-		return this.toString();
-	}
-
-	
-	public String atualizaReceptor(String nome, String email, String celular) {
-		if(!nome.equals(this.nome))
-			this.nome = nome;
-		if(!email.equals(this.email))
-			this.email = email;
-		if(!celular.equals(this.celular))
+		if(celular != null && celular.length() != 0 && !celular.equals(this.celular))
 			this.celular = celular;
 		return this.toString();
 	}
 	
-	
+	/**
+	 * Cadastra item que o usuario possui(pode ser para doar ou para receber) 
+	 * @param idItem identificador (gerado pelo sistema) do item , inteiro
+	 * @param descritor descritor do item, String
+	 * @param quantidade quantidade do item, String
+	 * @param tags tags do item, String
+	 * @return retorna o idDoItem
+	 */
 	public int cadastraItem(int idItem, String descritor, int quantidade, String tags) {
+		if (descritor == null || descritor.trim().equals(""))
+			throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");
+		if (quantidade <= 0)
+			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
+		
 		String[] vetorTags = tags.split(",");
 		List<String> listaTags = new ArrayList<String>();
 		
@@ -81,106 +105,129 @@ public class Usuario implements Comparable<Usuario>{
 		}
 		
 		int idItemProvisorio = idItem;
-		for (Item c : listaItens.values()) {
-			if (c.getDescritor().equals(descritor) && c.getTags().equals(listaTags)) {
+		for (Item c : itens.values()) {
+			if(c.equals(new Item(idItem, quantidade, descritor, listaTags))) {
 				c.setQuantidade(quantidade);
 				idItemProvisorio = c.getIdItem();
 			}
 		}
-		if(listaItens.containsValue(new Item(idItemProvisorio, quantidade, descritor, listaTags))) {
+		if(itens.containsValue(new Item(idItemProvisorio, quantidade, descritor, listaTags))) {
 			return idItemProvisorio;
 		}
 		
-		this.listaItens.put(idItem, new Item(idItem, quantidade, descritor, listaTags));
+		this.itens.put(idItem, new Item(idItem, quantidade, descritor, listaTags));
 		
 		return idItem;
 	}
 	
 	/**
-	 * 
-	 * @param idItem
-	 * @return
+	 * Exibe item a partir do seu id (inteiro)
+	 * @param idItem id do item
+	 * @return representacao em string do item
 	 */
 	public String exibeItem(int idItem) {
-		if (!this.listaItens.containsKey(idItem)) {
+		if (!this.itens.containsKey(idItem))
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
-		}
-		return this.listaItens.get(idItem).toString();
+		
+		return this.itens.get(idItem).toString();
 	}
 	
 	/**
-	 * 
-	 * @param idItem
-	 * @param novasTags
-	 * @param novaQuantidade
+	 * Atualiza item, a partir do seu id. Os campos que podem ser atualizados sao as tags e a quantidade do item
+	 * @param idItem id do item, int
+	 * @param novasTags novasTags do item, String
+	 * @param novaQuantidade novaQuantidade do item, int
 	 */
 	public String atualizaItem(int idItem, String novasTags, int novaQuantidade) {
-		if (!this.listaItens.containsKey(idItem)) {
+		if (!this.itens.containsKey(idItem))
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
-		}
 
-		return this.listaItens.get(idItem).atualizaItem(novasTags, novaQuantidade);
+		return this.itens.get(idItem).atualizaItem(novasTags, novaQuantidade);
 	}
 	
+	/**
+	 * Remove item do sistema a partir do seu id
+	 * @param idItem id do item, int
+	 */
 	public void removeItem(int idItem) {
-		if (this.listaItens.size() == 00 ) {
+		if (this.itens.size() == 00 ) {
 			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
 		}
-		if (!this.listaItens.containsKey(idItem)) {
+		if (!this.itens.containsKey(idItem)) {
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		}
-		this.listaItens.remove(idItem);
+		this.itens.remove(idItem);
 	}
-	
-	public Map<Integer, Item> itensNec() {
-		return listaItens;
-	}
-	
+
+	/**
+	 * Compara cada usuario pelo ordem de insercao no sistema
+	 */
 	@Override
 	public int compareTo(Usuario o) {
 		return this.getContador() - o.getContador(); 
 	}
 
-
+	/**
+	 * Retorna uma String com nome do usuario
+	 * @return nome do usuario
+	 */
 	public String getNome() {
-		nome = Normalizer.normalize(nome, Normalizer.Form.NFD);
-		nome = nome.replaceAll("[^\\p{ASCII}]", "");
-		nome = nome.replace("\\n", "");
 		return this.nome;
 	}
 
+	/**
+	 * Retorna uma String com email do usuario
+	 * @return email do usuario
+	 */
 	public String getEmail() {
 		return this.email;
 	}
 
+	/**
+	 * Retorna uma String com celular do usuario
+	 * @return celular do usuario
+	 */
 	public String getCelular() {
 		return this.celular;
 	}
 
+	/**
+	 * Retorna uma String com a classe do usuario
+	 * @return classe do usuario
+	 */
 	public String getClasse() {
 		return this.classe;
 	}
 	
-	public String getIdSemFormatacao() {
-		return this.id;
-	}
-	
-	public String getStatus() {
-		return this.status;
-	}
-	
-	public int getContador() {
-		return this.contadorOrdem;
-	}
-
-	public void adicionaItem(int id, int quantidade, String descricao, String data, List<String> tags) {
-		this.listaItens.put(id, new Item(id, quantidade, descricao, tags));
-	}
-
+	/**
+	 * Retorna uma String com o id do usuario
+	 * @return id do usuario
+	 */
 	public String getId() {
 		return this.id;
 	}
 	
+	/**
+	 * Retorna uma String com o status do usuario
+	 * @return status do usuario
+	 */
+	public String getStatus() {
+		return this.status;
+	}
+	
+	/**
+	 * Retorna uma String com o contador do usuario, aquele que eh usado para ordena-lo
+	 * @return contador do usuario
+	 */
+	public int getContador() {
+		return this.contadorOrdem;
+	}
+	
+	/**
+	 * Representacao em string do usuario
+	 * No formato:
+	 * 	NOME/ID, EMAIL, CELULAR, status: STATUS
+	 */
 	public String toString() {
 		return getNome() + "/" + this.getId() + ", " + getEmail() + ", " + getCelular() + ", status: " + getStatus(); 
 	}
@@ -192,7 +239,10 @@ public class Usuario implements Comparable<Usuario>{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
+	
+	/**
+	 * Verifica se dois usuarios sao iguais a partir do seu id
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

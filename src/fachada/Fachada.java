@@ -50,7 +50,7 @@ public class Fachada {
 	}
 	
 	public int adicionaItemNecessario(String idReceptor, String descricaoItem, int quantidade, String tags) {
-		return controllerUsuario.cadastraItemNecessario(idReceptor, descricaoItem, quantidade, tags);
+		return controllerUsuario.cadastraItem(idReceptor, descricaoItem, quantidade, tags);
 	}
 	
 	public String exibeItem(int idItem, String idDoador) {
@@ -66,7 +66,7 @@ public class Fachada {
 	}
 	
 	public String atualizaItemNecessario(String idReceptor, int idItem, int quantidade, String tags) {
-		return controllerUsuario.atualizaItemNecessario(idReceptor, idItem, quantidade, tags);
+		return controllerUsuario.atualizaItem(idItem, idReceptor, quantidade, tags);
 	}
 	
 	public void removeItemParaDoacao(int idItem, String idDoador) {
@@ -82,7 +82,7 @@ public class Fachada {
 	}
 	
 	public String pesquisaItemParaDoacaoPorDescricao(String desc) {
-		return controllerDescritor.pesquisaItemParaDoacaoPorDescricao(desc, controllerUsuario.getUsuarios());
+		return controllerUsuario.pesquisaItemParaDoacaoPorDescricao(desc);
 	}
 
  	public void removeItemNecessario(String idReceptor, int idItem) {
