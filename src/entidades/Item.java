@@ -109,4 +109,8 @@ public class Item implements Comparable<Item>{
 		return this.idItem + " - " + this.descritor + ", " + "tags: " + this.tags.toString() + ", quantidade: " + this.quantidade;
 	}
 
+	public List<String> getTags() {
+		return tags;
+	}
+
 }

@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 import entidades.Item;
 import entidades.ItemComparavelPorId;
+import entidades.ItemComparavelPorPontuacao;
 import entidades.Usuario;
 
 /**
@@ -308,6 +309,67 @@ public class ControllerUsuario {
 		return toString.substring(0, toString.length()-3);
 	}
 	
+	private Item getItemPeloId(int idItem) {
+		Item itemNecessario = null;
+		
+		outerloop:
+		for(Usuario user: usuarios.values()){
+			for(Item item: user.getItens().values()){
+				if (idItem == item.getIdItem()) {
+					itemNecessario = item;
+					break outerloop;
+				}
+			}
+		}
+		return itemNecessario;
+	}
+	
+	private int comparadorDeTags(List<String> tags, List<String> tagsNecessarias) {
+		int pontos = 20;
+
+		for (int i = 0; i < tags.size(); i++) {	
+			for (int j = 0; j < tagsNecessarias.size(); j++) {
+				if (tags.get(i).equals(tagsNecessarias.get(j))) {
+					if (i == j) {
+						pontos += 10;
+					}
+					else {
+						pontos += 5;
+					}
+				}
+			}
+		}
+		return pontos;
+	}
+	
+	public void match(String idReceptor, int idItemNecessario) {
+		Item itemNecessario = this.getItemPeloId(idItemNecessario);
+		List<Integer> pontosOrdenados = new ArrayList<Integer>(); 
+		HashMap<String, Integer> mapItemUsuario = new HashMap<String, Integer>(); 
+		
+		for(Usuario user: usuarios.values()){
+			for(Item item: user.getItens().values()){
+				if (user.getStatus().equals("doador")) {
+					if (itemNecessario.getDescritor().equals(item.getDescritor())) {
+						String aux = item.toString() + ", " + user.toString();
+						mapItemUsuario.put(aux, comparadorDeTags(item.getTags(), itemNecessario.getTags()));
+						
+					}
+				}
+			}
+		}
+		
+		pontosOrdenados.addAll(mapItemUsuario.values());
+		pontosOrdenados.sort(new ItemComparavelPorPontuacao());
+		
+		for (int i : pontosOrdenados) {
+			for (String nome : mapItemUsuario.keySet()) {
+				
+			}
+			
+		}
+		
+	}
 	
 	
 }
