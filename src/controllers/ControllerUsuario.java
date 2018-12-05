@@ -309,24 +309,30 @@ public class ControllerUsuario {
 		return toString.substring(0, toString.length()-3);
 	}
 	
+	/**
+	 * Retorna item encontrado no sistema atraves do id
+	 * @param idItem id do item que sera buscado no sistema
+	 * @return Item encontrado, caso nao seja encontrado, lançara uma excessao
+	 */
 	private Item getItemPeloId(int idItem) {
-		Item itemNecessario = null;
-		
-		outerloop:
 		for(Usuario user: usuarios.values()){
 			for(Item item: user.getItens().values()){
-				if (idItem == item.getIdItem()) {
-					itemNecessario = item;
-					break outerloop;
-				}
+				if (idItem == item.getIdItem())
+					return item;
 			}
 		}
-		return itemNecessario;
+		throw new IllegalArgumentException("Item nao encontrado: " + idItem + "."); 
 	}
 	
+	/**
+	 * Compara se as tags de dois itens sao iguais. Caso sejam iguais e na mesma ordem, o item ganha 10 pontos. Caso sejam iguais mas em ordem diferente, 
+	 * o item ganha 5 pontos.
+	 * @param tags tags de um item para doacao
+	 * @param tagsNecessarias tags de um item necessario
+	 * @return pontos que o item para a doacao acumulou
+	 */
 	private int comparadorDeTags(List<String> tags, List<String> tagsNecessarias) {
 		int pontos = 20;
-
 		for (int i = 0; i < tags.size(); i++) {	
 			for (int j = 0; j < tagsNecessarias.size(); j++) {
 				if (tags.get(i).equals(tagsNecessarias.get(j))) {
@@ -342,34 +348,62 @@ public class ControllerUsuario {
 		return pontos;
 	}
 	
-	public void match(String idReceptor, int idItemNecessario) {
-		Item itemNecessario = this.getItemPeloId(idItemNecessario);
+	/**
+	 * Ordena matchs de acordo com a pontuacao que cada match possui
+	 * @param mapItemPontos map que associa um item ao numero de pontos que ele possui
+	 * @return string com os itens ordenados de acordo com os pontos
+	 */
+	private String ordenaMatchs(Map<String, Integer> mapItemPontos) {
 		List<Integer> pontosOrdenados = new ArrayList<Integer>(); 
-		HashMap<String, Integer> mapItemUsuario = new HashMap<String, Integer>(); 
+
+		pontosOrdenados.addAll(mapItemPontos.values());
+		pontosOrdenados.sort(new ItemComparavelPorPontuacao());
+		List<String> listaParaDoacaoOrdenada = new ArrayList<String>();		
+		String itensParaDoacao = "";
+
+		for(int ponto : pontosOrdenados) {
+			for(String itemParaDoacao : mapItemPontos.keySet()) {
+				if(mapItemPontos.get(itemParaDoacao) == ponto && !listaParaDoacaoOrdenada.contains(itemParaDoacao)) {
+					listaParaDoacaoOrdenada.add(itemParaDoacao);
+					itensParaDoacao += itemParaDoacao + " | ";
+				}
+			}
+		}
+		return itensParaDoacao.substring(0, itensParaDoacao.length()-3);
+	}
+	
+	/**
+	 * Realiza match no sistema de um item necessario com um item disponivel no sistema atraves do id do receptor e do id do item necessario
+	 * @param idReceptor id do receptor
+	 * @param idItemNecessario id do item necessario
+	 * @return String ordenada dos matchs que o sistema realizou
+	 */
+	public String match(String idReceptor, int idItemNecessario) {
+		if(idReceptor == null || idReceptor.trim().equals(""))
+			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		if(this.pesquisaUsuarioPorId(idReceptor).split("status: ")[1].equals("doador"))
+			throw new IllegalArgumentException("O Usuario deve ser um receptor: " + idReceptor + ".");
+		if(idItemNecessario < 0) 
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+
+		Item itemNecessario = this.getItemPeloId(idItemNecessario);
+		HashMap<String, Integer> mapItemPontos = new HashMap<String, Integer>(); 
+		boolean itemExiste = false;
 		
 		for(Usuario user: usuarios.values()){
 			for(Item item: user.getItens().values()){
 				if (user.getStatus().equals("doador")) {
 					if (itemNecessario.getDescritor().equals(item.getDescritor())) {
-						String aux = item.toString() + ", " + user.toString();
-						mapItemUsuario.put(aux, comparadorDeTags(item.getTags(), itemNecessario.getTags()));
-						
+						mapItemPontos.put(item.toString() + ", doador: " + user.getNome() + "/" + user.getId(), comparadorDeTags(item.getTags(), itemNecessario.getTags()));
+						itemExiste = true;
 					}
+							
 				}
 			}
 		}
+		if(!itemExiste)
+			return "";
 		
-		pontosOrdenados.addAll(mapItemUsuario.values());
-		pontosOrdenados.sort(new ItemComparavelPorPontuacao());
-		
-		for (int i : pontosOrdenados) {
-			for (String nome : mapItemUsuario.keySet()) {
-				
-			}
-			
-		}
-		
+		return this.ordenaMatchs(mapItemPontos);
 	}
-	
-	
 }

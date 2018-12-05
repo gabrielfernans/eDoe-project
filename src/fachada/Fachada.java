@@ -88,4 +88,8 @@ public class Fachada {
  	public void removeItemNecessario(String idReceptor, int idItem) {
 		controllerUsuario.removeItem(idItem, idReceptor);
 	}
+ 	
+ 	public String match(String idReceptor, int idItemNecessario) {
+ 		return controllerUsuario.match(idReceptor, idItemNecessario);
+ 	}
 }
