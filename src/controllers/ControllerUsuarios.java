@@ -113,7 +113,6 @@ public class ControllerUsuarios {
 	 * @return String contendo os novos dados do usuario
 	 */
 	public String atualizaUsuario(String id, String nome, String email, String celular) {
-		
 		if(id == null || id.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		
@@ -176,7 +175,6 @@ public class ControllerUsuarios {
 	 * @return retorna o idDoItem
 	 */
 	public int cadastraItem(String idUsuario, String descritor, int quantidade, String tags) {
-		
 		if (descritor == null || descritor.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");
 		
@@ -241,9 +239,9 @@ public class ControllerUsuarios {
 		usuarios.get(idDoador).removeItem(idItem);
 	}
 	
-	private String editaLista(List<Usuario> listaDeUsuario) {
+	private <T> String editaLista(List<T> lista) {
 		String users = "";
-		for(Usuario u : listaDeUsuario) {
+		for( T u : lista) {
 			users += u.toString() + " | ";
 		}
 		return users.substring(0, users.length()-3);
@@ -253,7 +251,6 @@ public class ControllerUsuarios {
 	 * Metodo que lista todos os itens relacionados a uma dada string de pesquisa.
 	 * A listagem ocorre em ordem alfabetica considerando os descritores dos itens. 
 	 * @param desc Parametro designado pelo usuario para string de pesquisa.
-	 * @param map Um mapa com os usuarios que sera necessario para acessar as listas de itens dos usuarios.
 	 * @return O retorno eh uma string com a representacao do id do item, a descricao, tag e quantidade.
 	 */
 	public String pesquisaItemParaDoacaoPorDescricao(String desc) {
@@ -268,12 +265,7 @@ public class ControllerUsuarios {
 				listDeItens.add(item);
 		}
 		Collections.sort(listDeItens);
-		
-		String toString = "";
-		for (Item itens : listDeItens) {
-				toString += itens.idItemToString() + " | ";
-		}
-		return toString.substring(0, toString.length()-3);
+		return this.editaLista(listDeItens);
 	}
 	
 	/**
@@ -285,10 +277,8 @@ public class ControllerUsuarios {
 		if(idItem < 0 )
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		for(Usuario user: usuarios.values()){
-			for(Item item: user.getItens().values()){
-				if (idItem == item.getIdItem())
-					return item;
-			}
+			if(user.getItens().containsKey(idItem))
+					return user.getItens().get(idItem);
 		}
 		throw new IllegalArgumentException("Item nao encontrado: " + idItem + "."); 
 	}
@@ -305,12 +295,10 @@ public class ControllerUsuarios {
 		for (int i = 0; i < tags.size(); i++) {	
 			for (int j = 0; j < tagsNecessarias.size(); j++) {
 				if (tags.get(i).equals(tagsNecessarias.get(j))) {
-					if (i == j) {
+					if (i == j)
 						pontos += 10;
-					}
-					else {
+					else 
 						pontos += 5;
-					}
 				}
 			}
 		}
@@ -327,16 +315,6 @@ public class ControllerUsuarios {
 		return itensLista;
 	}
 	
-	private Map<Item, Usuario> itensComUsuarios(){
-		Map<Item, Usuario> mapItensEusers = new HashMap<>();
-		for(Usuario user: usuarios.values()){
-			for(Item item: user.getItens().values()){
-				mapItensEusers.put(item, user);
-			}
-		}
-		return mapItensEusers;
-	}
-	
 	/**
 	 * Retorna listagem de todos os itens que um usuário receptor necessita, 
 	 * no formato: ID DO ITEM - DESCRITOR DO ITEM, tags: [tag1, tag2...], quantidade: QUANTIDADE DE ITENS, Receptor: NOME RECEOTOR/ID | 
@@ -344,14 +322,21 @@ public class ControllerUsuarios {
 	 * @return String contendo dados do item e do usuario
 	 */
 	public String listaItensNecessarios() {
-		Map<Item, Usuario> mapItensEusers = this.itensComUsuarios();
-		List<Item> itensLista = this.todosOsItensDoSistema();
+		Map<Item, Usuario> itensEUsuarios = new HashMap<Item, Usuario>();
+		List<Item> itensLista = new ArrayList<Item>();
+		for(Usuario user: usuarios.values()){
+			for(Item item: user.getItens().values()){
+				if(user.getStatus().equals("receptor")) {
+					itensEUsuarios.put(item, user);
+					itensLista.add(item);
+				}
+			}
+		}
 		
 		Collections.sort(itensLista, new ItemComparavelPorId());
 		String aux ="";
 		for(Item item: itensLista){
-			if(mapItensEusers.get(item).getStatus().equals("receptor"))
-				aux += item.toString() + ", Receptor: " + mapItensEusers.get(item).getNome() + "/" + mapItensEusers.get(item).getId() + " | ";
+				aux += item.toString() + ", Receptor: " + itensEUsuarios.get(item).getNome() + "/" + itensEUsuarios.get(item).getId() + " | ";
 		}
 		
 		return aux.substring(0, aux.length()-3);	
@@ -394,7 +379,7 @@ public class ControllerUsuarios {
 			throw new IllegalArgumentException("O Usuario deve ser um receptor: " + idReceptor + ".");
 		if(idItemNecessario < 0) 
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
-
+		
 		Item itemNecessario = this.getItemPeloId(idItemNecessario);
 		HashMap<String, Integer> mapItemPontos = new HashMap<String, Integer>(); 
 		boolean itemExiste = false;
@@ -418,7 +403,6 @@ public class ControllerUsuarios {
 	
 	
 	private String getDonoDoItem(int idItem) {
-		
 		for(Usuario user: usuarios.values()){
 			for(Item item: user.getItens().values()){
 				if (idItem == item.getIdItem())
@@ -470,23 +454,25 @@ public class ControllerUsuarios {
 	 * @return O retorno eh uma string com a representacao do id do item, a descricao, tag, quantidade e o doador.
 	 */	
 	public String listaItensParaDoacao() {
-	ArrayList<Item> itensOrdenados = new ArrayList<Item>();
-	Map<Item, Usuario> ItensEusers = new HashMap<Item, Usuario>();
-	
-	for (Usuario usuario : usuarios.values()) { 
-		for (Item itens : (usuario.getItens().values())) {
-			itensOrdenados.add(itens);
-			ItensEusers.put(itens, usuario);
+		ArrayList<Item> itensOrdenados = new ArrayList<Item>();
+		Map<Item, Usuario> ItensEusers = new HashMap<Item, Usuario>();
+		
+		for (Usuario usuario : usuarios.values()) { 
+			for (Item itens : (usuario.getItens().values())) {
+				if(usuario.getStatus().equals("doador")) {
+					itensOrdenados.add(itens);
+					ItensEusers.put(itens, usuario);
+				}
+			}
 		}
-	}
-	
-	Collections.sort(itensOrdenados, new ItemComparavel());
-	String itensParaDoacao = "";
-	for(Item i : itensOrdenados) {
-		itensParaDoacao += i.toStringCombo() + "doador: " + ItensEusers.get(i).getNome() + "/" + ItensEusers.get(i).getId() + " | ";
-	}
-	
-	return itensParaDoacao.substring(0, itensParaDoacao.length()-3);
+		
+		Collections.sort(itensOrdenados, new ItemComparavel());
+		String itensParaDoacao = "";
+		for(Item i : itensOrdenados) {
+			itensParaDoacao += i.toStringCombo() + "doador: " + ItensEusers.get(i).getNome() + "/" + ItensEusers.get(i).getId() + " | ";
+		}
+		
+		return itensParaDoacao.substring(0, itensParaDoacao.length()-3);
 	}
 	
 	/**
@@ -497,10 +483,8 @@ public class ControllerUsuarios {
 	 */
 	public String listaDescritorDeItensParaDoacao(Set<String> descritores) {
 		Map<String, Integer> itens = new HashMap<String, Integer>();
-		for (Usuario usuario : usuarios.values()) {
-			for (Item item : (usuario.getItens().values())) {
+		for (Item item : this.todosOsItensDoSistema()) {
 				itens.put(item.getDescritor(), item.getQuantidade());
-			}
 		}
 		for (String descricao : descritores) {
 			if(!itens.containsKey(descricao))
