@@ -92,4 +92,13 @@ public class Fachada {
  	public String match(String idReceptor, int idItemNecessario) {
  		return controllerUsuario.match(idReceptor, idItemNecessario);
  	}
+ 	
+ 	public String realizaDoacao(int idItemNecessario, int idItemDoado, String data) {
+ 		return controllerUsuario.realizaDoacao(idItemNecessario, idItemDoado, data);
+ 	}
+ 	
+ 	public String listaDoacoes() {
+ 		return controllerUsuario.listaDoacoes();
+ 	}
+ 	
 }

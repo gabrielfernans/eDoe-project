@@ -129,7 +129,7 @@ public class Usuario implements Comparable<Usuario>{
 		if (!this.itens.containsKey(idItem))
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		
-		return this.itens.get(idItem).toString();
+		return itens.get(idItem).toString();
 	}
 	
 	/**

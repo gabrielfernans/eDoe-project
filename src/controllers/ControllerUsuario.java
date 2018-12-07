@@ -21,6 +21,7 @@ import entidades.Usuario;
  */
 public class ControllerUsuario {
 	private Map<String, Usuario> usuarios = new HashMap<String, Usuario>();
+	private ControllerDoacao doacoes = new ControllerDoacao();
 	private int contadorOrdemUsuario = 0;
 	private int idItem = 1;
 	
@@ -198,7 +199,6 @@ public class ControllerUsuario {
 	public String exibeItem(int idItem, String idDoador) {
 		if (!this.usuarios.containsKey(idDoador))
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
-			
 		return this.usuarios.get(idDoador).exibeItem(idItem);
 	}
 	
@@ -315,6 +315,8 @@ public class ControllerUsuario {
 	 * @return Item encontrado, caso nao seja encontrado, lançara uma excessao
 	 */
 	private Item getItemPeloId(int idItem) {
+		if(idItem < 0 )
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
 		for(Usuario user: usuarios.values()){
 			for(Item item: user.getItens().values()){
 				if (idItem == item.getIdItem())
@@ -406,4 +408,49 @@ public class ControllerUsuario {
 		
 		return this.ordenaMatchs(mapItemPontos);
 	}
+	
+	
+	private String getDonoDoItem(int idItem) {
+		for(Usuario user: usuarios.values()){
+			for(Item item: user.getItens().values()){
+				if (idItem == item.getIdItem())
+					return user.getNome() + "/" + user.getId();
+			}
+		}
+		throw new IllegalArgumentException("Item nao encontrado: " + idItem + "."); 
+	}
+	
+	public String realizaDoacao(int idItemNecessario, int idItemDoado, String data) {
+		if(data == null || data.trim().equals(""))
+			throw new IllegalArgumentException("Entrada invalida: data nao pode ser vazia ou nula.");
+		Item itemNecessario = this.getItemPeloId(idItemNecessario);
+		Item itemDoado = this.getItemPeloId(idItemDoado);
+		if(!itemNecessario.getDescritor().equals(itemDoado.getDescritor()))
+			throw new IllegalArgumentException("Os itens nao tem descricoes iguais.");
+		
+		int quantidade = itemNecessario.getQuantidade();
+		String[] infoDoacao = {this.getDonoDoItem(idItemDoado), itemNecessario.getDescritor(), "" + quantidade, this.getDonoDoItem(idItemNecessario)};
+		
+		if(itemDoado.getQuantidade() > itemNecessario.getQuantidade()) {
+			itemDoado.setQuantidade(itemDoado.getQuantidade() - itemNecessario.getQuantidade());
+			this.removeItem(idItemNecessario, this.getDonoDoItem(idItemNecessario).split("/")[1]);
+		}
+		else if(itemDoado.getQuantidade() == itemNecessario.getQuantidade()){
+			this.removeItem(idItemDoado, this.getDonoDoItem(idItemDoado).split("/")[1]);
+			this.removeItem(idItemNecessario, this.getDonoDoItem(idItemNecessario).split("/")[1]);
+		}else if(itemDoado.getQuantidade() < itemNecessario.getQuantidade()){
+			quantidade = itemDoado.getQuantidade();
+			itemNecessario.setQuantidade(itemNecessario.getQuantidade() - itemDoado.getQuantidade());
+			this.removeItem(idItemDoado, this.getDonoDoItem(idItemDoado).split("/")[1]);
+		}
+		infoDoacao[2] = "" + quantidade;
+		String doacao = data + " - " + "doador: " + infoDoacao[0] + ", item: " + infoDoacao[1] + ", quantidade: " +
+				infoDoacao[2] + ", receptor: " + infoDoacao[3];
+		doacoes.adicionaDoacao(doacao);
+		return doacao;
+	}
+	
+	public String listaDoacoes() {
+ 		return doacoes.listaDoacoes();
+ 	}
 }
