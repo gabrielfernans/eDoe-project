@@ -8,8 +8,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import entidades.Item;
+import entidades.ItemComparavel;
 import entidades.ItemComparavelPorId;
 import entidades.ItemComparavelPorPontuacao;
 import entidades.Usuario;
@@ -19,7 +21,7 @@ import entidades.Usuario;
  * @author deb
  *
  */
-public class ControllerUsuario {
+public class ControllerUsuarios {
 	private Map<String, Usuario> usuarios = new HashMap<String, Usuario>();
 	private ControllerDoacao doacoes = new ControllerDoacao();
 	private int contadorOrdemUsuario = 0;
@@ -186,7 +188,6 @@ public class ControllerUsuario {
 		
 		if (!this.usuarios.containsKey(idUsuario))
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idUsuario + ".");
-		
 		return this.usuarios.get(idUsuario).cadastraItem(this.idItem++, descritor.trim().toLowerCase(), quantidade, tags);
 	}
 
@@ -200,33 +201,6 @@ public class ControllerUsuario {
 		if (!this.usuarios.containsKey(idDoador))
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
 		return this.usuarios.get(idDoador).exibeItem(idItem);
-	}
-	
-	/**
-	 * Retorna listagem de todos os itens que um usuário receptor necessita, 
-	 * no formato: ID DO ITEM - DESCRITOR DO ITEM, tags: [tag1, tag2...], quantidade: QUANTIDADE DE ITENS, Receptor: NOME RECEOTOR/ID | 
-	 * ID DO ITEM - DESCRITOR DO ITEM, tags: [tag1, tag2...], quantidade: QUANTIDADE DE ITENS, Receptor: NOME RECEOTOR/ID | 
-	 * @return String contendo dados do item e do usuario
-	 */
-	public String listaItensNecessarios() {
-		Map<Item, String> mapItensEusers = new HashMap<>();
-		List<Item> itensLista = new ArrayList<>();
-		for(Usuario user: usuarios.values()){
-			if(user.getStatus().equals("receptor")){
-				for(Item item: user.getItens().values()){
-					mapItensEusers.put(item, user.getNome() + "/" + user.getId());
-					itensLista.add(item);
-				}
-			}
-		}
-		
-		Collections.sort(itensLista, new ItemComparavelPorId());
-		String aux ="";
-		for(Item item: itensLista){
-			aux += item.toString() + ", Receptor: " + mapItensEusers.get(item) + " | ";
-		}
-		
-		return aux.substring(0, aux.length()-3);	
 	}
 
 	/**
@@ -275,12 +249,6 @@ public class ControllerUsuario {
 		return users.substring(0, users.length()-3);
 	}
 	
-	//erick
-	public Map<String, Usuario> getUsuarios() {
-		return usuarios;
-	}
-	
-	
 	/**
 	 * Metodo que lista todos os itens relacionados a uma dada string de pesquisa.
 	 * A listagem ocorre em ordem alfabetica considerando os descritores dos itens. 
@@ -292,13 +260,12 @@ public class ControllerUsuario {
 		if (desc == null || desc.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: texto da pesquisa nao pode ser vazio ou nulo.");
 		
+		List<Item> todosOsItens = this.todosOsItensDoSistema();
 		List<Item> listDeItens= new ArrayList<Item>();
 		
-		for (Usuario usuario : usuarios.values()) {
-			for (Item item : usuario.getItens().values()) {
-				if (item.getDescritor().contains(desc) && !listDeItens.contains(item))
-					listDeItens.add(item);
-			}
+		for(Item item : todosOsItens) {
+			if (item.getDescritor().contains(desc) && !listDeItens.contains(item))
+				listDeItens.add(item);
 		}
 		Collections.sort(listDeItens);
 		
@@ -348,6 +315,46 @@ public class ControllerUsuario {
 			}
 		}
 		return pontos;
+	}
+	
+	private List<Item> todosOsItensDoSistema(){
+		List<Item> itensLista = new ArrayList<>();
+		for(Usuario user: usuarios.values()){
+			for(Item item: user.getItens().values()){
+				itensLista.add(item);
+			}
+		}
+		return itensLista;
+	}
+	
+	private Map<Item, Usuario> itensComUsuarios(){
+		Map<Item, Usuario> mapItensEusers = new HashMap<>();
+		for(Usuario user: usuarios.values()){
+			for(Item item: user.getItens().values()){
+				mapItensEusers.put(item, user);
+			}
+		}
+		return mapItensEusers;
+	}
+	
+	/**
+	 * Retorna listagem de todos os itens que um usuário receptor necessita, 
+	 * no formato: ID DO ITEM - DESCRITOR DO ITEM, tags: [tag1, tag2...], quantidade: QUANTIDADE DE ITENS, Receptor: NOME RECEOTOR/ID | 
+	 * ID DO ITEM - DESCRITOR DO ITEM, tags: [tag1, tag2...], quantidade: QUANTIDADE DE ITENS, Receptor: NOME RECEOTOR/ID | 
+	 * @return String contendo dados do item e do usuario
+	 */
+	public String listaItensNecessarios() {
+		Map<Item, Usuario> mapItensEusers = this.itensComUsuarios();
+		List<Item> itensLista = this.todosOsItensDoSistema();
+		
+		Collections.sort(itensLista, new ItemComparavelPorId());
+		String aux ="";
+		for(Item item: itensLista){
+			if(mapItensEusers.get(item).getStatus().equals("receptor"))
+				aux += item.toString() + ", Receptor: " + mapItensEusers.get(item).getNome() + "/" + mapItensEusers.get(item).getId() + " | ";
+		}
+		
+		return aux.substring(0, aux.length()-3);	
 	}
 	
 	/**
@@ -411,12 +418,14 @@ public class ControllerUsuario {
 	
 	
 	private String getDonoDoItem(int idItem) {
+		
 		for(Usuario user: usuarios.values()){
 			for(Item item: user.getItens().values()){
 				if (idItem == item.getIdItem())
 					return user.getNome() + "/" + user.getId();
 			}
 		}
+		
 		throw new IllegalArgumentException("Item nao encontrado: " + idItem + "."); 
 	}
 	
@@ -434,14 +443,13 @@ public class ControllerUsuario {
 		if(itemDoado.getQuantidade() > itemNecessario.getQuantidade()) {
 			itemDoado.setQuantidade(itemDoado.getQuantidade() - itemNecessario.getQuantidade());
 			this.removeItem(idItemNecessario, this.getDonoDoItem(idItemNecessario).split("/")[1]);
-		}
-		else if(itemDoado.getQuantidade() == itemNecessario.getQuantidade()){
-			this.removeItem(idItemDoado, this.getDonoDoItem(idItemDoado).split("/")[1]);
-			this.removeItem(idItemNecessario, this.getDonoDoItem(idItemNecessario).split("/")[1]);
 		}else if(itemDoado.getQuantidade() < itemNecessario.getQuantidade()){
 			quantidade = itemDoado.getQuantidade();
 			itemNecessario.setQuantidade(itemNecessario.getQuantidade() - itemDoado.getQuantidade());
 			this.removeItem(idItemDoado, this.getDonoDoItem(idItemDoado).split("/")[1]);
+		}else{
+			this.removeItem(idItemDoado, this.getDonoDoItem(idItemDoado).split("/")[1]);
+			this.removeItem(idItemNecessario, this.getDonoDoItem(idItemNecessario).split("/")[1]);
 		}
 		infoDoacao[2] = "" + quantidade;
 		String doacao = data + " - " + "doador: " + infoDoacao[0] + ", item: " + infoDoacao[1] + ", quantidade: " +
@@ -453,4 +461,59 @@ public class ControllerUsuario {
 	public String listaDoacoes() {
  		return doacoes.listaDoacoes();
  	}
+	
+	
+	/**
+	 * Metodo que lista todos os itens inseridos no sistema ordenada pela quantidade do item no sistema.
+	 * Itens com a mesma quantidade serao ordenados pela ordem alfabetica de descricao.
+	 * @param usuarios Um mapa com os usuarios que sera necessario para acessar as listas de itens dos usuarios.
+	 * @return O retorno eh uma string com a representacao do id do item, a descricao, tag, quantidade e o doador.
+	 */	
+	public String listaItensParaDoacao() {
+	ArrayList<Item> itensOrdenados = new ArrayList<Item>();
+	Map<Item, Usuario> ItensEusers = new HashMap<Item, Usuario>();
+	
+	for (Usuario usuario : usuarios.values()) { 
+		for (Item itens : (usuario.getItens().values())) {
+			itensOrdenados.add(itens);
+			ItensEusers.put(itens, usuario);
+		}
+	}
+	
+	Collections.sort(itensOrdenados, new ItemComparavel());
+	String itensParaDoacao = "";
+	for(Item i : itensOrdenados) {
+		itensParaDoacao += i.toStringCombo() + "doador: " + ItensEusers.get(i).getNome() + "/" + ItensEusers.get(i).getId() + " | ";
+	}
+	
+	return itensParaDoacao.substring(0, itensParaDoacao.length()-3);
+	}
+	
+	/**
+	 * Metodo que lista os descritores de itens cadastrados no sistema, em ordem alfabetica pela descricao do mesmo.
+	 * Na saida, eh exibido a quantidade do item e sua descricao.
+	 * @param usuarios Um mapa com os usuarios que sera necessario para acessar as listas de itens dos usuarios.
+	 * @return O retorno eh uma string com a representacao textual dos itens
+	 */
+	public String listaDescritorDeItensParaDoacao(Set<String> descritores) {
+		Map<String, Integer> itens = new HashMap<String, Integer>();
+		for (Usuario usuario : usuarios.values()) {
+			for (Item item : (usuario.getItens().values())) {
+				itens.put(item.getDescritor(), item.getQuantidade());
+			}
+		}
+		for (String descricao : descritores) {
+			if(!itens.containsKey(descricao))
+				itens.put(descricao, 0);
+		}
+		List<String> itensOrdenados = new ArrayList<String>();
+		itensOrdenados.addAll(itens.keySet());
+		Collections.sort(itensOrdenados);
+		
+		String listaFinal = "";
+		for(String descricao : itensOrdenados) {
+			listaFinal += itens.get(descricao) + " - " + descricao + " | ";
+		}
+		return listaFinal.substring(0, listaFinal.length()-3);
+	}
 }

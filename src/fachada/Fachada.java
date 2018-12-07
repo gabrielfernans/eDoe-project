@@ -2,12 +2,12 @@ package fachada;
 
 import java.io.IOException;
 import controllers.ControllerDescritor;
-import controllers.ControllerUsuario;
+import controllers.ControllerUsuarios;
 import easyaccept.EasyAccept;
 
 public class Fachada {
 	
-	ControllerUsuario controllerUsuario = new ControllerUsuario();
+	ControllerUsuarios controllerUsuario = new ControllerUsuarios();
 	ControllerDescritor controllerDescritor = new ControllerDescritor();
 	
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
@@ -74,11 +74,11 @@ public class Fachada {
 	}
 	
 	public String listaDescritorDeItensParaDoacao() {
-		return controllerDescritor.listaDescritorDeItensParaDoacao(controllerUsuario.getUsuarios());
+		return controllerUsuario.listaDescritorDeItensParaDoacao(controllerDescritor.getDescritores());
 	}
 	
 	public String listaItensParaDoacao() {
-		return controllerDescritor.listaItensParaDoacao(controllerUsuario.getUsuarios());
+		return controllerUsuario.listaItensParaDoacao();
 	}
 	
 	public String pesquisaItemParaDoacaoPorDescricao(String desc) {
