@@ -126,6 +126,8 @@ public class Usuario implements Comparable<Usuario>{
 	 * @return representacao em string do item
 	 */
 	public String exibeItem(int idItem) {
+		if(itens.size() == 0)
+			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
 		if (!this.itens.containsKey(idItem))
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 		
@@ -152,12 +154,13 @@ public class Usuario implements Comparable<Usuario>{
 	 * @param idItem id do item, int
 	 */
 	public void removeItem(int idItem) {
-		if (this.itens.size() == 00 ) {
+		if (this.itens.size() <= 0 )
 			throw new IllegalArgumentException("O Usuario nao possui itens cadastrados.");
-		}
-		if (!this.itens.containsKey(idItem)) {
+		if(idItem < 0)
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		if (!this.itens.containsKey(idItem))
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
-		}
+		
 		this.itens.remove(idItem);
 	}
 

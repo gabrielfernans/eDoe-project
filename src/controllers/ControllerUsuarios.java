@@ -23,7 +23,6 @@ import entidades.Usuario;
  */
 public class ControllerUsuarios {
 	private Map<String, Usuario> usuarios = new HashMap<String, Usuario>();
-	private ControllerDoacao doacoes = new ControllerDoacao();
 	private int contadorOrdemUsuario = 0;
 	private int idItem = 1;
 	
@@ -196,6 +195,10 @@ public class ControllerUsuarios {
 	 * @return String contendo dados do item buscado
 	 */
 	public String exibeItem(int idItem, String idDoador) {
+		if(idItem < 0)
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
+		if (idDoador == null || idDoador.trim().equals(""))
+			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
 		if (!this.usuarios.containsKey(idDoador))
 			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
 		return this.usuarios.get(idDoador).exibeItem(idItem);
@@ -229,13 +232,10 @@ public class ControllerUsuarios {
 	public void removeItem(int idItem, String idDoador) {
 		if(idItem < 0)
 			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");
-		
 		if (idDoador == null || idDoador.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
-		
 		if (!this.usuarios.containsKey(idDoador))
-			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");
-		
+			throw new IllegalArgumentException("Usuario nao encontrado: " + idDoador + ".");					
 		usuarios.get(idDoador).removeItem(idItem);
 	}
 	
@@ -438,13 +438,10 @@ public class ControllerUsuarios {
 		infoDoacao[2] = "" + quantidade;
 		String doacao = data + " - " + "doador: " + infoDoacao[0] + ", item: " + infoDoacao[1] + ", quantidade: " +
 				infoDoacao[2] + ", receptor: " + infoDoacao[3];
-		doacoes.adicionaDoacao(doacao);
 		return doacao;
 	}
 	
-	public String listaDoacoes() {
- 		return doacoes.listaDoacoes();
- 	}
+
 	
 	
 	/**

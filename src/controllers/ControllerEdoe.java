@@ -5,6 +5,7 @@ import java.io.IOException;
 public class ControllerEdoe {
 	private ControllerUsuarios controllerUsuario = new ControllerUsuarios();
 	private ControllerDescritor controllerDescritor = new ControllerDescritor();
+	private ControllerDoacao doacoes = new ControllerDoacao();
 	
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
 		return controllerUsuario.adicionaDoador(id, nome, email, celular, classe);
@@ -90,10 +91,10 @@ public class ControllerEdoe {
  	}
  	
  	public String realizaDoacao(int idItemNecessario, int idItemDoado, String data) {
- 		return controllerUsuario.realizaDoacao(idItemNecessario, idItemDoado, data);
+ 		return doacoes.adicionaDoacao(controllerUsuario.realizaDoacao(idItemNecessario, idItemDoado, data));
  	}
  	
- 	public String listaDoacoes() {
- 		return controllerUsuario.listaDoacoes();
+	public String listaDoacoes() {
+ 		return doacoes.listaDoacoes();
  	}
 }

@@ -1,6 +1,11 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -11,6 +16,7 @@ import java.util.Set;
 public class ControllerDescritor {
 	
 	private Set<String> descritores = new HashSet<>();
+	private Map<String, Integer> itenQuantidade = new HashMap<String, Integer>();
 
 	/**
 	 * Metodo responsavel por cadastrar um descritor no sistema. Contem uma excecao para verificar se o parametro inserido
@@ -40,6 +46,4 @@ public class ControllerDescritor {
 	public final Set<String> getDescritores() {
 		return descritores;
 	}
-	
-	
 }	

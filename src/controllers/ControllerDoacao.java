@@ -9,8 +9,9 @@ import entidades.DoacaoComparavelPorData;
 public class ControllerDoacao {
 	private List<String> doacoes = new ArrayList<String>();
 	
-	public void adicionaDoacao(String doacao) {
+	public String adicionaDoacao(String doacao) {
 		this.doacoes.add(doacao);
+		return doacao;
 	}
 	
 	public String listaDoacoes() {
