@@ -1,104 +1,94 @@
 package fachada;
 
 import java.io.IOException;
-import controllers.ControllerDescritor;
-import controllers.ControllerUsuarios;
-import easyaccept.EasyAccept;
+import controllers.ControllerEdoe;
 
 public class Fachada {
 	
-	ControllerUsuarios controllerUsuario = new ControllerUsuarios();
-	ControllerDescritor controllerDescritor = new ControllerDescritor();
+	ControllerEdoe controllerEdoe = new ControllerEdoe();
 	
 	public String adicionaDoador(String id, String nome, String email, String celular, String classe) {
-		return controllerUsuario.adicionaDoador(id, nome, email, celular, classe);
+		return controllerEdoe.adicionaDoador(id, nome, email, celular, classe);
 	}
 	
 	public String pesquisaUsuarioPorId(String id) {
-		return controllerUsuario.pesquisaUsuarioPorId(id);
+		return controllerEdoe.pesquisaUsuarioPorId(id);
 	}
 	
 	public String pesquisaUsuarioPorNome(String nome) {
-		return controllerUsuario.pesquisaUsuarioPorNome(nome);
+		return controllerEdoe.pesquisaUsuarioPorNome(nome);
 	}
 	
 	public String atualizaUsuario(String id, String nome, String email, String celular) {
-		return controllerUsuario.atualizaUsuario(id, nome, email, celular);
+		return controllerEdoe.atualizaUsuario(id, nome, email, celular);
 	}
 	
 	public void removeUsuario(String id) {
-		controllerUsuario.removeUsuario(id);
+		controllerEdoe.removeUsuario(id);
 	}
 	
 	public void lerReceptores(String caminho) throws IOException{
-		controllerUsuario.lerReceptores(caminho);
+		controllerEdoe.lerReceptores(caminho);
 	}
 	
 	public void adicionaDescritor(String descritor) {
-		controllerDescritor.cadastraDescritor(descritor);
+		controllerEdoe.adicionaDescritor(descritor);
 	}
 	
 	public int adicionaItemParaDoacao(String idDoador, String descricaoItem, int quantidade, String tags) {
-		if (controllerDescritor.contemDescritor(descricaoItem) == true) {
-			return controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
-		}
-		else {
-			controllerDescritor.cadastraDescritor(descricaoItem);
-			return controllerUsuario.cadastraItem(idDoador, descricaoItem, quantidade, tags);
-			
-		}
+		return controllerEdoe.adicionaItemParaDoacao(idDoador, descricaoItem, quantidade, tags);
 	}
 	
 	public int adicionaItemNecessario(String idReceptor, String descricaoItem, int quantidade, String tags) {
-		return controllerUsuario.cadastraItem(idReceptor, descricaoItem, quantidade, tags);
+		return controllerEdoe.adicionaItemNecessario(idReceptor, descricaoItem, quantidade, tags);
 	}
 	
 	public String exibeItem(int idItem, String idDoador) {
-		return controllerUsuario.exibeItem(idItem, idDoador);
+		return controllerEdoe.exibeItem(idItem, idDoador);
 	}
 	
 	public String listaItensNecessarios(){
-		return controllerUsuario.listaItensNecessarios();
+		return controllerEdoe.listaItensNecessarios();
 	}
 	
 	public String atualizaItemParaDoacao(int idItem, String idDoador, int quantidade, String tags) {
-		return controllerUsuario.atualizaItem(idItem, idDoador, quantidade, tags);
+		return controllerEdoe.atualizaItemParaDoacao(idItem, idDoador, quantidade, tags);
 	}
 	
 	public String atualizaItemNecessario(String idReceptor, int idItem, int quantidade, String tags) {
-		return controllerUsuario.atualizaItem(idItem, idReceptor, quantidade, tags);
+		return controllerEdoe.atualizaItemNecessario(idReceptor, idItem,  quantidade, tags);
 	}
 	
 	public void removeItemParaDoacao(int idItem, String idDoador) {
-		controllerUsuario.removeItem(idItem, idDoador);
+		controllerEdoe.removeItemParaDoacao(idItem, idDoador);
 	}
 	
 	public String listaDescritorDeItensParaDoacao() {
-		return controllerUsuario.listaDescritorDeItensParaDoacao(controllerDescritor.getDescritores());
+		return controllerEdoe.listaDescritorDeItensParaDoacao();
 	}
 	
 	public String listaItensParaDoacao() {
-		return controllerUsuario.listaItensParaDoacao();
+		return controllerEdoe.listaItensParaDoacao();
 	}
 	
 	public String pesquisaItemParaDoacaoPorDescricao(String desc) {
-		return controllerUsuario.pesquisaItemParaDoacaoPorDescricao(desc);
+		return controllerEdoe.pesquisaItemParaDoacaoPorDescricao(desc);
 	}
 
  	public void removeItemNecessario(String idReceptor, int idItem) {
-		controllerUsuario.removeItem(idItem, idReceptor);
+ 		controllerEdoe.removeItemNecessario(idReceptor, idItem);
 	}
  	
  	public String match(String idReceptor, int idItemNecessario) {
- 		return controllerUsuario.match(idReceptor, idItemNecessario);
+ 		return controllerEdoe.match(idReceptor, idItemNecessario);
  	}
  	
  	public String realizaDoacao(int idItemNecessario, int idItemDoado, String data) {
- 		return controllerUsuario.realizaDoacao(idItemNecessario, idItemDoado, data);
+ 		return controllerEdoe.realizaDoacao(idItemNecessario, idItemDoado, data);
  	}
  	
  	public String listaDoacoes() {
- 		return controllerUsuario.listaDoacoes();
+ 		return controllerEdoe.listaDoacoes();
  	}
  	
 }
