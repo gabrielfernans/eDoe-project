@@ -16,7 +16,6 @@ import java.util.Set;
 public class ControllerDescritor {
 	
 	private Set<String> descritores = new HashSet<>();
-	private Map<String, Integer> itenQuantidade = new HashMap<String, Integer>();
 
 	/**
 	 * Metodo responsavel por cadastrar um descritor no sistema. Contem uma excecao para verificar se o parametro inserido
