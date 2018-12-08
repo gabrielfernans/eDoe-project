@@ -139,6 +139,8 @@ public class Usuario implements Comparable<Usuario>{
 	 * @param novaQuantidade novaQuantidade do item, int
 	 */
 	public String atualizaItem(int idItem, String novasTags, int novaQuantidade) {
+		if(idItem < 0)
+			throw new IllegalArgumentException("Entrada invalida: id do item nao pode ser negativo.");		
 		if (!this.itens.containsKey(idItem))
 			throw new IllegalArgumentException("Item nao encontrado: " + idItem + ".");
 
