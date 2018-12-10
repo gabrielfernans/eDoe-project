@@ -1,0 +1,41 @@
+﻿Relatório de Projeto LP2 
+
+
+Design geral:
+
+
+	O design do projeto foi, basicamente, dividido entre as classes básicas como usuário e item, e seus controladores que irão delegar todos o métodos inerentes ao desenvolvimento do projeto. Falando de padrões GRASP, a alta coesão foi usada no projeto através da modularização em suas classes, garantindo assim que cada classe tenha a responsabilidade única de comunicar os dados da sua entidade. 
+O padrão Controller foi usado para gerenciar as funcionalidades do CRUD tanto em usuário, quanto em Item; e para facilitar a manipulação com os descritores, foi criado o controlador de descritor que auxiliará na cadastro e na busca de descritores, criando assim, níveis que diminuem o acoplamento entre as classes. 
+        Atraveś do padrão Creator, os objetos foram criados em seus controladores e alocados em alguma coleção para sua manipulação se tornar possível.
+Com relação a exceções, temos-as para atributos inválidos, para objetos que o usuário gostaria de adicionar mas que já existem no sistema, para objetos não encontrados, entre outras situações..
+Todas as classes estão encapsuladas em packages menores, que pertencem, eventualmente, a entidade, controller e fachada. 
+
+
+Caso 1:
+
+
+	O caso 1 pede que seja criado uma entidade que representa usuários. Esses usuários podem se dividir doador e receptor. Para isso, optamos por não usar herança, pois o usuários, independente do tipo, doador ou receptor, compartilham exatamente dos mesmos atributos, o que difere um do outro é a String do status, “doador” para os usuários doadores e “receptor” para os usuários receptores.. O usuário, também, mantém um ID único. A classe Usuário implementa a interface Comparator<T> para auxiliar posteriormente na representação ordenada dos itens, além disso, a classe foi desenvolvida respeitando os padrões de encapsulamento. 
+	Nesta classe, há uma coleção que armazena todos os itens. Essa coleção é um mapa, onde a chave é o código de identificação do item.
+	Também nessa classe, há uma coleção que armazena todos os funcionários. Essa coleção é um mapa, onde a chave é o código de identificação, único para cada usuário.
+
+
+Caso 2:
+
+
+	No caso de uso 2 pede que seja criado uma entidade que representa os itens a serem doados e que possa ser possível gerenciar esses itens. A entidade item implementa a interface Comparable<Item> que compara o descritor por ordem alfabética; essa, também, mantém uma lista de tags. Os métodos de gerenciamento dos itens é feito pelo controller de usuários.
+
+
+Caso 3:
+
+
+        No caso de uso 3, pedia-se que o sistema pudesse listar os itens e os descritores cadastrados no sistema de formas diferentes.
+        Na primeira funcionalidade, todos os descritores de itens cadastrados no sistema devem ser ordenados em ordem alfabética pela descrição do item. Neste caso, implementamos o método listaDescritorDeItensParaDoacao() que faz uma instância de um map (de chave String que representará a descrição, e de valor Integer que representará a quantidade de itens) que manterá os descritores dos usuários organizados por ordem alfabética. A escolha do map foi feita levando em conta que não pode haver descritores repetidos. 
+        A entidade Item implementa um Comparable<Item> para que seja possível a ordenação dos itens através de seu descritor.
+        Na segunda, o sistema deveria poder listar todos os itens inseridos no sistema ordenada pela quantidade do item no sistema. Caso os Itens tenham a mesma quantidade, estes devem ser ordenados pela ordem alfabética de descrição. Portanto, para fazer a ordenação foi decidido criar uma classe chamada ItemComparavel que implementa a interface Comparator<Item>. A classe possui o método do contrato da interface que cria um variável para guardar o valor da subtração entre a quantidade de itens do objeto item2 e do objeto item1. Caso a variável possua um valor igual a zero, então  esta passa a armazenar o valor do método compareTo, que compara o descritor do item1 com o descritor do item2. Por fim, é retornado o valor da variável.  
+        Na última funcionalidade, o sistema deve ser capaz de listar todos os itens relacionados a uma dada string de pesquisa, que deve ser insensível a maiúscula/minúscula. Essa listagem deve ocorrer em ordem alfabética considerando os descritores dos itens. Para tal, o método pesquisaItemParaDoacaoPorDescricao(String pesquisa) varre todos os itens do sistema e adiciona em um array que será ordenado e apresentado ao usuário conforme a especificação do sistema.
+
+
+Caso 4:
+
+
+	Para o caso de uso 4, pede que seja possível gerenciar os itens necessários, que são os itens que os  receptores podem indicar que estão precisando receber, então todo item necessário deve estar sempre associado a um usuário receptor. Para isso, optamos por não usar herança para diferenciar itens a serem doados e itens necessários, pois os dois tipos de item compartilham exatamente os mesmos atributos e quase todos os métodos, o que vai diferenciá-los é em que coleção estão alocados, nas dos usuários receptores ou doadores. Também foi criada outra classe Comparator, que ordena os itens necessaŕios pelo ID, que é um identificador único, ou seja, pela ordem em que foram cadastrados no sistema.
