@@ -57,11 +57,6 @@ public class Item implements Comparable<Item>, Serializable{
 		return descritor;
 	}
 
-	public void setQuantidade(int quantidade) {
-		if(quantidade > 0)
-			this.quantidade = quantidade;
-	}
-
 	public int getQuantidade() {
 		return quantidade;
 	}
@@ -110,7 +105,7 @@ public class Item implements Comparable<Item>, Serializable{
 		return this.idItem + " - " + this.descritor + ", " + "tags: " + this.tags.toString() + ", quantidade: " + this.quantidade;
 	}
 
-	public List<String> getTags() {
+	public final List<String> getTags() {
 		return tags;
 	}
 

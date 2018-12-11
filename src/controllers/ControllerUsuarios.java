@@ -426,11 +426,11 @@ public class ControllerUsuarios implements Serializable {
 		String[] infoDoacao = {this.getDonoDoItem(idItemDoado), itemNecessario.getDescritor(), "" + quantidade, this.getDonoDoItem(idItemNecessario)};
 		
 		if(itemDoado.getQuantidade() > itemNecessario.getQuantidade()) {
-			itemDoado.setQuantidade(itemDoado.getQuantidade() - itemNecessario.getQuantidade());
+			itemDoado.atualizaItem("", itemDoado.getQuantidade() - itemNecessario.getQuantidade());
 			this.removeItem(idItemNecessario, this.getDonoDoItem(idItemNecessario).split("/")[1]);
 		}else if(itemDoado.getQuantidade() < itemNecessario.getQuantidade()){
 			quantidade = itemDoado.getQuantidade();
-			itemNecessario.setQuantidade(itemNecessario.getQuantidade() - itemDoado.getQuantidade());
+			itemNecessario.atualizaItem("", itemNecessario.getQuantidade() - itemDoado.getQuantidade());
 			this.removeItem(idItemDoado, this.getDonoDoItem(idItemDoado).split("/")[1]);
 		}else{
 			this.removeItem(idItemDoado, this.getDonoDoItem(idItemDoado).split("/")[1]);

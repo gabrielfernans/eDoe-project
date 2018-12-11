@@ -108,7 +108,7 @@ public class Usuario implements Comparable<Usuario>, Serializable{
 		int idItemProvisorio = idItem;
 		for (Item c : itens.values()) {
 			if(c.equals(new Item(idItem, quantidade, descritor, listaTags))) {
-				c.setQuantidade(quantidade);
+				c.atualizaItem("", quantidade);
 				idItemProvisorio = c.getIdItem();
 			}
 		}
