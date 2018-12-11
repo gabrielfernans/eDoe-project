@@ -1,6 +1,11 @@
 package fachada;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import controllers.ControllerEdoe;
 
 public class Fachada {
@@ -89,6 +94,20 @@ public class Fachada {
  	
  	public String listaDoacoes() {
  		return controllerEdoe.listaDoacoes();
+ 	}
+ 	
+ 	public void finalizaSistema() throws IOException {
+ 		FileOutputStream arquivo = new FileOutputStream("sistema_serializado/objetos.ser");
+ 		ObjectOutputStream oos = new ObjectOutputStream(arquivo);
+ 		oos.writeObject(controllerEdoe);
+ 		oos.close();
+ 	}
+ 	
+ 	public void iniciaSistema() throws IOException, ClassNotFoundException {
+ 		FileInputStream arquivo = new FileInputStream("sistema_serializado/objetos.ser");
+ 		ObjectInputStream ois = new ObjectInputStream(arquivo);
+ 		controllerEdoe = (ControllerEdoe) ois.readObject();
+ 		ois.close();
  	}
  	
 }

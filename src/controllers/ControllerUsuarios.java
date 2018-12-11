@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ import entidades.Usuario;
  * @author deb
  *
  */
-public class ControllerUsuarios {
+public class ControllerUsuarios implements Serializable {
 	private Map<String, Usuario> usuarios = new HashMap<String, Usuario>();
 	private int contadorOrdemUsuario = 0;
 	private int idItem = 1;

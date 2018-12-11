@@ -1,9 +1,10 @@
 package entidades;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Item implements Comparable<Item>{
+public class Item implements Comparable<Item>, Serializable{
 	private int idItem;
 	private int quantidade;
 	private String descritor;

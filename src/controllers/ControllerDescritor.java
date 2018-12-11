@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import java.util.Set;
  * @author
  *
  */
-public class ControllerDescritor {
+public class ControllerDescritor implements Serializable{
 	
 	private Set<String> descritores = new HashSet<>();
 

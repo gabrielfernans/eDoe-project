@@ -1,5 +1,6 @@
 package entidades;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Map;
  * @author debora leda
  */
 
-public class Usuario implements Comparable<Usuario>{
+public class Usuario implements Comparable<Usuario>, Serializable{
 	
 	private String nome;
 	private String email;

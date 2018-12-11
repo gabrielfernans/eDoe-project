@@ -1,8 +1,9 @@
 package controllers;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-public class ControllerEdoe {
+public class ControllerEdoe implements Serializable {
 	private ControllerUsuarios controllerUsuario = new ControllerUsuarios();
 	private ControllerDescritor controllerDescritor = new ControllerDescritor();
 	private ControllerDoacao doacoes = new ControllerDoacao();
@@ -97,4 +98,20 @@ public class ControllerEdoe {
 	public String listaDoacoes() {
  		return doacoes.listaDoacoes();
  	}
+	
+//	public void finalizaSistema() throws IOException {
+//		FileOutputStream arquivo = new FileOutputStream("sistema_serializado/objetos.ser");
+// 		ObjectOutputStream oos = new ObjectOutputStream(arquivo);
+// 		oos.writeObject(doacoes);
+// 		oos.writeObject(controllerDescritor);
+// 		oos.writeObject(controllerUsuario);
+// 		oos.close();
+//	}
+//	
+//	public void iniciaSistema() throws IOException {
+// 		FileInputStream arquivo = new FileInputStream("sistema_serializado/objetos.ser");
+// 		ObjectInputStream ois = new ObjectInputStream(arquivo);
+// 		
+//	}
+
 }
