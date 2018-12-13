@@ -350,6 +350,13 @@ class ControllerUsuariosTest {
 	void testMatchIdItemInexistente() {
 		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.match("84473712044", 85));
 	}
+	
+	@DisplayName("Testa match item inexistente")
+	@Test
+	void testListaItensNecessarios() throws IOException {
+		assertEquals("6 - livro, tags: [Infantil, Matematica, Didatico], quantidade: 1, Receptor: Murilo Luiz Brito/84473712044", controllerUsuarios.listaItensNecessarios());
+	}
+	
 
 	@DisplayName("Testa realizaDoacao null")
 	@Test
