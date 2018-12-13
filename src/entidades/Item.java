@@ -4,12 +4,25 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Representacao de um item que um usuario do sistema Edoe pode possuir
+ * Todo item possui um id unico, quantidade, descritor (previamente adicionado no sistema) e tags que são usadas para descrever o item
+ * @author debora leda
+ *
+ */
 public class Item implements Comparable<Item>, Serializable{
 	private int idItem;
 	private int quantidade;
 	private String descritor;
 	private List<String> tags;
 	
+	/**
+	 * Constroi um item a partir do seu id, quantidade, descritor e suas tags
+	 * @param idItem identificador unico do item
+	 * @param quantidade quantidade do item
+	 * @param descritor descritor do item
+	 * @param tags tags que descrevem o item
+	 */
 	public Item(int idItem, int quantidade, String descritor, List<String> tags) {
 		this.idItem = idItem;
 		this.quantidade = quantidade;
@@ -17,13 +30,19 @@ public class Item implements Comparable<Item>, Serializable{
 		this.tags = tags;
 	}
 	
+	/**
+	 * Atualiza as tags e a quantidade de um item. Caso tags nao sejam passadas, apenas a quantidade
+	 * sera atualizada. A nova quantidade deve ser sempre maior que 0
+	 * @param novasTags novas tags do item
+	 * @param novaQuantidade nova quantidade, deve ser maior que 0
+	 * @return a representacao em string do item 
+	 */
 	public String atualizaItem(String novasTags, int novaQuantidade) {
 		if (novasTags != null ) {
 			if(novasTags.length() > 0) {
 				String[] vetorTags = novasTags.split(",");
 				List<String> listaTags = new ArrayList<String>();
 				
-				//Adicionando as tags do vetor no ArrayList
 				for (String c : vetorTags) {
 					listaTags.add(c);
 				}
@@ -37,14 +56,20 @@ public class Item implements Comparable<Item>, Serializable{
 		return this.toString();
 	}
 
+	/**
+	 * Funcao usada para retornar uma string contendo a quantidade e descricoa de um item
+	 * no formato QUANTIDADE - DESCRICAO
+	 * @return string contendo a quantidade e descricoa de um item
+	 */
 	public String retornaDescricaoEQuantidade() {
 		return this.quantidade + " - " + descritor;
 	}
-
-	public String toStringCombo() {
-		return this.idItem + " - " + this.getDescritor() + ", tags: " + this.tags.toString() + ", quantidade: " + this.quantidade + ", "; 
-	}
 	
+	/**
+	 * Representacao em string de um item, no formato
+	 * caso o item nao possua tags: ID - DESCRITOR, quantidade: QUANTIDADE 
+	 * caso o item possua tags: ID - DESCRITOR, tags: TAGS, quantidade: QUANTIDADE
+	 */
 	@Override
 	public String toString() {
 		if (tags.size() == 0) {
@@ -53,14 +78,26 @@ public class Item implements Comparable<Item>, Serializable{
 		return this.idItem + " - " + this.descritor.toString() + ", tags: " + this.tags.toString() + ", quantidade: " + this.quantidade;
 	}
 	
+	/**
+	 * Retorna string contendo descritor 
+	 * @return string contendo descritor do item
+	 */
 	public String getDescritor() {
 		return descritor;
 	}
-
+	
+	/**
+	 * Retorna int contendo quantidade 
+	 * @return int contendo quantidade do item
+	 */
 	public int getQuantidade() {
 		return quantidade;
 	}
 	
+	/**
+	 * Retorna int contendo id 
+	 * @return int contendo id do item
+	 */
 	public int getIdItem() {
 		return idItem;
 	}
@@ -74,6 +111,9 @@ public class Item implements Comparable<Item>, Serializable{
 		return result;
 	}
 
+	/**
+	 * Compara se dois itens sao iguais a partir do desccritor e das tags
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -96,15 +136,18 @@ public class Item implements Comparable<Item>, Serializable{
 		return true;
 	}
 
+	/**
+	 * Compara descritores
+	 */
 	@Override
 	public int compareTo(Item o) {
 		return this.descritor.compareTo(o.getDescritor());
 	}
-	
-	public String idItemToString() {
-		return this.idItem + " - " + this.descritor + ", " + "tags: " + this.tags.toString() + ", quantidade: " + this.quantidade;
-	}
 
+	/**
+	 * Retorna uma final list contendo as tags de um item 
+	 * @return final list contendo as tags de um item 
+	 */
 	public final List<String> getTags() {
 		return tags;
 	}

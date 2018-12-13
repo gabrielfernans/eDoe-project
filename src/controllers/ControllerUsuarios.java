@@ -467,7 +467,7 @@ public class ControllerUsuarios implements Serializable {
 		Collections.sort(itensOrdenados, new ItemComparavel());
 		String itensParaDoacao = "";
 		for(Item i : itensOrdenados) {
-			itensParaDoacao += i.toStringCombo() + "doador: " + ItensEusers.get(i).getNome() + "/" + ItensEusers.get(i).getId() + " | ";
+			itensParaDoacao += i.toString()+ ", doador: " + ItensEusers.get(i).getNome() + "/" + ItensEusers.get(i).getId() + " | ";
 		}
 		
 		return itensParaDoacao.substring(0, itensParaDoacao.length()-3);
