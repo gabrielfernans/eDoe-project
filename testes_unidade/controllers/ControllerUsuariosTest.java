@@ -11,10 +11,12 @@ import org.junit.jupiter.api.Test;
 class ControllerUsuariosTest {
 
 	ControllerUsuarios controllerUsuarios;
+	ControllerDescritor controllerDescritor;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		controllerUsuarios = new ControllerUsuarios();
+		controllerDescritor = new ControllerDescritor();
 		controllerUsuarios.adicionaDoador("1001", "Elizabeth Ashe", "elizabethcalamity@deadlock.com", "(83) 92918-0211", "PESSOA_FISICA");
 		controllerUsuarios.adicionaDoador("1002", "Satya Vaswani", "satya@vishkarcorp.com", "(83) 99221-2571", "PESSOA_FISICA");
 		controllerUsuarios.adicionaDoador("70594610435", "Gabriel Fernandes", "gabrielwebr@gmail.com", "(83) 98606-6330", "PESSOA_FISICA");
@@ -63,11 +65,6 @@ class ControllerUsuariosTest {
 		assertEquals(controllerUsuarios.adicionaDoador("1010", "Vaas Montenegro", "vaas@rook.com", "(83) 99348-2481", "PESSOA_FISICA"), "1010");	
 	}
 	
-	
-	
-	
-	
-	
 	@DisplayName("Testa pesquisaUsuarioPorId null")
 	@Test
 	void testPesquisaUsuarioPorIdNull() {
@@ -91,11 +88,6 @@ class ControllerUsuariosTest {
 	void testPesquisaUsuarioPorIdOk() {
 		assertEquals(controllerUsuarios.pesquisaUsuarioPorId("1001"), "Elizabeth Ashe/1001, elizabethcalamity@deadlock.com, (83) 92918-0211, status: doador");	
 	}
-	
-	
-	
-	
-	
 	
 	@DisplayName("Testa pesquisaUsuarioPorNome null")
 	@Test
@@ -121,9 +113,6 @@ class ControllerUsuariosTest {
 		assertEquals(controllerUsuarios.pesquisaUsuarioPorNome("Elizabeth Ashe"), "Elizabeth Ashe/1001, elizabethcalamity@deadlock.com, (83) 92918-0211, status: doador");	
 	}
 	
-	
-	
-	
 	@DisplayName("Testa atualizaUsuario null")
 	@Test
 	void testAtualizaUsuarioNull() {
@@ -147,9 +136,6 @@ class ControllerUsuariosTest {
 	void testAtualizaUsuarioOk() {
 		assertEquals(controllerUsuarios.atualizaUsuario("1001", "Elizabeth Ashe", "elizabethcalamity@hotmail.com", "(83) 92918-0211"), "Elizabeth Ashe/1001, elizabethcalamity@hotmail.com, (83) 92918-0211, status: doador");	
 	}
-	
-	
-	
 	
 	@DisplayName("Testa removeUsuario null")
 	@Test
@@ -175,10 +161,7 @@ class ControllerUsuariosTest {
 		controllerUsuarios.removeUsuario("70594610435");
 		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.pesquisaUsuarioPorNome("70594610435"));
 	}
-	
-	
-	
-	
+
 	@DisplayName("Testa lerReceptores ok")
 	@Test
 	void testLerReceptoresOk() throws IOException {
@@ -190,10 +173,7 @@ class ControllerUsuariosTest {
 	void testLerReceptoresInvalido() throws IOException {
 		assertThrows(IOException.class, () -> controllerUsuarios.lerReceptores("arquivos_sistemas/invalid_file"));
 	}
-	
-	
-	
-	
+
 	@DisplayName("Testa cadastraItem null")
 	@Test
 	void testCadastraItemNull() {
@@ -225,10 +205,7 @@ class ControllerUsuariosTest {
 	void testCadastraItemOk() {
 		assertEquals(controllerUsuarios.cadastraItem("1234", "computador", 7, "all-in-one"), 7);	
 	}
-	
-	
-	
-	
+
 	@DisplayName("Testa exibeItem quantidade menor que zero")
 	@Test
 	void testExibeItemMenorQueZero() {
@@ -258,11 +235,7 @@ class ControllerUsuariosTest {
 	void testExibeItemOk() {
 		assertEquals(controllerUsuarios.exibeItem(3, "1234"), "3 - calca jeans, tags: [azul], quantidade: 2");	
 	}
-	
-	
-	
-	
-	
+
 	@DisplayName("Testa atualizaItem quantidade menor que zero")
 	@Test
 	void testAtualizaItemMenorQueZero() {
@@ -273,7 +246,6 @@ class ControllerUsuariosTest {
 	@Test
 	void testAtualizaItemNull() {
 		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.atualizaItem(3, null, 3, "azul, listrada"));		
-		
 	}
 	
 	@DisplayName("Testa atualizaItem vazio")
@@ -293,10 +265,6 @@ class ControllerUsuariosTest {
 	void testAtualizaItemOk() {
 		assertEquals(controllerUsuarios.atualizaItem(3, "1234", 5, "azul, listrada"), "3 - calca jeans, tags: [azul, listrada], quantidade: 5");	
 	}
-	
-	
-	
-	
 	
 	@DisplayName("Testa removeItem quantidade menor que zero")
 	@Test
@@ -329,11 +297,6 @@ class ControllerUsuariosTest {
 		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.removeItem(3, "1234"));	
 	}
 	
-	
-	
-	
-	
-	
 	@DisplayName("Testa pesquisaItemParaDoacaoPorDescricao null")
 	@Test
 	void testPesquisaItemParaDoacaoPorDescricaoNull() {
@@ -351,8 +314,6 @@ class ControllerUsuariosTest {
 	void testPesquisaItemParaDoacaoPorDescricaoOk() {
 		assertEquals(controllerUsuarios.pesquisaItemParaDoacaoPorDescricao("travesseiro"), "4 - travesseiro, tags: [travesseiro de pena], quantidade: 10");
 	}
-	
-	
 	
 	@DisplayName("Testa match null")
 	@Test
@@ -389,10 +350,7 @@ class ControllerUsuariosTest {
 	void testMatchIdItemInexistente() {
 		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.match("84473712044", 85));
 	}
-	
-	
-	
-	
+
 	@DisplayName("Testa realizaDoacao null")
 	@Test
 	void testRealizaDoacaoNull() {
@@ -411,11 +369,26 @@ class ControllerUsuariosTest {
 		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.realizaDoacao(3, 4, "13/12/2018"));
 	}
 	
-	@DisplayName("Testa realizaDoacao descricao ok")
+	@DisplayName("Testa realizaDoacao ok")
 	@Test
 	void testRealizaDoacaoOk() {
 		assertEquals(controllerUsuarios.realizaDoacao(5, 6, "13/12/2018"), "13/12/2018 - doador: Murilo Luiz Brito/84473712044, item: livro, quantidade: 1, receptor: Elizabeth Ashe/1001");
 	}
 	
+	@DisplayName("Testa listaItensParaDoacao ok")
+	@Test
+	void testListaItensParaDoacaoOk() {
+		assertEquals(controllerUsuarios.listaItensParaDoacao(), "2 - colchao, tags: [colchao kingsize, conforto, dormir], quantidade: 10, doador: Satya Vaswani/1002 |"
+				+ " 5 - livro, tags: [Infantil, Matematica, Didatico], quantidade: 10, doador: Elizabeth Ashe/1001 |"
+				+ " 4 - travesseiro, tags: [travesseiro de pena], quantidade: 10, doador: Fulano/9090 |"
+				+ " 1 - cadeira de rodas, tags: [roda grande, cadeira], quantidade: 5, doador: Elizabeth Ashe/1001 |"
+				+ " 3 - calca jeans, tags: [azul], quantidade: 2, doador: Manel/1234");
+	}
+	
+	@DisplayName("Testa listaDescritorDeItensParaDoacao ok")
+	@Test
+	void testListaDescritorDeItensParaDoacaoOk() {
+		assertEquals(controllerUsuarios.listaDescritorDeItensParaDoacao(controllerDescritor.getDescritores()), "5 - cadeira de rodas | 2 - calca jeans | 10 - colchao | 10 - livro | 10 - travesseiro");
+	}
 	
 }
