@@ -2,6 +2,7 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,9 +25,14 @@ public class Item implements Comparable<Item>, Serializable{
 	 * @param tags tags que descrevem o item
 	 */
 	public Item(int idItem, int quantidade, String descritor, List<String> tags) {
+		if (descritor == null || descritor.trim().equals(""))
+			throw new IllegalArgumentException("Entrada invalida: descricao nao pode ser vazia ou nula.");
+		if (quantidade <= 0)
+			throw new IllegalArgumentException("Entrada invalida: quantidade deve ser maior que zero.");
+	
 		this.idItem = idItem;
 		this.quantidade = quantidade;
-		this.descritor = descritor;
+		this.descritor = descritor.trim().toLowerCase();
 		this.tags = tags;
 	}
 	
@@ -44,11 +50,11 @@ public class Item implements Comparable<Item>, Serializable{
 				List<String> listaTags = new ArrayList<String>();
 				
 				for (String c : vetorTags) {
-					listaTags.add(c);
+					listaTags.add(c.trim());
 				}
-				
 				this.tags = listaTags;
 			}
+			
 		}
 		if (novaQuantidade > 0) {
 			this.quantidade = novaQuantidade;
@@ -72,7 +78,7 @@ public class Item implements Comparable<Item>, Serializable{
 	 */
 	@Override
 	public String toString() {
-		if (tags.size() == 0) {
+		if (tags == null || tags.size() == 0) {
 			return this.idItem + " - " +this.descritor.toString() + ", quantidade: " + this.quantidade;
 		}
 		return this.idItem + " - " + this.descritor.toString() + ", tags: " + this.tags.toString() + ", quantidade: " + this.quantidade;
