@@ -53,7 +53,7 @@ public class Usuario implements Comparable<Usuario>, Serializable{
 		this.email = email;
 		this.celular = celular;
 		this.classe = classe;
-		this.status = status;
+		this.status = status.trim().toLowerCase();
 		this.id = id;
 		this.contadorOrdem = contadorOrdem;
 	}
