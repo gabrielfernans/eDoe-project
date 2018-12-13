@@ -47,8 +47,12 @@ public class Usuario implements Comparable<Usuario>, Serializable{
 		if(classe == null || classe.trim().equals(""))
 			throw new IllegalArgumentException("Entrada invalida: classe nao pode ser vazia ou nula.");
 		
+		if(status == null || status.trim().equals("")) 
+			throw new IllegalArgumentException("Entrada invalida: status do usuario nao pode ser vazio ou nulo.");
+		
 		if(id == null || id.trim().equals("")) 
 			throw new IllegalArgumentException("Entrada invalida: id do usuario nao pode ser vazio ou nulo.");
+		
 		this.nome = nome;
 		this.email = email;
 		this.celular = celular;
@@ -194,14 +198,6 @@ public class Usuario implements Comparable<Usuario>, Serializable{
 	 */
 	public String getCelular() {
 		return this.celular;
-	}
-
-	/**
-	 * Retorna uma String com a classe do usuario
-	 * @return classe do usuario
-	 */
-	public String getClasse() {
-		return this.classe;
 	}
 	
 	/**
