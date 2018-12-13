@@ -83,32 +83,52 @@ class UsuarioTest {
 	
 	@DisplayName("Testa exibe item")
 	@Test
-	void testUsuario5() {
+	void testExibeItem() {
 		assertEquals("0 - colchao, tags: [colchao kingsize, conforto, dormir], quantidade: 5", usuario.exibeItem(0));
 		assertEquals("1 - cobertor, tags: [lencol, conforto], quantidade: 18", usuario.exibeItem(1));
 	}
 	
 	@DisplayName("Testa exibe item invalido")
 	@Test
-	void testUsuario6() {
+	void testExibeItem1() {
 		assertThrows(IllegalArgumentException.class, () -> usuario2.exibeItem(0));
 		assertThrows(IllegalArgumentException.class, () -> usuario.exibeItem(8));
 	}
 	
+	@DisplayName("Testa exibe item de usuario que nao possui itens")
+	@Test
+	void testExibeItem2() {
+		assertThrows(IllegalArgumentException.class, () -> new Usuario("1003", "Elizabeth Ashe", "elizabethcalamity@deadlock.com", "(83) 92918-0211", "PESSOA_FISICA", "DOADOR", 1).exibeItem(0));
+	}
+	
 	@DisplayName("Testa atualiza item")
 	@Test
-	void testUsuario7() {
+	void testAtualizaItem() {
 		usuario.atualizaItem(0, "colchao dormir", 1);
 		usuario.atualizaItem(1, "lencol, conforto", 2);
 		assertEquals("0 - colchao, tags: [colchao dormir], quantidade: 1", usuario.exibeItem(0));
 		assertEquals("1 - cobertor, tags: [lencol, conforto], quantidade: 2", usuario.exibeItem(1));
 	}
 	
-	@DisplayName("Testa atualiza item invalido")
+	@DisplayName("Testa atualiza item id < 0")
 	@Test
-	void testUsuario8() {
+	void testAtualizaItem1() {
 		assertThrows(IllegalArgumentException.class, () -> usuario.atualizaItem(-3, "colchao dormir", 1));
+
+	}
+	
+	@DisplayName("Testa atualiza item id inexistente")
+	@Test
+	void testAtualizaItem2() {
 		assertThrows(IllegalArgumentException.class, () -> usuario.atualizaItem(17, "lencol, conforto", 2));
+
+	}
+	
+	@DisplayName("Testa atualiza item quantidade < 0")
+	@Test
+	void testAtualizaItem3() {
+		usuario.atualizaItem(0, "", -1);
+		assertEquals("0 - colchao, tags: [colchao kingsize, conforto, dormir], quantidade: 5", usuario.exibeItem(0));
 
 	}
 	

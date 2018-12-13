@@ -112,9 +112,8 @@ public class Usuario implements Comparable<Usuario>, Serializable{
 				idItemProvisorio = c.getIdItem();
 			}
 		}
-		if(itens.containsValue(new Item(idItemProvisorio, quantidade, descritor, listaTags))) {
+		if(itens.containsValue(new Item(idItemProvisorio, quantidade, descritor, listaTags)))
 			return idItemProvisorio;
-		}
 		
 		this.itens.put(idItem, new Item(idItem, quantidade, descritor, listaTags));
 		
