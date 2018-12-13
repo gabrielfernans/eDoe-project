@@ -2,6 +2,8 @@ package controllers;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,8 +18,10 @@ class ControllerUsuariosTest {
 		controllerUsuarios.adicionaDoador("1001", "Elizabeth Ashe", "elizabethcalamity@deadlock.com", "(83) 92918-0211", "PESSOA_FISICA");
 		controllerUsuarios.adicionaDoador("1002", "Satya Vaswani", "satya@vishkarcorp.com", "(83) 99221-2571", "PESSOA_FISICA");
 		controllerUsuarios.adicionaDoador("70594610435", "Gabriel Fernandes", "gabrielwebr@gmail.com", "(83) 98606-6330", "PESSOA_FISICA");
+		controllerUsuarios.adicionaDoador("1234", "Manel", "manel@gmail.com", "(83) 98000-0000", "PESSOA_FISICA");
 		controllerUsuarios.cadastraItem("1001", "cadeira de rodas", 5, "roda grande,cadeira");
 		controllerUsuarios.cadastraItem("1002", "colchao", 10, "colchao kingsize,conforto,dormir");
+		controllerUsuarios.cadastraItem("1234", "calca jeans", 2, "azul");
 	}
 	
 	@DisplayName("Testa adicionaDoador null")
@@ -114,7 +118,6 @@ class ControllerUsuariosTest {
 	
 	
 	
-	
 	@DisplayName("Testa atualizaUsuario null")
 	@Test
 	void testAtualizaUsuarioNull() {
@@ -159,6 +162,104 @@ class ControllerUsuariosTest {
 	void testRemoveUsuarioInexistente() {
 		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.removeUsuario("1526352"));	
 	}
+	
+	@DisplayName("Testa removeUsuario ok")
+	@Test
+	void testRemoveUsuarioOk() {
+		controllerUsuarios.removeUsuario("70594610435");
+		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.pesquisaUsuarioPorNome("70594610435"));
+	}
+	
+	
+	
+	
+	@DisplayName("Testa lerReceptores ok")
+	@Test
+	void testLerReceptoresOk() throws IOException {
+		controllerUsuarios.lerReceptores("arquivos_sistema/novosReceptores.csv");	
+	}
+	
+	@DisplayName("Testa lerReceptores invalido")
+	@Test
+	void testLerReceptoresInvalido() throws IOException {
+		assertThrows(IOException.class, () -> controllerUsuarios.lerReceptores("arquivos_sistemas/invalid_file"));
+	}
+	
+	
+	
+	
+	@DisplayName("Testa cadastraItem null")
+	@Test
+	void testCadastraItemNull() {
+		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.cadastraItem("1001", null, 2, "all-in-one"));	
+		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.cadastraItem(null, "computador", 2, "all-in-one"));	
+		
+	}
+	
+	@DisplayName("Testa cadastraItem vazio")
+	@Test
+	void testCadastraItemVazio() {
+		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.cadastraItem("1001", "", 2, "all-in-one"));	
+		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.cadastraItem("", "computador", 2, "all-in-one"));	
+	}
+	
+	@DisplayName("Testa cadastraItem quantidade menor que zero")
+	@Test
+	void testCadastraItemMenorQueZero() {
+		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.cadastraItem("1001", "computador", -1, "all-in-one"));	
+	}
+	
+	@DisplayName("Testa cadastraItem doador inexistente")
+	@Test
+	void testCadastraItemInexistente() {
+		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.cadastraItem("5625", "computador", 7, "all-in-one"));	
+	}
+	
+	
+	@DisplayName("Testa cadastraItem ok")
+	@Test
+	void testCadastraItemOk() {
+		assertEquals(controllerUsuarios.cadastraItem("1234", "computador", 7, "all-in-one"), 4);	
+	}
+	
+	
+	
+	
+	@DisplayName("Testa exibeItem quantidade menor que zero")
+	@Test
+	void testExibeItemMenorQueZero() {
+		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.exibeItem(-1, "1234"));	
+	}
+	
+	@DisplayName("Testa exibeItem null")
+	@Test
+	void testExibeItemNull() {
+		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.exibeItem(1, null));		
+		
+	}
+	
+	@DisplayName("Testa exibeItem vazio")
+	@Test
+	void testExibeItemVazio() {
+		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.exibeItem(1, ""));	
+	}
+	
+	
+	
+	@DisplayName("Testa exibeItem doador inexistente")
+	@Test
+	void testExibeItemInexistente() {
+		assertThrows(IllegalArgumentException.class, () -> controllerUsuarios.exibeItem(4, "12543"));	
+	}
+	
+	
+	@DisplayName("Testa exibeItem ok")
+	@Test
+	void testExibeItemOk() {
+		assertEquals(controllerUsuarios.exibeItem(3, "1234"), "3 - calca jeans, tags: [azul], quantidade: 2");	
+	}
+	
+	
 	
 	
 	
