@@ -1,12 +1,7 @@
 package controllers;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -21,7 +16,7 @@ public class ControllerDescritor implements Serializable{
 	/**
 	 * Metodo responsavel por cadastrar um descritor no sistema. Contem uma excecao para verificar se o parametro inserido
 	 * nao ira interferir no funcionamento do programa.
-	 * @param descritor Nome do descritor
+	 * @param descritor nome do descritor.
 	 */
 	public void cadastraDescritor(String descritor) {
 		
@@ -35,15 +30,19 @@ public class ControllerDescritor implements Serializable{
 	}
 	
 	/**
-	 * 
-	 * @param descritor
-	 * @return
+	 * Metodo responsavel por verificar se, dado um nome de descritor, ele contem esse descritor no sistema.
+	 * @param descritor.
+	 * @return um valor booleano, sendo true se o descritor existir no sistema e false se nao existir.
 	 */
 	public boolean contemDescritor(String descritor) {
 			return descritores.contains(descritor);
 	}
 	
+	/**
+	 * Metodo responsavel por retornar o set de descritores.
+	 * @return um set dos descritores existentes no sistema.
+	 */
 	public final Set<String> getDescritores() {
 		return descritores;
 	}
-}	
+}
