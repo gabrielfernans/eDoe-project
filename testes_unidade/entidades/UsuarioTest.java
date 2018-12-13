@@ -33,11 +33,32 @@ class UsuarioTest {
 		assertThrows(IllegalArgumentException.class, () -> new Usuario("1001", "Elizabeth Ashe", "elizabethcalamity@deadlock.com", "(83) 92918-0211", null, "DOADOR", 1));
 	}
 	
-	@DisplayName("Testa atualiza usuario")
+	@DisplayName("Testa atualiza usuario ok")
 	@Test
-	void testUsuario2() {
+	void testAtualizaUsuario() {
 		usuario.atualizaUsuario("Elizabeth Ashe", "novoEmaik@deadlock.com", "(83) 92918-0211");
 		assertEquals("Elizabeth Ashe/1001, novoEmaik@deadlock.com, (83) 92918-0211, status: doador", usuario.toString());
+	}
+	
+	@DisplayName("Testa atualiza usuario nome null")
+	@Test
+	void testAtualizaUsuario1() {
+		usuario.atualizaUsuario(null, "novoEmaik@deadlock.com", "(83) 92918-0211");
+		assertEquals("Elizabeth Ashe/1001, novoEmaik@deadlock.com, (83) 92918-0211, status: doador", usuario.toString());
+	}
+	
+	@DisplayName("Testa atualiza usuario telefone null")
+	@Test
+	void testAtualizaUsuario2() {
+		usuario.atualizaUsuario("Elizabeth Ashe", "novoEmaik@deadlock.com", null);
+		assertEquals("Elizabeth Ashe/1001, novoEmaik@deadlock.com, (83) 92918-0211, status: doador", usuario.toString());
+	}
+	
+	@DisplayName("Testa atualiza usuario email null")
+	@Test
+	void testAtualizaUsuario3() {
+		usuario.atualizaUsuario("Elizabeth Ashe", null, "(83) 92918-0211");
+		assertEquals("Elizabeth Ashe/1001, elizabethcalamity@deadlock.com, (83) 92918-0211, status: doador", usuario.toString());
 	}
 	
 	@DisplayName("Testa cadastra item")
@@ -47,11 +68,17 @@ class UsuarioTest {
 		assertEquals("2 - cadeira de rodas, tags: [roda grande, cadeira], quantidade: 5", usuario.exibeItem(2));
 	}
 	
-	@DisplayName("Testa cadastra item inválido")
+	@DisplayName("Testa cadastra item descritor invalido")
 	@Test
-	void testUsuario4() {
+	void testCadastraItem() {
 		assertThrows(IllegalArgumentException.class, () -> usuario.cadastraItem(18, null, 5, "roda grande,cadeira"));
-		assertThrows(IllegalArgumentException.class, () -> usuario.cadastraItem(3, "travesseiro", -6, ""));	
+		assertThrows(IllegalArgumentException.class, () -> usuario.cadastraItem(3, "", 6, ""));	
+	}
+	
+	@DisplayName("Testa cadastra item quantidade invalida")
+	@Test
+	void testCadastraItem1() {
+		assertThrows(IllegalArgumentException.class, () -> usuario.cadastraItem(18, "cadeira de rodas", -5, "roda grande,cadeira"));	
 	}
 	
 	@DisplayName("Testa exibe item")
