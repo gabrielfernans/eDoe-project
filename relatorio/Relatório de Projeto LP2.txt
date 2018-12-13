@@ -52,3 +52,14 @@ Caso 6:
 
 No penúltimo caso de uso, foi criada uma função para realizar a doação, que recebe o id do item necessário, id do item doado e a data da doação. Então, é realizada a busca de ambos os itens por meio da função privada getItemPeloId(); caso o item não exista, é lançada uma exceção. O sistema verifica se os itens possuem o mesmo descritor. A partir disso, a quantidade de item para doação e item necessária é atualizada. Caso o item chegue a quantidade 0, ele é removido; entretanto não se deve remover o descritor do item.
 É retornado para o controlador Edoe, uma string contendo os dados da doação realizada e ela é repassada para a entidade controllerDoacao. Em controllerDoacao existe a função adicionarDoacao(), q adiciona a doação no sistema, e possui a função listadoacao() que lista todas as doações no sistema. Débora codificou o caso de uso 6.
+
+
+Caso 7:
+
+
+        No último caso de uso, foram utilizados dois métodos (iniciaSistema e finalizaSistema) que possuem a função de armazenar as informações inseridas no sistema em um arquivo .ser. Primeiramente, o método iniciaSistema invoca a classe FileInputStream e recebe o arquivo “objetos.ser” que está dentro da pasta “sistema_serializado”. O objeto da classe ObjectInputStream recebe o arquivo em seu construtor e, posteriormente, usando a função readObject(), lê o objeto da classe ControllerEdoe serializado do arquivo “objetos.ser” e passa o objeto lido para o atributo da classe Fachada como mostra na seguinte linha de código:
+controllerEdoe = (ControllerEdoe) ois.readObject();
+Após isso, o arquivo é fechado. 
+        Por outro lado, o método finalizaSistema faz uso da classe FileOutputStream para criar o arquivo “objetos.ser” e passa o arquivo no construtor do objeto da classe ObjectOutputStream. A partir disso, o objeto controllerEdoe é escrito dentro do arquivo como mostra na seguinte linha de código:
+        oos.writeObject(controllerEdoe);
+Após isso, o arquivo é fechado.
