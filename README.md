@@ -1,5 +1,3 @@
-![edoe](https://user-images.githubusercontent.com/40633369/50045874-26973f80-0079-11e9-91cd-784e6a7d8c69.jpg)
-
 ## Projeto da disciplina Laboratório de Programação II - UFCG
 
 O eDoe é um software criado com o intuito de gerenciar doações em uma cidade ou região.
@@ -18,4 +16,4 @@ Portanto, no eDoe.com usuários de toda a região envolvida podem cadastrar iten
 
 ##### [MAICO BRENDO CORDEIRO DO NASCIMENTO](https://github.com/maicobcn)
 
-
+![edoe](https://user-images.githubusercontent.com/40633369/50045874-26973f80-0079-11e9-91cd-784e6a7d8c69.jpg)
